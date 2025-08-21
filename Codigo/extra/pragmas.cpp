@@ -1,9 +1,8 @@
-
 // Perfomance geral (seguro p/ CP)
  #pragma GCC optimize("O3,unroll-loops,fast-math")
  
-// Máximo vetor + FP agressivo (pode quebrar precisão)
+// Maximo vetor + FP agressivo (pode quebrar precisao)
  #pragma GCC optimize("Ofast,fast-math,unroll-loops,inline")
 
-// Foco em binário pequeno
+// Foco em binario pequeno
  #pragma GCC optimize("Os")

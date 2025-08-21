@@ -252,7 +252,7 @@ int main(int argc, char** argv) {
 		if (entry->d_type != DT_DIR) continue;
 
 		string dir(entry->d_name);
-		if (dir == "Extra") continue;
+		if (dir == "extra") continue;
 		printa_section(dir);
 
 		vector<pair<string, string>> files;
@@ -271,9 +271,9 @@ int main(int argc, char** argv) {
 	}
 
 	cout << "\\pagebreak" << endl;
-	printa_section("Extra");
+	printa_section("extra");
 	vector<pair<string, string>> files;
-	dfs(files, path + "Extra", true);
+	dfs(files, path + "extra", true);
 
 	cout << "\\end{document}\n";
 	return 0;

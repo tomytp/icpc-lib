@@ -392,7 +392,7 @@ int main(int argc, char** argv) {
 		string dir(entry->d_name);
 		cout << RED << "=== " << dir << " ===" << RESET << endl;
 		create_section(dir);
-		if (dir == "Extra") continue;
+		if (dir == "extra") continue;
 
 		vector<pair<string, string>> files;
 		dfs(files, PATH + dir);
@@ -430,9 +430,9 @@ int main(int argc, char** argv) {
 		}
 	}
 
-	// printa_section("Extra");
+	// printa_section("extra");
 	// vector<pair<string, string>> files;
-	// dfs(files, path + "Extra", true);
+	// dfs(files, path + "extra", true);
 
 	return 0;
 }

@@ -1,4 +1,4 @@
-// Knuth–Morris–Pratt (KMP)
+// Knuth-Morris-Pratt (KMP)
 //
 // Computes prefix function and performs linear-time substring search with optional automaton construction.
 //

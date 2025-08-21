@@ -1,4 +1,4 @@
-// Floyd–Warshall Algorithm
+// Floyd-Warshall Algorithm
 //
 // Computes all-pairs shortest paths and detects negative cycles using dynamic programming over path lengths.
 //

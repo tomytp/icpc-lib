@@ -1,4 +1,4 @@
-// Aho–Corasick Automaton
+// Aho-Corasick Automaton
 //
 // Builds a trie with failure links for multi-pattern matching; insert is O(|s|), build is linear in total length, and queries run in linear time in the text.
 //
