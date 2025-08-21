@@ -8,7 +8,7 @@ Biblioteca de algoritmos, estruturas de dados e primitivas para Maratonas de Pro
 
 ## Estrutura
 - `src/`: algoritmos por tópico (`graphs/`, `math/`, `geometry/`, `strings/`, `structures/`, `misc/`, `extra/`).
-- `latex/`: gerador (`getlatex.cpp`, `getlatex.sh`, `preamble.tex`).
+- `latex/`: gerador (`getlatex.py`, `getlatex.sh`, `preamble.tex`).
 - `pdf/`: PDFs gerados (ex.: [`pdf/biblioteca.pdf`](./pdf/biblioteca.pdf)).
 
 ## Build

@@ -2,7 +2,7 @@
 
 ## Project Structure & Module Organization
 - `src/`: C++17 algorithms by topic (`extra/`, `graphs/`, `math/`, `geometry/`, `strings/`, `structures/`, `misc/`). Files use lower_snake_case, e.g., `sparse_table.cpp`.
-- `latex/`: PDF generator (`getlatex.cpp`, `getlatex.sh`, `preamble.tex`). Output is placed in `pdf/`.
+- `latex/`: PDF generator (`getlatex.py`, `getlatex.sh`, `preamble.tex`). Output is placed in `pdf/`.
 - `pdf/`: Generated PDFs.
 
 ## Build, Test, and Development Commands
