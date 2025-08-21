@@ -1,8 +1,20 @@
+! NOTE: This fork is focused on Codigo/ and LaTeX only. Hugo site content and automation were removed.
+
 # Biblioteca
 
 Biblioteca de algoritmos, estruturas de dados e primitivas para Maratona de Programação da UFMG.
 
 Códigos em C++, em maior parte implementados pelos alunos da universidade.
+
+### Scope of this fork
+
+- Purpose: keep `Codigo/` (C++ snippets) and `latex/` (PDF generator).
+- Removed: `assets/`, `content/`, `data/`, `static/`, `docs/`, `hugo.toml`, Go modules, and the GitHub Pages workflow for Hugo.
+- Outputs: generated PDFs in `pdf/`.
+
+Quick commands:
+- Build PDF: `cd latex && ./getlatex.sh`
+- Compile a snippet: `g++ -std=c++17 -O2 -Wall -Wshadow Codigo/<path/to/file>.cpp -o bin/<name>`
 
 ### PDF
 

@@ -4,7 +4,7 @@
 //
 // complexity: O(log E) for power/inverse, O(1)
 
-const ll MOD = 1'000'000'007;
+const ll MOD = 1_000_000_007;
 
 inline ll sum(ll a, ll b) { a += b; if (a >= MOD) a -= MOD; return a; }
 inline ll sub(ll a, ll b) { a -= b; if (a < 0)  a += MOD; return a; }

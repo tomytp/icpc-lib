@@ -12,7 +12,7 @@ int HASH_LEN = 3;
 string NO_HASH = "nohash";
 string NO_PRINT = "noprint";
 
-string path = "../Codigo/";
+string path = "../src/";
 #ifdef __clang__
 string hash_cmd = "sed -n 1','10000' p' tmp.cpp | sed '/^#w/d' "
            "| clang -E -x c++ -dD -P - | tr -d '[:space:]' | md5sum | cut -c-";
