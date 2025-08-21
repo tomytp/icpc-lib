@@ -1,0 +1,74 @@
+% Preamble and document start for the ICPC library PDF.
+\documentclass[11pt, a4paper, twoside]{article}
+
+% Encoding and math
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb}
+
+% Readable, bulkier fonts with fallbacks
+% Prefer Palatino-like + matching math; fallback to mathpazo if newpx not available.
+\IfFileExists{newpxtext.sty}{
+  \usepackage{newpxtext,newpxmath}
+}{
+  \usepackage[sc]{mathpazo}
+}
+% Prefer Bera Mono or Inconsolata for monospace; otherwise keep default CM Typewriter
+\IfFileExists{beramono.sty}{
+  \usepackage[scaled=0.93]{beramono}
+  \renewcommand{\ttdefault}{fvm}
+}{
+  \IfFileExists{inconsolata.sty}{\usepackage[scaled=0.95]{inconsolata}}{}
+}
+
+% Language and links
+\usepackage[portuguese]{babel}
+\usepackage[pdfusetitle]{hyperref}
+
+% Layout
+\usepackage[landscape, left=0.5cm, right=0.5cm, top=1cm, bottom=1.5cm]{geometry}
+
+% Code listings (IDE-like via minted/Pygments)
+\usepackage{xcolor}
+\usepackage[newfloat]{minted}
+
+% Colors and columns
+\definecolor{gray}{rgb}{0.4,0.4,0.4}
+\setlength{\columnseprule}{0.2pt}
+\setlength{\columnsep}{10pt}
+
+% Minted configuration and style
+\usemintedstyle{tango}
+% Subtle code background for IDE-like feel
+\definecolor{codebg}{HTML}{F7F7F9}
+
+\setminted{
+  fontsize=\footnotesize,
+  linenos=false,
+  breaklines=true,
+  breakanywhere=true,
+  tabsize=4,
+  autogobble=true,
+  obeytabs=false,
+  escapeinside=@@,
+  bgcolor=codebg
+}
+
+% Prefix for per-line hashes (not lexed by minted)
+\newcommand{\hashprefix}[1]{\textcolor{gray}{\ttfamily #1}}
+
+% Custom type highlighting (for typedefs like `ll`)
+\definecolor{typecolor}{HTML}{0077AA}
+\newcommand{\typ}[1]{\textcolor{typecolor}{\textbf{#1}}}
+
+% Title
+\title{Biblioteca PUC-Rio 2025}
+\author{Thomaz Miranda, Miguel Batista, Joao Arthur Marques}
+\date{\today}
+
+\begin{document}
+\twocolumn
+\maketitle
+
+\renewcommand{\contentsname}{Índice}
+\tableofcontents

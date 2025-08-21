@@ -1,14 +1,14 @@
 # Repository Guidelines
 
 ## Project Structure & Module Organization
-- `Codigo/`: C++17 algorithms by topic (`basic/`, `graphs/`, `math/`, `geometry/`, `strings/`, `structures/`, `misc/`, `extra/`). Files use lower_snake_case, e.g., `sparse_table.cpp`.
-- `latex/`: PDF generator (`getlatex.cpp`, `getlatex.sh`). Output is placed in `pdf/`.
+- `src/`: C++17 algorithms by topic (`extra/`, `graphs/`, `math/`, `geometry/`, `strings/`, `structures/`, `misc/`). Files use lower_snake_case, e.g., `sparse_table.cpp`.
+- `latex/`: PDF generator (`getlatex.cpp`, `getlatex.sh`, `preamble.tex`). Output is placed in `pdf/`.
 - `pdf/`: Generated PDFs.
 
 ## Build, Test, and Development Commands
 - Build PDF library: `cd latex && ./getlatex.sh` (requires TeX and Rubber; see below).
-- Compile a snippet: `g++ -std=c++17 -O2 -Wall -Wshadow Codigo/graphs/dijkstra.cpp -o bin/dijkstra`
-  - Use `Codigo/basic/makefile` flags for sanitizers during local checks.
+- Compile a snippet: `g++ -std=c++17 -O2 -Wall -Wshadow src/graphs/dijkstra.cpp -o bin/dijkstra`
+  - Use `src/extra/makefile` flags for sanitizers during local checks.
 
 ## Coding Style & Naming Conventions
 - Language: C++17.

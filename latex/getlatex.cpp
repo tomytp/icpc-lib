@@ -23,6 +23,37 @@ string hash_cmd = "sed -n 1','10000' p' tmp.cpp | sed '/^#w/d' "
 
 bool print_all = false;
 
+// Custom typedef/type aliases to highlight as types
+unordered_set<string> CUSTOM_TYPES = {
+    "ll", "ull", "ld", "i64", "u64",
+    "p64", "pii", "pll", "v64", "vll"
+};
+
+bool is_ident_char(char c) {
+    return (c == '_' || isalnum(static_cast<unsigned char>(c)));
+}
+
+string inject_custom_type_markup(const string& s) {
+    string out;
+    int n = (int)s.size();
+    for (int i = 0; i < n; ) {
+        if (is_ident_char(s[i])) {
+            int j = i;
+            while (j < n && is_ident_char(s[j])) j++;
+            string tok = s.substr(i, j - i);
+            if (CUSTOM_TYPES.count(tok)) {
+                out += "@\\typ{" + tok + "}@";
+            } else {
+                out += tok;
+            }
+            i = j;
+        } else {
+            out += s[i++];
+        }
+    }
+    return out;
+}
+
 string exec(string cmd) {
 	array<char, 128> buffer;
 	string result;
@@ -116,7 +147,7 @@ void remove_flags(string& line) {
 }
 
 void printa_arquivo_codigo(string file, bool extra = false) {
-	cout << "\\begin{lstlisting}\n";
+	cout << "\\begin{minted}{cpp}\n";
 	ifstream fin(file.c_str());
 	string line;
 	int count = 0;
@@ -135,20 +166,25 @@ void printa_arquivo_codigo(string file, bool extra = false) {
 		bool comment = is_comment(line);
 		if (!comment) started_code = true;
 
-		if (!extra and started_code) {
-			string hash = get_hash_arquivo(file, HASH_LEN, start_line, line_idx);
+    if (!extra and started_code) {
+            string hash = get_hash_arquivo(file, HASH_LEN, start_line, line_idx);
 
-			if (comment) {
-				if (depth != 0) {
-					for (int i = 0; i < HASH_LEN + 1; i++)
-						cout << " ";
-				}
-			} else cout << hash << " ";
-		}
-		cout << line << endl;
+            if (comment) {
+                    if (depth != 0) {
+                            cout << "@\\hashprefix{";
+                            for (int i = 0; i < HASH_LEN + 1; i++) cout << " ";
+                            cout << "}@";
+                    }
+            } else {
+                    cout << "@\\hashprefix{" << hash << " }@";
+            }
+    }
+    string printed = line;
+    if (!comment) printed = inject_custom_type_markup(line);
+    cout << printed << endl;
 	}
 	fin.close();
-	cout << "\\end{lstlisting}\n\n";
+	cout << "\\end{minted}\n\n";
 }
 
 void printa_arquivo(string file, bool extra = false) {
@@ -243,7 +279,7 @@ int main(int argc, char** argv) {
 		}
 	}
 
-	printa_arquivo("comeco.tex", true);
+	printa_arquivo("preamble.tex", true);
 	struct dirent* entry = nullptr;
 	DIR* dp = nullptr;
 	dp = opendir(path.c_str());
