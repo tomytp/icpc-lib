@@ -1,31 +1,15 @@
-// Euler Totient Linear Sieve
-//
-// Computes Euler's totient for all numbers up to n using a linear sieve and collects primes.
-//
-// complexity: O(n), O(n)
+const ll N = 10000000;
+v64 lp(N+1), pr;
 
-v64 primes;
-vector<bool> is_comp(MAXN,false);
-ll phi[MAXN];
-ll cum_sum[MAXN];
-
-void sieve(ll n){
-  phi[1] = 1;
-  forn(i,2,n){
-    if(!is_comp[i]){
-      phi[i] = i-1;
-      primes.push_back(i);
+forn(i, 2, N+1) {
+    if (lp[i] == 0) {
+        lp[i] = i;
+        pr.push_back(i);
     }
-    
-    forn(j,0,primes.size()){
-      if(i*primes[j] > n) break;
-      is_comp[i*primes[j]] = true;
-      
-      if(i % primes[j] == 0){
-        phi[i*primes[j]] = phi[i]*primes[j]; 
-        break;
-      }
-      phi[i*primes[j]] = phi[i]*phi[primes[j]];    
+    for (ll j = 0; i * pr[j] <= N; ++j) {
+        lp[i * pr[j]] = pr[j];
+        if (pr[j] == lp[i]) {
+            break;
+        }
     }
-  }
 }
