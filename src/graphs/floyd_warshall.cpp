@@ -8,12 +8,12 @@ ll n;
 ll d[MAX][MAX];
 
 bool floyd_warshall() {
-	for (int k = 0; k < n; k++)
-	for (int i = 0; i < n; i++)
-	for (int j = 0; j < n; j++)
+	forn(k,0,n)
+	forn(i,0,n)
+	forn(j,0,n)
 		d[i][j] = min(d[i][j], d[i][k] + d[k][j]);
 
-	for (int i = 0; i < n; i++)
+	forn(i,0,n)
 		if (d[i][i] < 0) return 1;
 
 	return 0;
