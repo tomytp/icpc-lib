@@ -1,6 +1,15 @@
-// Centroid Decomposition
+// Centroid Decomposition — pares a distância k
 //
-// Decompose Centroid
+// Objetivo: contar #pares (u,v) com dist(u,v)=k na árvore.
+// Ideia: em cada centróide c, para cada subárvore j:
+//   - path = profundidades d partindo de j (sem nós removidos)
+//   - somar cnt[k-d-1] ANTES de atualizar (evita dupla contagem entre subárvores)
+//   - depois, cnt[d+1]++ (a aresta (c,j) soma 1)
+//
+// Funções: dfs_sz (tamanhos), centroid (acha centróide), dfs (coleta depths), decomp (divide e combina).
+// Complexidade: O(n log n) tempo; O(n) memória.
+// Cuidados: limites de cnt, k==0 trata à parte se quiser contar (u,u); rem[c] permanece marcado.
+// escrito pelo gpt, cuidado
 
 vector<ll> g[MAX];
 ll sz[MAX], rem[MAX];
