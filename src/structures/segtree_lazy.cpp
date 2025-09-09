@@ -1,4 +1,4 @@
-// Segment Tree (Range Query + range Update)
+// Segment Tree (Range Query + Range Update)
 //
 // Balanced binary tree for range queries with a customizable combine; supports point updates and range queries.
 //

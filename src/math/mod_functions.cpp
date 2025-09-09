@@ -2,7 +2,7 @@
 //
 // Provides modular add/sub/mul, fast exponentiation, and modular inverse under fixed MOD.
 //
-// complexity: O(log E) for power/inverse, O(1)
+// complexity: O(log E) for power/inverse
 
 const ll MOD = 1_000_000_007;
 

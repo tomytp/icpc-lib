@@ -1,3 +1,12 @@
+// Linear Sieve (prime precomputation)
+//
+// Computes primes up to N in O(N) using the smallest prime factor (lp).
+// pr will contain all primes ≤ N.
+// lp[x] stores the smallest prime dividing x.
+//
+// complexity: O(N)
+// escrito pelo gpt, cuidado
+
 const ll N = 10000000;
 v64 lp(N+1), pr;
 

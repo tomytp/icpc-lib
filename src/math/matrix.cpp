@@ -1,4 +1,9 @@
-// Matriz
+// Matrix template
+//
+// - operator*: multiplicação (O(n*m*r))
+//   opcional modo modular (#define MODULAR true)
+// - operator^: exponenciação rápida (O(log e))
+// - apply_transform(): aplica transformação M^e * v
 
 #define MODULAR false
 template<typename T> struct matrix : vector<vector<T>> {

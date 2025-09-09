@@ -5,6 +5,7 @@
 // e alguma solucao, caso exista
 //
 // O(n^2 * m)
+// escrito pelo gpt, cuidado
 
 template<typename T>
 pair<ll, vector<T>> gauss(vector<vector<T>> a, vector<T> b) {
