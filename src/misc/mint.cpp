@@ -6,7 +6,7 @@
 
 const ll MOD = 998244353;
 
-template<int p> struct mod_int {
+template<ll p> struct mod_int {
 	ll expo(ll b, ll e) {
 		ll ret = 1;
 		while (e) {
@@ -36,7 +36,7 @@ template<int p> struct mod_int {
 		return *this;
 	}
 	m& operator *=(const m& a) {
-		v = v * ll(a.v) % p;
+		v = v * a.v % p;
 		return *this;
 	}
 	m& operator /=(const m& a) {
