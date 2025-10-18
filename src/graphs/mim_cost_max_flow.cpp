@@ -87,7 +87,7 @@ template<typename T> struct mcmf {
     pair<ll, T> min_cost_flow(ll s, ll t, ll flow = INF) {
         vector<T> pot(g.size(), 0);
         pot = spfa(s); // mudar algoritmo de caminho minimo aqui
-        // sem custo negativo não precisa de nada
+        // sem custo negativo nao precisa de nada
         // se grafo for um DAG usar dp
         ll f = 0;
         T ret = 0;

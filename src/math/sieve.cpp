@@ -1,7 +1,7 @@
 // Linear Sieve (prime precomputation)
 //
 // Computes primes up to N in O(N) using the smallest prime factor (lp).
-// pr will contain all primes ≤ N.
+// pr will contain all primes <= N.
 // lp[x] stores the smallest prime dividing x.
 //
 // complexity: O(N)
