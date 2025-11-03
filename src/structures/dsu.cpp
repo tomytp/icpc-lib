@@ -5,16 +5,16 @@
 // complexity: O(alpha(N)) amortized per op, O(N)
 
 struct dsu {
-	vector<ll> id, sz;
+	v64 id, len;
 
-	dsu(ll n) : id(n), sz(n, 1) { iota(id.begin(), id.end(), 0); }
+	dsu(ll n) : id(n), len(n, 1) { iota(id.begin(), id.end(), 0); }
 
 	ll find(ll a) { return a == id[a] ? a : id[a] = find(id[a]); }
 
 	void uni(ll a, ll b) {
 		a = find(a), b = find(b);
 		if (a == b) return;
-		if (sz[a] < sz[b]) swap(a, b);
-		sz[a] += sz[b], id[b] = a;
+		if (len[a] < len[b]) swap(a, b);
+		len[a] += len[b], id[b] = a;
 	}
 };
