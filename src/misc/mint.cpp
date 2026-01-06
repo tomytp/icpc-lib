@@ -43,7 +43,7 @@ template<ll p> struct mod_int {
 		v = v * inv(a.v) % p;
 		return *this;
 	}
-	m operator -(){ return m(-v); }
+	m operator -() const { return m(-v); }
 	m& operator ^=(ll e) {
 		if (e < 0) {
 			v = inv(v);
