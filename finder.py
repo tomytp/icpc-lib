@@ -27,7 +27,7 @@ class TypstFileManager:
         try:
             subprocess.run(['code', '--goto', str(file_path), str(self.base_folder)])
         except FileNotFoundError:
-            print("Error: VSCode command line tool 'code' no t found. Please make sure VSCode is installed and the 'code' command is in your PATH.")
+            print("Error: VSCode command line tool 'code' not found. Please make sure VSCode is installed and the 'code' command is in your PATH.")
             sys.exit(1)
 
     def get_categories(self) -> List[str]:

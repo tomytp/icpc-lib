@@ -8,13 +8,13 @@ ll n;
 ll d[MAX][MAX];
 
 bool floyd_warshall() {
-	forn(k,0,n)
-	forn(i,0,n)
-	forn(j,0,n)
-		d[i][j] = min(d[i][j], d[i][k] + d[k][j]);
+    forn(k,0,n)
+    forn(i,0,n)
+    forn(j,0,n)
+        d[i][j] = min(d[i][j], d[i][k] + d[k][j]);
 
-	forn(i,0,n)
-		if (d[i][i] < 0) return 1;
+    forn(i,0,n)
+        if (d[i][i] < 0) return 1;
 
-	return 0;
+    return 0;
 }

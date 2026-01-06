@@ -1,19 +1,17 @@
-// MinCostMaxFlow
+// Min Cost Max Flow (MCMF)
 //
-// min_cost_flow(s, t, f) computa o par (fluxo, custo)
-// com max(fluxo) <= f que tenha min(custo)
-// min_cost_flow(s, t) -> Fluxo maximo de custo minimo de s pra t
-// Se for um dag, da pra substituir o SPFA por uma DP pra nao
-// pagar O(nm) no comeco
-// Se nao tiver aresta com custo negativo, nao precisa do SPFA
+// min_cost_flow(s, t, f) computes the pair (flow, cost) where max(flow) <= f with min(cost).
+// min_cost_flow(s, t) -> Maximum flow with minimum cost from s to t.
+// For DAGs, SPFA can be replaced with DP to avoid O(nm) initial cost.
+// If no negative cost edges exist, SPFA is not needed.
 //
-// O(nm + f * m log n)
+// complexity: O(nm + f * m log n), O(n + m)
 
 template<typename T> struct mcmf {
     struct edge {
-        ll to, rev, flow, cap; // para, id da reversa, fluxo, capacidade
-        bool res; // se eh reversa
-        T cost; // custo da unidade de fluxo
+        ll to, rev, flow, cap; // destination, reverse edge id, current flow, capacity
+        bool res; // is reverse edge
+        T cost; // cost per unit of flow
         edge() : to(0), rev(0), flow(0), cap(0), cost(0), res(false) {}
         edge(ll to_, ll rev_, ll flow_, ll cap_, T cost_, bool res_)
             : to(to_), rev(rev_), flow(flow_), cap(cap_), res(res_), cost(cost_) {}
@@ -26,7 +24,7 @@ template<typename T> struct mcmf {
 
     mcmf(ll n) : g(n), par_idx(n), par(n), inf(numeric_limits<T>::max()/3) {}
 
-    void add(ll u, ll v, ll w, T cost) { // de u pra v com cap w e custo cost
+    void add(ll u, ll v, ll w, T cost) { // edge from u to v with capacity w and cost
         edge a = edge(v, g[v].size(), 0, w, cost, false);
         edge b = edge(u, g[u].size(), 0, 0, -cost, true);
 
@@ -34,7 +32,7 @@ template<typename T> struct mcmf {
         g[v].push_back(b);
     }
 
-    vector<T> spfa(ll s) { // nao precisa se nao tiver custo negativo
+    vector<T> spfa(ll s) { // not needed if no negative cost edges
         deque<ll> q;
         vector<bool> is_inside(g.size(), 0);
         dist = vector<T>(g.size(), inf);
@@ -86,9 +84,9 @@ template<typename T> struct mcmf {
 
     pair<ll, T> min_cost_flow(ll s, ll t, ll flow = INF) {
         vector<T> pot(g.size(), 0);
-        pot = spfa(s); // mudar algoritmo de caminho minimo aqui
-        // sem custo negativo nao precisa de nada
-        // se grafo for um DAG usar dp
+        pot = spfa(s); // change shortest path algorithm here
+        // no negative costs: nothing needed
+        // DAG: use DP instead
         ll f = 0;
         T ret = 0;
         while (f < flow and dijkstra(s, t, pot)) {
@@ -117,7 +115,7 @@ template<typename T> struct mcmf {
         return make_pair(f, ret);
     }
 
-    // Opcional: retorna as arestas originais por onde passa flow = cap
+    // Optional: returns original edges where flow == cap
     vector<p64> recover() {
         vector<p64> used;
         forn(i, 0, sz(g)) for (edge e : g[i])
