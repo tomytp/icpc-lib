@@ -6,19 +6,19 @@ typedef pair<ll, ll> p64;
 typedef vector<ll> v64;
 
 #define forn(i, s, e) for(ll i = (s); i < (e); i++)
-#define sz(x) ((ll) x.size())
+#define sz(u) ((ll) u.size())
 #define ln "\n"
 
 #ifdef DEBUG
-    #define trace(x) x
-    #define _ (void)0
-#else
-    #define trace(x) (void)0
-    #define _ ios_base::sync_with_stdio(false), cin.tie(NULL)
+#define trace(u) u
+#define _
+#else 
+#define trace(u)
+#define _ ios::sync_with_stdio(0), cin.tie(0);
 #endif
 
-#define debugv(v) trace({cout << #v": "; for (auto x : v) cout<< x << " "; cout << ln;})
-#define debug(x) trace(cout << __LINE__ << ": " #x " = " << x << ln)
+#define debug(u) trace(cout << #u " = " << u << ln)
+#define debugv(v) trace(cout << #v ": "; for (auto u : v) cout << u << " "; cout << ln)
 
 const ll INF = 0x3f3f3f3f3f3f3f3fll;
 
