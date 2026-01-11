@@ -18,7 +18,7 @@ typedef vector<ll> v64;
 #endif
 
 #define debug(u) trace(cout << #u " = " << u << ln)
-#define debugv(v) trace(cout << #v ": "; for (auto u : v) cout << u << " "; cout << ln)
+#define debugv(v) trace(cout << #v ": "; for (auto xx : v) cout << xx << " "; cout << ln)
 
 const ll INF = 0x3f3f3f3f3f3f3f3fll;
 
