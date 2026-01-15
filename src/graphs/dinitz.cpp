@@ -15,7 +15,7 @@ struct dinitz {
     };
 
     vector<vector<edge>> g;
-    vector<ll> lev, beg;
+    v64 lev, beg;
     ll F;
     dinitz(ll n) : g(n), F(0) {}
 
@@ -25,14 +25,14 @@ struct dinitz {
     }
 
     bool bfs(ll s, ll t) {
-        lev = vector<ll>(g.size(), -1); lev[s] = 0;
-        beg = vector<ll>(g.size(), 0);
+        lev = v64(g.size(), -1); lev[s] = 0;
+        beg = v64(g.size(), 0);
         queue<ll> q; q.push(s);
         while (q.size()) {
             ll u = q.front(); q.pop();
             for (auto& i : g[u]) {
-                if (lev[i.to] != -1 or (i.flow == i.cap)) continue;
-                if (scaling and i.cap - i.flow < lim) continue;
+                if (lev[i.to] != -1 || (i.flow == i.cap)) continue;
+                if (scaling && i.cap - i.flow < lim) continue;
                 lev[i.to] = lev[u] + 1;
                 q.push(i.to);
             }
@@ -41,7 +41,7 @@ struct dinitz {
     }
 
     ll dfs(ll v, ll s, ll f = INF) {
-        if (!f or v == s) return f;
+        if (!f || v == s) return f;
         for (ll& i = beg[v]; i < g[v].size(); i++) {
             auto& e = g[v][i];
             if (lev[e.to] != lev[v] + 1) continue;
