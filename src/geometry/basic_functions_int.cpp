@@ -56,6 +56,26 @@ bool compare_angle(pt p, pt q) { // returns true if angle(p) < angle(q)
     return ccw(q, pt(0, 0), p);
 }
 
+bool isinseg(pt p, line r) { // se p pertence ao seg de r
+	pt a = r.p - p, b = r.q - p;
+	return (a ^ b) == 0 and (a * b) <= 0;
+}
+
+bool interseg(line r, line s) { // se o seg de r intersecta o seg de s
+	if (isinseg(r.p, s) or isinseg(r.q, s)
+		or isinseg(s.p, r) or isinseg(s.q, r)) return 1;
+
+	return ccw(r.p, r.q, s.p) != ccw(r.p, r.q, s.q) and
+			ccw(s.p, s.q, r.p) != ccw(s.p, s.q, r.q);
+}
+
+ll polarea2(vector<pt> v) { // 2 * area do poligono
+	ll ret = 0;
+	for (int i = 0; i < v.size(); i++)
+		ret += sarea2(pt(0, 0), v[i], v[(i + 1) % v.size()]);
+	return abs(ret);
+}
+
 // comparator for set to perform sweep line with segments
 struct cmp_sweepline {
     bool operator () (const line& a, const line& b) const {
