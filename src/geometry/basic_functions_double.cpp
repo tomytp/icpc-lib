@@ -16,7 +16,7 @@ struct pt { // ponto
 		return 0;
 	}
 	bool operator == (const pt p) const {
-		return cmp(x, p.x) == 0 and cmp(y, p.y);
+		return cmp(x, p.x) == 0 and cmp(y, p.y) == 0;
 	}
 	pt operator + (const pt p) const { return pt(x+p.x, y+p.y); }
 	pt operator - (const pt p) const { return pt(x-p.x, y-p.y); }
@@ -66,7 +66,7 @@ bool col(pt p, pt q, pt r) { // se p, q e r sao colin.
 }
 
 bool ccw(pt p, pt q, pt r) { // se p, q, r sao ccw
-	return cmp(sarea(p, q, r),0) > 0;
+	return cmp(sarea(p, q, r),0) > 0; // talvez vc queira = !!!!!!!
 }
 
 ld polarea(vector<pt> v) { // area do poligono
@@ -84,11 +84,4 @@ pt inter(line r, line s) { // r inter s
 	if (cmp((r.p - r.q) ^ (s.p - s.q), 0) == 0) return pt(DINF, DINF);
 	r.q = r.q - r.p, s.p = s.p - r.p, s.q = s.q - r.p;
 	return r.q * get_t(r.q, s) + r.p;
-}
-
-ld polarea(vector<pt> v) { // area do poligono
-	ld ret = 0;
-	for (int i = 0; i < v.size(); i++)
-		ret += sarea(pt(0, 0), v[i], v[(i + 1) % v.size()]);
-	return abs(ret);
 }
