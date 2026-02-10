@@ -95,7 +95,13 @@ clean-all: clean clean-generated
 install-dependencies:
 	@echo "=== Installing dependencies ==="
 	sudo apt-get update
-	sudo apt-get install -y texlive-full python3-yaml
+	sudo apt-get install -y \
+		texlive-latex-base \
+		texlive-latex-recommended \
+		texlive-latex-extra \
+		texlive-fonts-recommended \
+		texlive-fonts-extra \
+		python3-yaml
 
 # ============================================================
 # Help
