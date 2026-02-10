@@ -72,7 +72,17 @@ Temporary Items
 .apdisk
 
 *~
-latex/biblioteca.tex
-latex/biblioteca.log
-latex/getlatex
 .venv/
+
+# LaTeX build artifacts
+latex/generated/
+latex/*.aux
+latex/*.log
+latex/*.out
+latex/*.toc
+latex/*.fdb_latexmk
+latex/*.fls
+latex/*.synctex.gz
+latex/icpclib.pdf
+latex/icpclib-finals.pdf
+latex/icpclib-finals.tex

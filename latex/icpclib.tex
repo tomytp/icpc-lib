@@ -1,0 +1,53 @@
+% ICPC Library - Main Document
+% Compact 3-column KACTL-style layout
+%
+% Build with: pdflatex -shell-escape icpclib.tex
+%
+
+\documentclass[9pt,a4paper,landscape]{extarticle}
+\usepackage{icpclibpkg}
+
+% Document metadata
+\title{Biblioteca PUC-Rio 2025}
+\author{Thomaz Miranda, Miguel Batista, Joao Arthur Marques}
+\date{\today}
+
+\begin{document}
+
+% Title page (single column)
+\begin{center}
+{\LARGE\textbf{Biblioteca PUC-Rio 2025}}\\[1ex]
+{\large Thomaz Miranda, Miguel Batista, Joao Arthur Marques}\\[0.5ex]
+{\small\today}
+\end{center}
+
+\vspace{2mm}
+
+% Compact table of contents
+\begingroup
+\footnotesize
+\setlength{\columnsep}{3mm}
+\begin{multicols}{4}
+\tableofcontents
+\end{multicols}
+\endgroup
+
+\vspace{2mm}
+\hrule
+\vspace{2mm}
+
+% Main content in 3 columns
+\begin{multicols*}{3}
+
+% Include all chapters
+\icpclibchapter{structures}
+\icpclibchapter{graphs}
+\icpclibchapter{math}
+\icpclibchapter{strings}
+\icpclibchapter{dp}
+\icpclibchapter{geometry}
+\icpclibchapter{extra}
+
+\end{multicols*}
+
+\end{document}

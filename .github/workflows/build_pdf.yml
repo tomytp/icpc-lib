@@ -13,23 +13,28 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          submodules: false
 
-      - name: Install LaTeX, rubber, and Pygments
+      - name: Install LaTeX and dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y texlive-full rubber python3-pygments
+          sudo apt-get install -y texlive-full python3-yaml
 
-      - name: Build PDF
-        working-directory: latex
-        env:
-          PYTHONPATH: ${{ github.workspace }}/latex/pygments
-        run: ./getlatex.sh
+      - name: Build full PDF
+        run: make full
 
-      - name: Upload PDF artifact
+      - name: Build finals PDF
+        run: make finals
+
+      - name: Upload full PDF artifact
         uses: actions/upload-artifact@v4
         with:
-          name: biblioteca-pdf
-          path: pdf/biblioteca.pdf
+          name: lib-pdf
+          path: pdf/lib.pdf
+          if-no-files-found: error
+
+      - name: Upload finals PDF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: lib-finals-pdf
+          path: pdf/lib_finals.pdf
           if-no-files-found: error
