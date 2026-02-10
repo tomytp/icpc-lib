@@ -7,7 +7,7 @@
 #   clean   - Remove generated files
 #
 
-.PHONY: all full finals fast clean clean-generated clean-aux help
+.PHONY: all full finals fast clean clean-generated clean-aux help install-dependencies
 
 # Directories
 LATEX_DIR := latex
@@ -87,7 +87,15 @@ clean-generated:
 	rm -rf $(LATEX_DIR)/generated
 
 clean-all: clean clean-generated
-	rm -f $(PDF_DIR)/biblioteca.pdf $(PDF_DIR)/biblioteca-finals.pdf
+	rm -f $(PDF_DIR)/lib.pdf $(PDF_DIR)/lib_finals.pdf
+
+# ============================================================
+# Install dependencies
+# ============================================================
+install-dependencies:
+	@echo "=== Installing dependencies ==="
+	sudo apt-get update
+	sudo apt-get install -y texlive-full python3-yaml
 
 # ============================================================
 # Help
@@ -96,12 +104,13 @@ help:
 	@echo "ICPC Library Build System"
 	@echo ""
 	@echo "Targets:"
-	@echo "  make full       Build complete PDF (default)"
-	@echo "  make finals     Build 25-page finals subset"
-	@echo "  make fast       Quick single-pass build"
-	@echo "  make clean      Remove LaTeX build artifacts"
-	@echo "  make clean-all  Remove all generated files"
+	@echo "  make full                 Build complete PDF (default)"
+	@echo "  make finals               Build 25-page finals subset"
+	@echo "  make fast                 Quick single-pass build"
+	@echo "  make clean                Remove LaTeX build artifacts"
+	@echo "  make clean-all            Remove all generated files"
+	@echo "  make install-dependencies Install required packages"
 	@echo ""
 	@echo "Output:"
-	@echo "  pdf/biblioteca.pdf        Full library"
-	@echo "  pdf/biblioteca-finals.pdf Finals subset"
+	@echo "  pdf/lib.pdf               Full library"
+	@echo "  pdf/lib_finals.pdf        Finals subset"

@@ -13,10 +13,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install LaTeX and dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y texlive-full python3-yaml
+      - name: Install dependencies
+        run: make install-dependencies
 
       - name: Build full PDF
         run: make full
