@@ -1,0 +1,66 @@
+# Finals Configuration - 25-page limit subset
+#
+# This file specifies which files to include in the finals PDF.
+# Edit this file to customize the content for your team's needs.
+#
+
+title: "Biblioteca PUC-Rio - Finals 2025"
+
+team:
+  name: "PUC-Rio"
+  members:
+    - "Thomaz Miranda"
+    - "Miguel Batista"
+    - "Joao Arthur Marques"
+
+# Chapters and files to include
+# Order within chapters is preserved
+chapters:
+  structures:
+    - fenwick_tree.cpp
+    - segtree.cpp
+    - segtree_lazy.cpp
+    - sparse_table.cpp
+    - dsu.cpp
+    - treap.cpp
+    - ordered_set.cpp
+    - cht.cpp
+
+  graphs:
+    - dijkstra.cpp
+    - dinitz.cpp
+    - min_cost_max_flow.cpp
+    - finding_bridges.cpp
+    - scc.cpp
+    - 2sat.cpp
+    - topo_sort.cpp
+    - lca_binary_lifting.cpp
+    - hld.cpp
+    - centroid_decomp.cpp
+
+  math:
+    - mint.cpp
+    - mod_functions.cpp
+    - sieve.cpp
+    - fft.cpp
+    - matrix.cpp
+    - gauss.cpp
+
+  strings:
+    - kmp.cpp
+    - aho-corasick.cpp
+    - suffarray.cpp
+
+  dp:
+    - dnc_dp.cpp
+    - sos_dp.cpp
+
+  geometry:
+    - basic_functions_int.cpp
+    - basic_functions_double.cpp
+    - convex_hull.cpp
+    - halfplane.cpp
+
+  extra:
+    - template.cpp
+    - pragmas.cpp

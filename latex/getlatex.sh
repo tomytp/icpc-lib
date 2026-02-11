@@ -1,10 +1,26 @@
 #!/bin/bash
+#
+# ICPC Library PDF Builder
+#
+# Usage: ./getlatex.sh [MODE]
+#
+# Modes:
+#   full    - Build complete PDF (default)
+#   finals  - Build finals PDF (25-page subset)
+#   fast    - Quick single-pass build
+#
 
 set -euo pipefail
 
-python3 getlatex.py "${1:-}" > biblioteca.tex
+MODE="${1:-full}"
 
-rubber --unsafe -d biblioteca
-mv biblioteca.pdf ../pdf
-rm -f biblioteca.aux biblioteca.toc biblioteca.out biblioteca.log biblioteca.rubbercache
-rm -rf _minted-biblioteca
+case "$MODE" in
+    full|finals|fast)
+        make -C .. "$MODE"
+        ;;
+    *)
+        echo "Unknown mode: $MODE"
+        echo "Valid modes: full, finals, fast"
+        exit 1
+        ;;
+esac

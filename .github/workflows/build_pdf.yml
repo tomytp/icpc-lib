@@ -5,31 +5,19 @@ on:
     branches: ["**"]
   pull_request:
     branches: ["**"]
-  workflow_dispatch:
 
 jobs:
-  build-pdf:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          submodules: false
 
-      - name: Install LaTeX, rubber, and Pygments
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y texlive-full rubber python3-pygments
+      - name: Install dependencies
+        run: make install-dependencies
 
-      - name: Build PDF
-        working-directory: latex
-        env:
-          PYTHONPATH: ${{ github.workspace }}/latex/pygments
-        run: ./getlatex.sh
+      - name: Build full PDF
+        run: make full
 
-      - name: Upload PDF artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: biblioteca-pdf
-          path: pdf/biblioteca.pdf
-          if-no-files-found: error
+      - name: Build finals PDF
+        run: make finals
