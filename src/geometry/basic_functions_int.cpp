@@ -69,10 +69,10 @@ bool interseg(line r, line s) { // se o seg de r intersecta o seg de s
 			ccw(s.p, s.q, r.p) != ccw(s.p, s.q, r.q);
 }
 
-ll polarea2(vector<pt> v) { // 2 * area do poligono
+ll polarea(vector<pt> v) { // area do poligono
 	ll ret = 0;
-	for (int i = 0; i < v.size(); i++)
-		ret += sarea2(pt(0, 0), v[i], v[(i + 1) % v.size()]);
+	forn(i, 0, sz(v))
+		ret += sarea2(pt(0, 0), v[i], v[(i + 1) % sz(v)]);
 	return abs(ret);
 }
 

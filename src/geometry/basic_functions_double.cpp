@@ -71,8 +71,8 @@ bool ccw(pt p, pt q, pt r) { // se p, q, r sao ccw
 
 ld polarea(vector<pt> v) { // area do poligono
 	ld ret = 0;
-	for (int i = 0; i < v.size(); i++)
-		ret += sarea(pt(0, 0), v[i], v[(i + 1) % v.size()]);
+	forn(i, 0, sz(v))
+		ret += sarea(pt(0, 0), v[i], v[(i + 1) % sz(v)]);
 	return abs(ret);
 }
 
