@@ -10,7 +10,7 @@ struct pt { // point
         return y < p.y;
     }
     bool operator == (const pt p) const {
-        return x == p.x and y == p.y;
+        return x == p.x && y == p.y;
     }
     pt operator + (const pt p) const { return pt(x+p.x, y+p.y); }
     pt operator - (const pt p) const { return pt(x-p.x, y-p.y); }
@@ -32,7 +32,7 @@ struct line { // line segment
         return q < l.q;
     }
     bool operator == (const line l) const {
-        return p == l.p and q == l.q;
+        return p == l.p && q == l.q;
     }
     friend istream& operator >> (istream& in, line& r) {
         return in >> r.p >> r.q;
@@ -58,14 +58,14 @@ bool compare_angle(pt p, pt q) { // returns true if angle(p) < angle(q)
 
 bool isinseg(pt p, line r) { // se p pertence ao seg de r
 	pt a = r.p - p, b = r.q - p;
-	return (a ^ b) == 0 and (a * b) <= 0;
+	return (a ^ b) == 0 && (a * b) <= 0;
 }
 
 bool interseg(line r, line s) { // se o seg de r intersecta o seg de s
 	if (isinseg(r.p, s) or isinseg(r.q, s)
 		or isinseg(s.p, r) or isinseg(s.q, r)) return 1;
 
-	return ccw(r.p, r.q, s.p) != ccw(r.p, r.q, s.q) and
+	return ccw(r.p, r.q, s.p) != ccw(r.p, r.q, s.q) &&
 			ccw(s.p, s.q, r.p) != ccw(s.p, s.q, r.q);
 }
 
@@ -81,7 +81,7 @@ struct cmp_sweepline {
     bool operator () (const line& a, const line& b) const {
         // assumes segments have p < q
         if (a.p == b.p) return ccw(a.p, a.q, b.q);
-        if (a.p.x != a.q.x and (b.p.x == b.q.x or a.p.x < b.p.x))
+        if (a.p.x != a.q.x && (b.p.x == b.q.x or a.p.x < b.p.x))
             return ccw(a.p, a.q, b.p);
         return ccw(a.p, b.q, b.p);
     }

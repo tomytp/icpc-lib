@@ -16,7 +16,7 @@ struct pt { // ponto
 		return 0;
 	}
 	bool operator == (const pt p) const {
-		return cmp(x, p.x) == 0 and cmp(y, p.y) == 0;
+		return cmp(x, p.x) == 0 && cmp(y, p.y) == 0;
 	}
 	pt operator + (const pt p) const { return pt(x+p.x, y+p.y); }
 	pt operator - (const pt p) const { return pt(x-p.x, y-p.y); }

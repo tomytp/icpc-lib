@@ -10,11 +10,11 @@
 template<typename T>
 pair<ll, vector<T>> gauss(vector<vector<T>> a, vector<T> b) {
     const double eps = 1e-6;
-    ll n = a.size(), m = a[0].size();
+    ll n = sz(a), m = sz(a[0]);
     forn(i, 0, n) a[i].push_back(b[i]);
 
     v64 where(m, -1);
-    for (ll col = 0, row = 0; col < m and row < n; col++) {
+    for (ll col = 0, row = 0; col < m && row < n; col++) {
         ll sel = row;
         forn(i, row, n)
             if(abs(a[i][col]) > abs(a[sel][col])) sel = i;
