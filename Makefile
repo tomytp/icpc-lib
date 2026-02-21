@@ -77,17 +77,16 @@ clean-aux:
 	@rm -f $(LATEX_DIR)/*.toc $(LATEX_DIR)/*.fdb_latexmk $(LATEX_DIR)/*.fls
 	@rm -f $(LATEX_DIR)/*.synctex.gz
 
-clean: clean-aux
-	@echo "=== Cleaning build artifacts ==="
-	rm -f $(LATEX_DIR)/icpclib.pdf $(LATEX_DIR)/icpclib-finals.pdf
-	rm -f $(LATEX_DIR)/icpclib-finals.tex
-
 clean-generated:
-	@echo "=== Cleaning generated .tex files ==="
-	rm -rf $(LATEX_DIR)/generated
+	@echo "=== Cleaning generated .tex files and chapters ==="
+	@rm -rf $(LATEX_DIR)/generated
+	@rm -f $(LATEX_DIR)/chapters/*.tex
 
-clean-all: clean clean-generated
-	rm -f $(PDF_DIR)/lib.pdf $(PDF_DIR)/lib_finals.pdf
+clean: clean-aux clean-generated
+	@echo "=== Cleaning build artifacts ==="
+	@rm -f $(LATEX_DIR)/icpclib.pdf $(LATEX_DIR)/icpclib-finals.pdf
+	@rm -f $(LATEX_DIR)/icpclib-finals.tex
+	@rm -f $(PDF_DIR)/lib.pdf $(PDF_DIR)/lib_finals.pdf
 
 # ============================================================
 # Install dependencies

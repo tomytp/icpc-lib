@@ -92,33 +92,53 @@ def split_flags(s: str) -> list:
     return parts
 
 
+def get_comment_prefix(path: Path) -> str:
+    """Determine comment prefix based on file extension."""
+    suffix = path.suffix.lower()
+    if suffix in {'.cpp', '.c', '.h', '.hpp'}:
+        return '//'
+    elif suffix in {'.sh', '.py'} or path.name in {'makefile', 'Makefile'}:
+        return '#'
+    return '//'  # Default to C++ style
+
+
 def parse_header(path: Path) -> dict:
     """
     Parse the file header to extract metadata.
 
-    Expected format:
+    Expected format (for C++):
         // Name [flags]
         //
         // Description line(s)
         //
         // complexity: O(...) time, O(...) memory
 
+    Expected format (for shell/makefile):
+        # Name [flags]
+        #
+        # Description line(s)
+        #
+        # complexity: O(...) time, O(...) memory
+
     Returns dict with: name, flags, description, complexity
     """
     result = {
-        'name': path.stem,
+        'name': path.stem if path.stem else path.name,
         'flags': set(),
         'description': '',
         'complexity': ''
     }
 
+    comment_prefix = get_comment_prefix(path)
     lines = []
     with path.open('r', encoding='utf-8') as f:
         for line in f:
             stripped = line.strip()
-            if not stripped.startswith('//'):
+            if not stripped.startswith(comment_prefix):
                 break
-            lines.append(stripped[2:].strip() if len(stripped) > 2 else '')
+            # Extract comment content
+            content = stripped[len(comment_prefix):].strip() if len(stripped) > len(comment_prefix) else ''
+            lines.append(content)
 
     if not lines:
         return result
@@ -131,7 +151,9 @@ def parse_header(path: Path) -> dict:
         flags_str = first[idx+1:-1]
         result['flags'] = set(split_flags(flags_str))
     else:
-        result['name'] = first.strip()
+        name = first.strip()
+        if name:  # Only override if we found a non-empty name
+            result['name'] = name
 
     # Parse remaining lines for description and complexity
     desc_lines = []
@@ -191,14 +213,15 @@ def hash_region(lines: list, l: int = 0, r: int = 10**9) -> str:
     return compute_hash(region)
 
 
-def is_comment_line(line: str) -> bool:
+def is_comment_line(line: str, comment_prefix: str = '//') -> bool:
     """Check if line is a comment or blank."""
     t = line.strip()
     if not t:
         return True
-    if t.startswith('//'):
+    if t.startswith(comment_prefix):
         return True
-    if t.startswith('/*'):
+    # Also check for C-style block comments for C++ files
+    if comment_prefix == '//' and t.startswith('/*'):
         return True
     return False
 
@@ -207,13 +230,14 @@ def get_code_lines(path: Path) -> list:
     """Extract code lines (skipping header comments)."""
     lines = []
     in_header = True
+    comment_prefix = get_comment_prefix(path)
 
     with path.open('r', encoding='utf-8') as f:
         for line in f:
             stripped = line.rstrip('\n')
             if in_header:
                 # Skip initial comment block
-                if stripped.strip().startswith('//') or not stripped.strip():
+                if stripped.strip().startswith(comment_prefix) or not stripped.strip():
                     continue
                 in_header = False
             lines.append(stripped)
@@ -245,6 +269,12 @@ def generate_listing(path: Path, custom_title: str = None,
     if NO_HASH in header['flags']:
         show_hash = False
 
+    # Disable hashing for non-C++ files (they don't compile with C preprocessor)
+    is_cpp = path.suffix.lower() in {'.cpp', '.c', '.h', '.hpp'}
+    if not is_cpp:
+        show_hash = False
+
+    comment_prefix = get_comment_prefix(path)
     output = []
 
     # Title
@@ -253,7 +283,12 @@ def generate_listing(path: Path, custom_title: str = None,
 
     # File hash for integrity
     code_lines = get_code_lines(path)
-    file_hash = compute_hash('\n'.join(code_lines))
+    if is_cpp:
+        file_hash = compute_hash('\n'.join(code_lines))
+    else:
+        # Simple hash for non-C++ files (no preprocessing)
+        compact = re.sub(r"\s+", "", '\n'.join(code_lines))
+        file_hash = hashlib.md5(compact.encode('utf-8')).hexdigest()[:HASH_LEN]
 
     output.append(f"\\codesection{{{title}}}{{{file_hash}}}")
 
@@ -270,7 +305,7 @@ def generate_listing(path: Path, custom_title: str = None,
     # Code listing
     output.append("\\begin{lstlisting}")
 
-    # Track brace depth for hash computation
+    # Track brace depth for hash computation (only for C++ files)
     depth = 0
     st = []  # Stack of line indices where braces opened
     started_code = False
@@ -278,18 +313,19 @@ def generate_listing(path: Path, custom_title: str = None,
     for line_idx, raw in enumerate(code_lines):
         start_line = line_idx
 
-        # Track braces
-        for c in raw:
-            if c == '{':
-                depth += 1
-                st.append(line_idx)
-            elif c == '}':
-                depth -= 1
-                if st:
-                    start_line = st[-1]
-                    st.pop()
+        # Track braces (only for C++ files)
+        if is_cpp:
+            for c in raw:
+                if c == '{':
+                    depth += 1
+                    st.append(line_idx)
+                elif c == '}':
+                    depth -= 1
+                    if st:
+                        start_line = st[-1]
+                        st.pop()
 
-        comment = is_comment_line(raw)
+        comment = is_comment_line(raw, comment_prefix)
         if not comment:
             started_code = True
 
@@ -303,11 +339,11 @@ def generate_listing(path: Path, custom_title: str = None,
             else:
                 h = hash_region(code_lines, start_line, line_idx)
                 prefix = f"@\\hashprefix{{{h} }}@"
-                # Apply custom type markup
+                # Apply custom type markup (only for C++)
                 marked = inject_custom_type_markup(raw)
                 output.append(f"{prefix}{marked}")
         else:
-            if not comment:
+            if not comment and is_cpp:
                 marked = inject_custom_type_markup(raw)
                 output.append(marked)
             else:
