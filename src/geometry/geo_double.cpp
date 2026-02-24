@@ -4,7 +4,7 @@ const ld pi = 2*acos(0);
 
 #define sq(x) ((x)*(x))
 
-int cmp(ld x, ld y = 0, ld tol = eps) {
+ll cmp(ld x, ld y = 0, ld tol = eps) {
 	return (x <= y + tol) ? (x + tol < y) ? -1 : 0 : 1;
 }
 
