@@ -4,7 +4,7 @@ const ld pi = 2*acos(0);
 
 #define sq(x) ((x)*(x))
 
-int cmp(double x, double y = 0, double tol = eps) {
+int cmp(ld x, ld y = 0, ld tol = eps) {
 	return (x <= y + tol) ? (x + tol < y) ? -1 : 0 : 1;
 }
 
@@ -39,18 +39,11 @@ struct line { // reta
 	}
 };
 
+ld norm_sq(pt p){ return p*p;}
 
-ld dist(pt p, pt q) { // distancia
-	return hypot(p.y - q.y, p.x - q.x);
-}
+ld dist_sq(pt p, pt q){ return norm_sq(p - q);}
 
-ld dist2(pt p, pt q) { // quadrado da distancia
-	return sq(p.x - q.x) + sq(p.y - q.y);
-}
-
-ld norm(pt v) { // norma do vetor
-	return dist(pt(0, 0), v);
-}
+ld dist(pt p,pt q){ return sqrt(dist_sq(p, q));}
 
 ld angle(pt v) { // angulo do vetor com o eixo x
 	ld ang = atan2(v.y, v.x);

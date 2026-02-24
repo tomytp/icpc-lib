@@ -43,6 +43,10 @@ ll sarea2(pt p, pt q, pt r) { // 2 * signed area
     return (q-p)^(r-q);
 }
 
+ll norm_sq(pt p){ return p*p;}
+
+ll dist_sq(pt p, pt q){ return norm_sq(p - q);}
+
 bool ccw(pt p, pt q, pt r) { // true if p, q, r are 
     return sarea2(p, q, r) > 0;
 }
