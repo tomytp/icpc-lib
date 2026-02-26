@@ -2,21 +2,16 @@
 //
 // Tree for range queries with a customizable combine; supports range updates and range queries.
 //
-// complexity: O(log N) per op, O(N)
+// complexity: O(log N) per op, O(N) to build
 
 struct Node {
-    ll sum;
-    ll cnt;
-    Node() : sum(0), cnt(0) {}
-    Node(ll s, ll c = 1) : sum(s), cnt(c) {}
+    ll sum, cnt;
     Node operator*(const Node &o) const { return {sum + o.sum, cnt + o.cnt}; }
 };
 
 struct Update {
     ll add = 0;
     optional<ll> set;
-    Update() = default;
-    Update(ll a, optional<ll> s) : add(a), set(s) {}
 
     Node operator()(const Node &n) const {
         ll res = set.has_value() ? *set * n.cnt : n.sum;
@@ -37,50 +32,50 @@ struct Update {
     }
 };
 
-template<typename T, typename U> struct seg_tree_lazy {
-  ll S, H;
+template<typename T, typename U> struct segtree {
+  ll s, h;
 
-  T identity;
-  vector<T> value;
+  T id;
+  vector<T> val;
 
   U noop;
   vector<bool> dirty;
   vector<U> prop;
 
-  seg_tree_lazy<T, U>(ll _S, T _identity = T(), U _noop = U()) {
-    identity = _identity, noop = _noop;
-    for (S = 1, H = 1; S < _S; ) S *= 2, H++;
+  explicit segtree(ll ts, T tid = T(), U tnoop = U()) {
+    id = tid, noop = tnoop;
+    for (s = 1, h = 1; s < ts; ) s *= 2, h++;
 
-    value.assign(2*S, identity);
-    dirty.assign(2*S, false);
-    prop.assign(2*S, noop);
+    val.assign(2*s, id);
+    dirty.assign(2*s, false);
+    prop.assign(2*s, noop);
   }
 
-  void set_leaves(vector<T> &leaves) {
-    copy(leaves.begin(), leaves.end(), value.begin() + S);
+  void set_leaves(vector<T> &lvs) {
+    copy(lvs.begin(), lvs.end(), val.begin() + s);
 
-    for (ll i = S - 1; i > 0; i--)
-      value[i] = value[2 * i] * value[2 * i + 1];
-    dirty.assign(2*S, false);
-    prop.assign(2*S, noop);
+    for (ll i = s - 1; i > 0; i--) val[i] = val[2 * i] * val[2 * i + 1];
+    dirty.assign(2*s, false);
+    prop.assign(2*s, noop);
   }
 
-  void apply(ll i, U &update) {
-    value[i] = update(value[i]);
-    if(i < S) {
-      prop[i] = prop[i] + update;
+  void apply(ll i, U &upd) {
+    val[i] = upd(val[i]);
+    if(i < s) {
+      prop[i] = prop[i] + upd;
       dirty[i] = true;
     }
   }
 
-  void rebuild(ll i) {
+  void pull(ll i) {
     for (ll l = i/2; l; l /= 2) {
-      T combined = value[2*l] * value[2*l+1];
-      value[l] = prop[l](combined);
+      T comb = val[2*l] * val[2*l+1];
+      val[l] = prop[l](comb);
     }
   }
-  void propagate(ll i) {
-    for (ll h = H; h > 0; h--) {
+
+  void push(ll i) {
+    for (ll h = h; h > 0; h--) {
       ll l = i >> h;
 
       if (dirty[l]) {
@@ -93,27 +88,27 @@ template<typename T, typename U> struct seg_tree_lazy {
     }
   }
 
-  void upd(ll i, ll j, U update) {
-    i += S, j += S;
-    propagate(i), propagate(j);
+  void update(ll i, ll j, U upd) {
+    i += s, j += s;
+    push(i), push(j);
 
     for (ll l = i, r = j; l <= r; l /= 2, r /= 2) {
-      if((l&1) == 1) apply(l++, update);
-      if((r&1) == 0) apply(r--, update);
+      if((l&1) == 1) apply(l++, upd);
+      if((r&1) == 0) apply(r--, upd);
     }
 
-    rebuild(i), rebuild(j);
+    pull(i), pull(j);
   }
 
   T query(ll i, ll j){
-    i += S, j += S;
-    propagate(i), propagate(j);
+    i += s, j += s;
+    push(i), push(j);
 
-    T res_left = identity, res_right = identity;
+    T rl = id, rr = id;
     for(; i <= j; i /= 2, j /= 2){
-      if((i&1) == 1) res_left = res_left * value[i++];
-      if((j&1) == 0) res_right = value[j--] * res_right;
+      if((i&1) == 1) rl = rl * val[i++];
+      if((j&1) == 0) rr = val[j--] * rr;
     }
-    return res_left * res_right;
+    return rl * rr;
   }
 };
