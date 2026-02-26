@@ -6,33 +6,34 @@
 //
 // complexity: O(log N) per find/unite, O(1) per checkpoint/rollback
 
-struct dsu {
-	vector<ll> id, len;
-	stack<stack<pair<ll&, ll>>> st;
+struct dsu_rb {
+    v64 id, len;
+    ll allbip = true;
+    stack<pair<ll&, ll>> st;
 
-	dsu(int n) : id(n), len(n, 1) { 
-		iota(id.begin(), id.end(), 0), st.emplace(); 
-	}
-		
-	void save(ll &x) { st.top().emplace(x, x); }
-
-	void checkpoint() { st.emplace(); }
-	
-	void rollback() {
-		while(st.top().size()) {
-			auto [end, val] = st.top().top(); st.top().pop();
-			end = val;
-		}
-		st.pop();
-	}
-
-	int find(int a) { return a == id[a] ? a : find(id[a]); }
-
-	void unite(int a, int b) {
-		a = find(a), b = find(b);
-		if (a == b) return;
-		if (len[a] < len[b]) swap(a, b);
-		save(len[a]), save(id[b]);
-		len[a] += len[b], id[b] = a;
-	}
+    dsu_rb(ll n) : id(n), len(n, 1) { 
+        iota(id.begin(), id.end(), 0); 
+    }
+    
+	void save(ll &x) {  st.emplace(x, x);}
+    
+	ll time() { return sz(st); }
+    void rollback(ll t) {
+        while(sz(st) > t) {
+            auto [end, val] = st.top(); st.pop();
+            end = val;
+        }
+    }
+    
+	ll find(ll a) { return a == id[a] ? a : find(id[a]); }
+    
+	bool unite(ll a, ll b) {
+        a = find(a), b = find(b);
+        if (a == b) return false;        
+        if (len[a] < len[b]) swap(a, b);
+		save(len[a]);
+        save(id[b]);
+        len[a] += len[b], id[b] = a;
+		return true;
+    }
 };
