@@ -13,23 +13,25 @@
 //
 // O(k * T), T tempo do lca::lca
 
+#include "src/graphs/lca.cpp"
+
+const ll MAX = 100'005;
 vector<pair<ll, ll>> virt[MAX];
 
-#warning lembrar de buildar o LCA antes
-ll build_virt(vector<ll> v) {
-    auto cmp = [&](ll i, ll j) { return lca::pos[i] < lca::pos[j]; };
-    sort(v.begin(), v.end(), cmp);
-    for (ll i = sz(v)-1; i; i--) v.push_back(lca::lca(v[i], v[i-1]));
-    sort(v.begin(), v.end(), cmp);
+ll build_virt(vector<ll> v, LCA& lca) {
+	auto cmp = [&](ll i, ll j) { return lca.time[i] < lca.time[j]; };
+	sort(v.begin(), v.end(), cmp);
+	for (ll i = v.size()-1; i; i--) v.push_back(lca.lca(v[i], v[i-1]));
+	sort(v.begin(), v.end(), cmp);
     v.erase(unique(v.begin(), v.end()), v.end());
-    forn(i,0,sz(v)) virt[v[i]].clear();
-    forn(i,1,sz(v)) virt[lca::lca(v[i-1], v[i])].clear();
-    forn(i,1,sz(v)) {
-        ll parent = lca::lca(v[i-1], v[i]);
-        ll d = lca::dist(parent, v[i]);
-#warning soh to colocando aresta descendo
-        virt[parent].emplace_back(v[i], d);
-    }
+    forn(i,0,v.size()) virt[v[i]].clear();
+	forn(i,1,v.size()) virt[lca.lca(v[i-1], v[i])].clear();
+    forn(i,1,v.size()) {
+		ll parent = lca.lca(v[i-1], v[i]);
+		ll d = lca.dist(parent, v[i]);
+// #warning soh to colocando aresta descendo
+		virt[parent].emplace_back(v[i], d);
+	}
 
-    return v[0];
+	return v[0];
 }

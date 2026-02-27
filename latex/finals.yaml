@@ -29,7 +29,7 @@ chapters:
     - dijkstra.cpp
     - dinitz.cpp
     - min_cost_max_flow.cpp
-    - finding_bridges.cpp
+    - articulation_points.cpp
     - scc.cpp
     - 2sat.cpp
     - topo_sort.cpp
