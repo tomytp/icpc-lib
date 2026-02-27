@@ -7,6 +7,8 @@
 //
 // complexity: O(M log N), O(N+M) me
 
+#include "src/structures/dsu_rb.cpp"
+
 struct Edge {ll a, b, w; };
 struct Node {
 	Edge key;
