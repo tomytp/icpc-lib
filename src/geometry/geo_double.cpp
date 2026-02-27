@@ -1,3 +1,5 @@
+typedef long double ld;
+
 const ld DINF = 1e18;
 const ld eps = 1e-9;
 const ld pi = 2*acos(0);

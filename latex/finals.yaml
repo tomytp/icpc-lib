@@ -56,8 +56,8 @@ chapters:
     - sos_dp.cpp
 
   geometry:
-    - basic_functions_int.cpp
-    - basic_functions_double.cpp
+    - geo_int.cpp
+    - geo_double.cpp
     - convex_hull.cpp
     - halfplane.cpp
 
