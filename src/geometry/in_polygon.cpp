@@ -1,3 +1,4 @@
+// Point Inside Polygon
 // responde se um ponto está dentro do poligono com ray casting
 // se strict = true ele nao considera pontos na borda como interior
 // O(n)

@@ -1,3 +1,4 @@
+// Minimum Enclosing Circle
 // calcula o minimum enclosing circle, probalistico mas e O(n)
 // so se o pt for de double!!
 // talvez usar r*(1+eps);

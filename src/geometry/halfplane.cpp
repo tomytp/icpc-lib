@@ -1,8 +1,10 @@
-mt19937_64 rng((ll) chrono::steady_clock::now().time_since_epoch().count());
-
+// Halfplane Intersection
+// Acha o ponto mais extremo na direção dada
 // só entra retas nao verticais, processar as retas verticais antes e encodar essa info no minx e maxx
 // se quiser o ponto mais acima, fazer best_dir = (0,1)
 // dependendo do best_dir, best = (+-INF, +-INF)
+
+mt19937_64 rng((ll) chrono::steady_clock::now().time_since_epoch().count());
 
 pt hpi_1d(vector<line> v, pt best_dir, ll n, line suport, ll minx, ll maxx){
 	pt low = inter(line(pt(minx, 0), pt(minx,1)), suport), upp = inter(line(pt(maxx, 0), pt(maxx,1)), suport);
