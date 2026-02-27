@@ -48,7 +48,7 @@ chapters:
 
   strings:
     - kmp.cpp
-    - aho-corasick.cpp
+    - aho_corasick.cpp
     - suffarray.cpp
 
   dp:
