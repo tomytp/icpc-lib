@@ -11,21 +11,22 @@
 template <bool VALS_EDGES> struct HLD {
     ll N, tim = 0;
     vector<v64> adj;
-    v64 parent, sz, head, pos;
-    vector<node> vseg;
-    std::unique_ptr<tree> seg;
+    v64 parent, siz, head, pos;
+    vector<Node> vseg;
+    std::unique_ptr<segtree<Node, Update>> seg;
     HLD(vector<v64> adj_, v64 vals)
-        : N(sz(adj_)), adj(adj_), parent(N, -1), sz(N, 1),
+        : N(sz(adj_)), adj(adj_), parent(N, -1), siz(N, 1),
           head(N),pos(N),vseg(N, {0}){ dfsSz(0); dfsHld(0);
-            seg = make_unique<tree>(0, N-1, vseg);
+            seg = make_unique<segtree<Node, Update>>(N);
+            seg->set_leaves(vseg);
         }
     void dfsSz(ll v) { // get heavy son
         for (ll& u : adj[v]) {
             adj[u].erase(find(adj[u].begin(), adj[u].end(), v));
             parent[u] = v;
             dfsSz(u);
-            sz[v] += sz[u];
-            if (sz[u] > sz[adj[v][0]]) swap(u, adj[v][0]);
+            siz[v] += siz[u];
+            if (siz[u] > siz[adj[v][0]]) swap(u, adj[v][0]);
         }
     }
     void dfsHld(ll v) { // "linearizes" the tree
@@ -46,7 +47,7 @@ template <bool VALS_EDGES> struct HLD {
     }
     void modifyPath(ll u, ll v, ll val) { 
         process(u, v, [&](ll l, ll r) { 
-            seg->range_update(l, r, {0, val}); // Modify depending on problem 
+            seg->update(l, r, {val}); // Modify depending on problem 
         });
     }
     ll queryPath(ll u, ll v) { // Modify depending on problem
@@ -57,6 +58,6 @@ template <bool VALS_EDGES> struct HLD {
         return res;
     }
     ll querySubtree(ll v) { // modifySubtree is similar
-        return seg->query(pos[v] + VALS_EDGES, pos[v] + sz[v] - 1).val;
+        return seg->query(pos[v] + VALS_EDGES, pos[v] + siz[v] - 1).val;
     }
 };
