@@ -108,13 +108,9 @@ def generate_finals_tex(config: dict) -> str:
     lines.append(r"\begin{document}")
     lines.append(r"")
 
-    # Title
-    lines.append(r"% Title")
-    lines.append(r"\begin{center}")
-    lines.append(f"{{\\LARGE\\textbf{{{title}}}}}\\\\[1ex]")
-    lines.append(f"{{\\large {author}}}\\\\[0.5ex]")
-    lines.append(r"{\small\today}")
-    lines.append(r"\end{center}")
+    # Cover page
+    lines.append(r"% Cover page")
+    lines.append(r"\makecover")
     lines.append(r"")
     lines.append(r"\vspace{2mm}")
     lines.append(r"")

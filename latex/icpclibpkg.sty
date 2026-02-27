@@ -26,6 +26,7 @@
 \usepackage{xcolor}
 
 % Links and PDF metadata
+\usepackage{graphicx}
 \usepackage[pdfusetitle,hidelinks]{hyperref}
 
 % ============================================================
@@ -180,6 +181,20 @@
 \setlength{\cftsecnumwidth}{2em}
 \setlength{\cftsubsecnumwidth}{2.5em}
 \setlength{\cftsubsecindent}{2em}
+
+% Cover page - uses \title, \author, \date metadata
+\newcommand{\makecover}{%
+    \thispagestyle{empty}%
+    \vspace*{\fill}%
+    \begin{center}%
+        \includegraphics[height=15cm]{puc_logo.png}\\[5ex]%
+        {\Huge\textbf{\@title}}\\[3ex]%
+        {\LARGE\@author}\\[3ex]%
+        {\LARGE\@date}%
+    \end{center}%
+    \vspace*{\fill}%
+    \newpage%
+}
 
 % Compact TOC
 \newcommand{\compacttoc}{%
