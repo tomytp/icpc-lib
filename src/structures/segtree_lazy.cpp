@@ -75,8 +75,8 @@ template<typename T, typename U> struct segtree {
   }
 
   void push(ll i) {
-    for (ll h = h; h > 0; h--) {
-      ll l = i >> h;
+    for (ll th = h; th > 0; th--) {
+      ll l = i >> th;
 
       if (dirty[l]) {
         apply(2*l, prop[l]);
