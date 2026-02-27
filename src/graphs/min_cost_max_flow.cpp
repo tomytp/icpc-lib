@@ -48,11 +48,11 @@ template<typename T> struct mcmf {
 
             forn(i,0,sz(g[v])){
                 auto [to, rev, flow, cap, res, cost] = g[v][i];
-                if (flow < cap and dist[v] + cost < dist[to]) {
+                if (flow < cap && dist[v] + cost < dist[to]) {
                     dist[to] = dist[v] + cost;
 
                     if (is_inside[to]) continue;
-                    if (!q.empty() and dist[to] > dist[q.front()]) q.push_back(to);
+                    if (!q.empty() && dist[to] > dist[q.front()]) q.push_back(to);
                     else q.push_front(to);
                     is_inside[to] = true;
                 }
@@ -72,7 +72,7 @@ template<typename T> struct mcmf {
             forn(i,0,sz(g[v])) {
                 auto [to, rev, flow, cap, res, cost] = g[v][i];
                 cost += pot[v] - pot[to];
-                if (flow < cap and dist[v] + cost < dist[to]) {
+                if (flow < cap && dist[v] + cost < dist[to]) {
                     dist[to] = dist[v] + cost;
                     q.emplace(dist[to], to);
                     par_idx[to] = i, par[to] = v;
@@ -89,7 +89,7 @@ template<typename T> struct mcmf {
         // DAG: use DP instead
         ll f = 0;
         T ret = 0;
-        while (f < flow and dijkstra(s, t, pot)) {
+        while (f < flow && dijkstra(s, t, pot)) {
             forn(i,0,sz(g))
                 if (dist[i] < inf) pot[i] += dist[i];
 

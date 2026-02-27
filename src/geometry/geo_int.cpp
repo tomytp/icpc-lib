@@ -66,8 +66,8 @@ bool isinseg(pt p, line r) { // se p pertence ao seg de r
 }
 
 bool interseg(line r, line s) { // se o seg de r intersecta o seg de s
-	if (isinseg(r.p, s) or isinseg(r.q, s)
-		or isinseg(s.p, r) or isinseg(s.q, r)) return 1;
+	if (isinseg(r.p, s) || isinseg(r.q, s)
+		|| isinseg(s.p, r) || isinseg(s.q, r)) return 1;
 
 	return ccw(r.p, r.q, s.p) != ccw(r.p, r.q, s.q) &&
 			ccw(s.p, s.q, r.p) != ccw(s.p, s.q, r.q);
@@ -85,7 +85,7 @@ struct cmp_sweepline {
     bool operator () (const line& a, const line& b) const {
         // assumes segments have p < q
         if (a.p == b.p) return ccw(a.p, a.q, b.q);
-        if (a.p.x != a.q.x && (b.p.x == b.q.x or a.p.x < b.p.x))
+        if (a.p.x != a.q.x && (b.p.x == b.q.x || a.p.x < b.p.x))
             return ccw(a.p, a.q, b.p);
         return ccw(a.p, b.q, b.p);
     }

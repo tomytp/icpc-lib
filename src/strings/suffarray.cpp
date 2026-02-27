@@ -22,7 +22,7 @@ v64 suffix_array(string s) {
         for(ll i = n-1; i+1; i--) sa[--cnt[ra[nsa[i]]]] = nsa[i];
 
         for(ll i = 1, r = 0; i < n; i++) nra[sa[i]] = r += ra[sa[i]] !=
-            ra[sa[i-1]] or ra[(sa[i]+k)%n] != ra[(sa[i-1]+k)%n];
+            ra[sa[i-1]] || ra[(sa[i]+k)%n] != ra[(sa[i-1]+k)%n];
         ra = nra;
         if (ra[sa[n-1]] == n-1) break; 
     }
@@ -37,7 +37,7 @@ v64 kasai(string s, v64 sa) {
     for (ll i = 0; i < n; i++, k -= !!k) {
         if (ra[i] == n-1) { k = 0; continue; }
         ll j = sa[ra[i]+1];
-        while (i+k < n and j+k < n and s[i+k] == s[j+k]) k++;
+        while (i+k < n && j+k < n && s[i+k] == s[j+k]) k++;
         lcp[ra[i]] = k;
     }
     return lcp;

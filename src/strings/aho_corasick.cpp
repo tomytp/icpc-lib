@@ -28,7 +28,7 @@ namespace aho {
             ll i = q.front(); q.pop();
             for (auto [c, j] : to[i]) {
                 ll l = link[i];
-                while (l != -1 and !to[l].count(c)) l = link[l];
+                while (l != -1 && !to[l].count(c)) l = link[l];
                 link[j] = l == -1 ? 0 : to[l][c];
                 exit[j] = term[link[j]] ? link[j] : exit[link[j]];
 
@@ -41,7 +41,7 @@ namespace aho {
     ll query(string& s) {
         ll at = 0, ans = 0;
         for (char c : s){
-            while (at != -1 and !to[at].count(c)) at = link[at];
+            while (at != -1 && !to[at].count(c)) at = link[at];
             at = at == -1 ? 0 : to[at][c];
             ans += sobe[at];
         }
@@ -52,7 +52,7 @@ namespace aho {
         vector<ll> v(n, 0);
         forn(i, 0, n){
             char c = s[i];
-            while (at != -1 and !to[at].count(c)) at = link[at];
+            while (at != -1 && !to[at].count(c)) at = link[at];
             at = at == -1 ? 0 : to[at][c];
 
             v[i] = max_match[at]; // quero isso

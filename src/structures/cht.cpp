@@ -17,7 +17,7 @@ struct Line {
 
 struct CHT : multiset<Line, less<>> {
     ll div(ll a, ll b) { 
-        return a / b - ((a ^ b) < 0 and a % b);
+        return a / b - ((a ^ b) < 0 && a % b);
     }
     
     void update(iterator x) {
@@ -36,8 +36,8 @@ struct CHT : multiset<Line, less<>> {
     void add(ll a, ll b) {
         auto x = insert({a, b, 0});
         while (overlap(x)) erase(next(x)), update(x);
-        if (x != begin() and !overlap(prev(x))) x = prev(x), update(x);
-        while (x != begin() and overlap(prev(x))) 
+        if (x != begin() && !overlap(prev(x))) x = prev(x), update(x);
+        while (x != begin() && overlap(prev(x))) 
             x = prev(x), erase(next(x)), update(x);
     }
     

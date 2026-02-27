@@ -29,7 +29,7 @@ struct sat {
         if (lo == id[i]) while (1) {
             ll u = s.top(); s.pop();
             vis[u] = 1, comp[u] = i;
-            if ((u>>1) < n and ans[u>>1] == -1) ans[u>>1] = ~u&1;
+            if ((u>>1) < n && ans[u>>1] == -1) ans[u>>1] = ~u&1;
             if (u == i) break;
         }
         return lo;

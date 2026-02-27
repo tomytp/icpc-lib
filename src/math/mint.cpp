@@ -21,7 +21,7 @@ template<ll p> struct mod_int {
     ll v;
     mod_int() : v(0) {}
     mod_int(ll v_) {
-        if (v_ >= p or v_ <= -p) v_ %= p;
+        if (v_ >= p || v_ <= -p) v_ %= p;
         if (v_ < 0) v_ += p;
         v = v_;
     }

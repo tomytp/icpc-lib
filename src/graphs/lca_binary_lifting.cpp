@@ -33,7 +33,7 @@ void build(ll raiz) {
 }
 
 bool anc(ll a, ll b) { // se a eh ancestral de b
-    return in[a] <= in[b] and out[a] >= out[b];
+    return in[a] <= in[b] && out[a] >= out[b];
 }
 
 ll lca(ll a, ll b) {

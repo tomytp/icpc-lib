@@ -27,7 +27,7 @@ void process_end(set<line, cmp_sweepline>& v, set<line, cmp_sweepline>& active_l
 void sweepline(ll n){
     set<line, cmp_sweepline> active_line;
 
-    while(!sweepline_begin.empty() or !sweepline_end.empty()){
+    while(!sweepline_begin.empty() || !sweepline_end.empty()){
         auto it_beg = sweepline_begin.begin();
         auto it_end = sweepline_end.begin();
 
@@ -37,7 +37,7 @@ void sweepline(ll n){
             continue;
         }
 
-        if(sweepline_begin.empty() or it_end->first <= it_beg->first){
+        if(sweepline_begin.empty() || it_end->first <= it_beg->first){
             process_end(it_end->second, active_line);
             sweepline_end.erase(it_end);
             continue;
