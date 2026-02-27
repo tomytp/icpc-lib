@@ -43,7 +43,7 @@ def load_config() -> dict:
         config = yaml.safe_load(f)
 
     # Validate required fields
-    required = ['title', 'team', 'chapters']
+    required = ['team', 'chapters']
     for field in required:
         if field not in config:
             print(f"Error: Missing required field '{field}' in config", file=sys.stderr)
@@ -80,16 +80,18 @@ def generate_chapter_tex(chapter: str, files: list) -> str:
 
 def generate_finals_tex(config: dict) -> str:
     """Generate the complete finals LaTeX document."""
-    title = config['title']
     team = config['team']
     chapters = config['chapters']
+
+    teamname = team.get('name', 'Team')
+    university = team.get('university', '')
 
     # Build team author string
     members = team.get('members', [])
     if members:
         author = ', '.join(members)
     else:
-        author = team.get('name', 'Team')
+        author = teamname
 
     lines = []
 
@@ -101,7 +103,8 @@ def generate_finals_tex(config: dict) -> str:
     lines.append(r"\documentclass[9pt,a4paper,landscape]{extarticle}")
     lines.append(r"\usepackage{icpclibpkg}")
     lines.append(r"")
-    lines.append(f"\\title{{{title}}}")
+    lines.append(f"\\teamname{{{teamname}}}")
+    lines.append(f"\\universityname{{{university}}}")
     lines.append(f"\\author{{{author}}}")
     lines.append(r"\date{\today}")
     lines.append(r"")
@@ -155,7 +158,7 @@ def main():
 
     # Count files
     total_files = sum(len(files) for files in config['chapters'].values())
-    print(f"Title: {config['title']}")
+    print(f"Team: {config['team'].get('name', '')}")
     print(f"Files: {total_files}")
 
     # Generate document

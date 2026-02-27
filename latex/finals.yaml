@@ -4,10 +4,9 @@
 # Edit this file to customize the content for your team's needs.
 #
 
-title: "Esse ai resolve com CCW - PUC-Rio"
-
 team:
-  name: "PUC-Rio"
+  name: "Esse ai resolve com CCW"
+  university: "PUC-Rio"
   members:
     - "Thomaz Miranda"
     - "Miguel Batista"

@@ -16,7 +16,7 @@
 \usepackage{microtype}
 
 % Layout
-\usepackage[landscape, left=5mm, right=5mm, top=7mm, bottom=7mm]{geometry}
+\usepackage[landscape, left=5mm, right=5mm, top=7mm, bottom=7mm, includehead, headheight=12pt, headsep=3mm]{geometry}
 \usepackage{multicol}
 \usepackage{fancyhdr}
 \usepackage{titlesec}
@@ -92,23 +92,35 @@
 % ============================================================
 % Header/Footer - shows current section on each page
 % ============================================================
-\pagestyle{fancy}
-\fancyhf{}
-\renewcommand{\headrulewidth}{0.4pt}
-\renewcommand{\footrulewidth}{0.4pt}
+
+% Team and university name variables
+\newcommand{\@teamname}{}
+\newcommand{\@universityname}{}
+\newcommand{\teamname}[1]{\renewcommand{\@teamname}{#1}}
+\newcommand{\universityname}[1]{\renewcommand{\@universityname}{#1}}
 
 % Track current chapter and section
 \newcommand{\@currentchapter}{}
 \newcommand{\setchapter}[1]{\renewcommand{\@currentchapter}{#1}}
 
-\fancyhead[L]{\small\textbf{Biblioteca PUC-Rio}}
-\fancyhead[C]{\small\@currentchapter}
-\fancyhead[R]{\small\thepage}
+% Header setup helper - used for both fancy and plain styles
+\newcommand{\@setupheader}{%
+    \fancyhf{}%
+    \fancyhead[L]{\small\textbf{\@universityname} \textbar\ \@teamname}%
+    \fancyhead[C]{\small\@currentchapter}%
+    \fancyhead[R]{\small\thepage}%
+    \renewcommand{\headrulewidth}{0.4pt}%
+    \renewcommand{\footrulewidth}{0pt}%
+}
 
-\fancyfoot[C]{\small\thepage}
-
-% Apply fancy style to all pages including first page
-\fancypagestyle{plain}{\pagestyle{fancy}}
+% Apply fancy style after \begin{document} so the class cannot override it.
+% Also redefine plain to show the header, since some commands (e.g. tocloft,
+% multicols) may call \thispagestyle{plain} on the index page.
+\AtBeginDocument{%
+    \pagestyle{fancy}%
+    \@setupheader%
+    \fancypagestyle{plain}{\@setupheader}%
+}
 
 % Reduce header height
 \setlength{\headheight}{12pt}
@@ -184,18 +196,18 @@
 
 % Cover page - uses \title, \author, \date metadata
 \newcommand{\makecover}{%
-    \thispagestyle{empty}%
     \vspace*{\fill}%
     \begin{center}%
-        \includegraphics[height=15cm]{puc_logo.png}\\[5ex]%
-        {\Huge\textbf{\@title}}\\[3ex]%
+        \includegraphics[height=13cm]{puc_logo.png}\\[5ex]%
+        {\Huge\textbf{\@teamname}}\\[3ex]%
         {\LARGE\@author}\\[3ex]%
         {\LARGE\@date}%
     \end{center}%
     \vspace*{\fill}%
+    \thispagestyle{empty}%
+    \setcounter{page}{0}%
     \newpage%
 }
-
 % Compact TOC
 \newcommand{\compacttoc}{%
     \begin{multicols}{3}
