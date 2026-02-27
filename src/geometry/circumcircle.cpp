@@ -1,3 +1,4 @@
+// Circumcircle and Circumradius
 // ccRadius: calcula o circumraio funciona com pt de int
 // ccCentar: calcula o circumcentro funciona somente com pt de double
 

@@ -1,3 +1,6 @@
+#Plota Poligonos
+#Ajuda a debugar codigo de geometria
+
 def svg(P, o="d.svg"):
     if not P: return
     X, Y = zip(*P)
