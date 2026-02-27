@@ -13,6 +13,8 @@
 //
 // O(k * T), T tempo do lca::lca
 
+#include "src/graphs/lca.cpp"
+
 const ll MAX = 100'005;
 vector<pair<ll, ll>> virt[MAX];
 
