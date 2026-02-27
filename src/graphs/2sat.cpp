@@ -54,15 +54,15 @@ struct sat {
         add_impl(~x, x);
     }
     void at_most_one(v64 v) { // no max um verdadeiro
-        g.resize(2*(tot+v.size()));
-        for (ll i = 0; i < v.size(); i++) {
+        g.resize(2*(tot+sz(v)));
+        for (ll i = 0; i < sz(v); i++) {
             add_impl(tot+i, ~v[i]);
             if (i) {
                 add_impl(tot+i, tot+i-1);
                 add_impl(v[i], tot+i-1);
             }
         }
-        tot += v.size();
+        tot += sz(v);
     }
 
     pair<bool, v64> solve() {

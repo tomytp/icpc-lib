@@ -23,7 +23,7 @@ template<typename T> struct matrix : vector<vector<T>> {
         }
     }
     matrix(const vector<vector<T>>& c) : vector<vector<T>>(c),
-        n(c.size()), m(c[0].size()) {}
+        n(sz(c)), m(sz(c[0])) {}
     matrix(const initializer_list<initializer_list<T>>& c) {
         vector<vector<T>> val;
         for (auto& i : c) val.push_back(i);

@@ -25,8 +25,8 @@ template<typename T> struct mcmf {
     mcmf(ll n) : g(n), par_idx(n), par(n), inf(numeric_limits<T>::max()/3) {}
 
     void add(ll u, ll v, ll w, T cost) { // edge from u to v with capacity w and cost
-        edge a = edge(v, g[v].size(), 0, w, cost, false);
-        edge b = edge(u, g[u].size(), 0, 0, -cost, true);
+        edge a = edge(v, sz(g[v]), 0, w, cost, false);
+        edge b = edge(u, sz(g[u]), 0, 0, -cost, true);
 
         g[u].push_back(a);
         g[v].push_back(b);
@@ -34,8 +34,8 @@ template<typename T> struct mcmf {
 
     vector<T> spfa(ll s) { // not needed if no negative cost edges
         deque<ll> q;
-        vector<bool> is_inside(g.size(), 0);
-        dist = vector<T>(g.size(), inf);
+        vector<bool> is_inside(sz(g), 0);
+        dist = vector<T>(sz(g), inf);
 
         dist[s] = 0;
         q.push_back(s);
@@ -62,10 +62,10 @@ template<typename T> struct mcmf {
     }
     bool dijkstra(ll s, ll t, vector<T>& pot) {
         priority_queue<pair<T, ll>, vector<pair<T, ll>>, greater<>> q;
-        dist = vector<T>(g.size(), inf);
+        dist = vector<T>(sz(g), inf);
         dist[s] = 0;
         q.emplace(0, s);
-        while (q.size()) {
+        while (sz(q)) {
             auto [d, v] = q.top();
             q.pop();
             if (dist[v] < d) continue;
@@ -83,7 +83,7 @@ template<typename T> struct mcmf {
     }
 
     pair<ll, T> min_cost_flow(ll s, ll t, ll flow = INF) {
-        vector<T> pot(g.size(), 0);
+        vector<T> pot(sz(g), 0);
         pot = spfa(s); // change shortest path algorithm here
         // no negative costs: nothing needed
         // DAG: use DP instead

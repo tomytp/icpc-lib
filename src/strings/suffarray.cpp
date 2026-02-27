@@ -9,7 +9,7 @@
 
 v64 suffix_array(string s) {
     s.push_back('$'); // 0 caso v64 (CHECAR SE PODE)
-    ll n = s.size(), N = max(n, 260ll);
+    ll n = sz(s), N = max(n, 260ll);
     v64 sa(n), ra(n);
     forn(i, 0, n) sa[i] = i, ra[i] = s[i];
 
@@ -30,7 +30,7 @@ v64 suffix_array(string s) {
 }
 
 v64 kasai(string s, v64 sa) {
-    ll n = s.size(), k = 0;
+    ll n = sz(s), k = 0;
     v64 ra(n), lcp(n);
     forn(i, 0, n) ra[sa[i]] = i;
 

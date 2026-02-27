@@ -6,7 +6,7 @@
 // complexity: O((N+M) log N), O(N+M) mem
 
 v64 DomTree(vector<v64>& graph, ll src) {
-    ll n = graph.size();
+    ll n = sz(graph);
     vector<v64> tree(n), trans(n), buck(n);
     v64 semi(n), par(n), dom(n), label(n), atob(n, -1), btoa(n, -1),
         link(n, -1);

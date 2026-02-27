@@ -63,7 +63,7 @@ struct segtree {
     vector<pair<node*,ll>> log;
 
     segtree(const v64& a) {
-        root = make_unique<node>(0, (ll)a.size()-1, a);
+        root = make_unique<node>(0, sz(a)-1, a);
     }
 
     void upd(ll l, ll r, ll x){
@@ -75,11 +75,11 @@ struct segtree {
     }
 
     ll version() const {
-        return (ll)log.size();
+        return sz(log);
     }
 
     void rollback(ll ver){
-        while ((ll)log.size() > ver){
+        while (sz(log) > ver){
             auto [p, old] = log.back();
             log.pop_back();
             p->mn = old;

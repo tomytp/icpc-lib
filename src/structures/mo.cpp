@@ -32,7 +32,7 @@ inline ll hilbert(ll x, ll y) {
 #define HILBERT true
 vector<ll> MO(vector<pair<ll, ll>> &q) {
     ans = 0;
-    ll m = q.size();
+    ll m = sz(q);
     vector<ll> ord(m);
     iota(ord.begin(), ord.end(), 0);
 #if HILBERT

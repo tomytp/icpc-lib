@@ -20,15 +20,15 @@ struct dinitz {
     dinitz(ll n) : g(n), F(0) {}
 
     void add(ll a, ll b, ll c) {
-        g[a].emplace_back(b, c, g[b].size(), false);
-        g[b].emplace_back(a, 0, g[a].size()-1, true);
+        g[a].emplace_back(b, c, sz(g[b]), false);
+        g[b].emplace_back(a, 0, sz(g[a])-1, true);
     }
 
     bool bfs(ll s, ll t) {
-        lev = v64(g.size(), -1); lev[s] = 0;
-        beg = v64(g.size(), 0);
+        lev = v64(sz(g), -1); lev[s] = 0;
+        beg = v64(sz(g), 0);
         queue<ll> q; q.push(s);
-        while (q.size()) {
+        while (sz(q)) {
             ll u = q.front(); q.pop();
             for (auto& i : g[u]) {
                 if (lev[i.to] != -1 || (i.flow == i.cap)) continue;
@@ -42,7 +42,7 @@ struct dinitz {
 
     ll dfs(ll v, ll s, ll f = INF) {
         if (!f || v == s) return f;
-        for (ll& i = beg[v]; i < g[v].size(); i++) {
+        for (ll& i = beg[v]; i < sz(g[v]); i++) {
             auto& e = g[v][i];
             if (lev[e.to] != lev[v] + 1) continue;
             ll foi = dfs(e.to, s, min(f, e.cap - e.flow));

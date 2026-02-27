@@ -19,12 +19,12 @@ vector<pair<ll, ll>> virt[MAX];
 ll build_virt(vector<ll> v) {
     auto cmp = [&](ll i, ll j) { return lca::pos[i] < lca::pos[j]; };
     sort(v.begin(), v.end(), cmp);
-    for (ll i = v.size()-1; i; i--) v.push_back(lca::lca(v[i], v[i-1]));
+    for (ll i = sz(v)-1; i; i--) v.push_back(lca::lca(v[i], v[i-1]));
     sort(v.begin(), v.end(), cmp);
     v.erase(unique(v.begin(), v.end()), v.end());
-    forn(i,0,v.size()) virt[v[i]].clear();
-    forn(i,1,v.size()) virt[lca::lca(v[i-1], v[i])].clear();
-    forn(i,1,v.size()) {
+    forn(i,0,sz(v)) virt[v[i]].clear();
+    forn(i,1,sz(v)) virt[lca::lca(v[i-1], v[i])].clear();
+    forn(i,1,sz(v)) {
         ll parent = lca::lca(v[i-1], v[i]);
         ll d = lca::dist(parent, v[i]);
 #warning soh to colocando aresta descendo

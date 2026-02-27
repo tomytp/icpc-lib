@@ -17,14 +17,14 @@ namespace aho {
             else at = it->second;
         }
         term[at]++, sobe[at]++;
-        max_match[at] = s.size();
+        max_match[at] = sz(s);
     }
 
     void build() {
         queue<ll> q;
         q.push(0);
         link[0] = exit[0] = -1;
-        while (q.size()) {
+        while (sz(q)) {
             ll i = q.front(); q.pop();
             for (auto [c, j] : to[i]) {
                 ll l = link[i];
@@ -48,7 +48,7 @@ namespace aho {
         return ans;
     }
     vector<ll> match_vec(string& s) {
-        ll at = 0, n = s.size();
+        ll at = 0, n = sz(s);
         vector<ll> v(n, 0);
         forn(i, 0, n){
             char c = s[i];

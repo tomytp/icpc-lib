@@ -19,7 +19,7 @@ struct trie {
         for (auto c : s) {
             ll &nxt = to[x][c-norm];
             if (!nxt) {
-                nxt = to.size();
+                nxt = sz(to);
                 to.push_back(v64(sigma));
                 end.push_back(0), pref.push_back(0);
             }

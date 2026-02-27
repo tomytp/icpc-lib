@@ -15,7 +15,7 @@ template <bool VALS_EDGES> struct HLD {
     vector<node> vseg;
     std::unique_ptr<tree> seg;
     HLD(vector<v64> adj_, v64 vals)
-        : N(adj_.size()), adj(adj_), parent(N, -1), sz(N, 1),
+        : N(sz(adj_)), adj(adj_), parent(N, -1), sz(N, 1),
           head(N),pos(N),vseg(N, {0}){ dfsSz(0); dfsHld(0);
             seg = make_unique<tree>(0, N-1, vseg);
         }

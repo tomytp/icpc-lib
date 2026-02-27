@@ -13,7 +13,7 @@ void dfs(ll v, vector<v64>& g, vector<ll> &out) {
 }
 
 vector<v64> scc(vector<v64>& g) {
-    int n = g.size();
+    int n = sz(g);
     v64 order, roots(n, 0);
 
     vector<v64> adj_rev(n);

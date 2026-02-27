@@ -60,7 +60,7 @@ template<typename T> void fft(vector<T>& a, bool f, int N, vector<int>& rev) {
 
 template<typename T> vector<T> convolution(vector<T>& a, vector<T>& b) {
     vector<T> l(a.begin(), a.end()), r(b.begin(), b.end());
-    int N = l.size()+r.size()-1;
+    int N = sz(l)+sz(r)-1;
     int n = 1, log_n = 0;
     while (n <= N) n *= 2, log_n++;
     vector<int> rev(n);

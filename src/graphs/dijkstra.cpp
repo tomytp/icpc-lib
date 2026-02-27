@@ -8,7 +8,7 @@ vector<vector<p64>> g;
 
 // d = distance | p = from/path
 void dijkstra(ll s, v64 &d, v64& p) {
-    ll n = g.size();
+    ll n = sz(g);
     d.assign(n, INF);
     p.assign(n, -1);
 
