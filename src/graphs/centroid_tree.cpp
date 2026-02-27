@@ -7,17 +7,18 @@
 //
 // O(n log(n)) de tempo e memoria
 
+const ll MAX = 100'005;
 vector<v64> g(MAX), dist(MAX);
-vector<ll> sz(MAX), rem(MAX), p(MAX);
+v64 siz(MAX), rem(MAX), p(MAX);
 
 ll dfs_sz(ll i, ll l=-1) {
-    sz[i] = 1;
-    for (ll j : g[i]) if (j != l && !rem[j]) sz[i] += dfs_sz(j, i);
-    return sz[i];
+    siz[i] = 1;
+    for (ll j : g[i]) if (j != l && !rem[j]) siz[i] += dfs_sz(j, i);
+    return siz[i];
 }
 
 ll centroid(ll i, ll l, ll size) {
-    for (ll j : g[i]) if (j != l && !rem[j] && sz[j] > size / 2)
+    for (ll j : g[i]) if (j != l && !rem[j] && siz[j] > size / 2)
         return centroid(j, i, size);
     return i;
 }
