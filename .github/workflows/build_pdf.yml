@@ -19,6 +19,9 @@ jobs:
       - name: Install dependencies
         run: make install-dependencies
 
+      - name: Validate finals.yaml
+        run: make validate-finals
+
       - name: Build full PDF
         run: make full
 

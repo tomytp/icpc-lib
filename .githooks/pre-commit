@@ -1,0 +1,17 @@
+#!/bin/bash
+# Pre-commit hook: verify all files referenced in finals.yaml exist.
+# Delegates to latex/validate_finals.py so the logic stays in one place.
+
+cd "$(git rev-parse --show-toplevel)" || exit 1
+
+# Extract the staged version of finals.yaml so we validate what is actually
+# being committed, not the working-tree copy.
+STAGED_YAML=$(mktemp)
+trap 'rm -f "$STAGED_YAML"' EXIT
+
+if ! git show :latex/finals.yaml > "$STAGED_YAML" 2>/dev/null; then
+    echo "Warning: latex/finals.yaml not in index; skipping validation."
+    exit 0
+fi
+
+python3 latex/validate_finals.py "$STAGED_YAML"

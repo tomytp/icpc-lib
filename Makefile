@@ -7,7 +7,7 @@
 #   clean   - Remove generated files
 #
 
-.PHONY: all full finals fast clean clean-generated clean-aux help install-dependencies
+.PHONY: all full finals fast clean clean-generated clean-aux help install-dependencies install-hooks validate-finals
 
 # Directories
 LATEX_DIR := latex
@@ -91,6 +91,14 @@ clean: clean-aux clean-generated
 # ============================================================
 # Install dependencies
 # ============================================================
+validate-finals:
+	@python3 $(LATEX_DIR)/validate_finals.py
+
+install-hooks:
+	@echo "=== Installing git hooks ==="
+	git config core.hooksPath .githooks
+	@echo "=== Git hooks installed (using .githooks/) ==="
+
 install-dependencies:
 	@echo "=== Installing dependencies ==="
 	sudo apt-get update
@@ -114,6 +122,8 @@ help:
 	@echo "  make fast                 Quick single-pass build"
 	@echo "  make clean                Remove LaTeX build artifacts"
 	@echo "  make clean-all            Remove all generated files"
+	@echo "  make validate-finals      Check finals.yaml references exist"
+	@echo "  make install-hooks        Configure git to use .githooks/ (local)"
 	@echo "  make install-dependencies Install required packages"
 	@echo ""
 	@echo "Output:"
