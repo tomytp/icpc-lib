@@ -86,7 +86,6 @@ clean: clean-aux clean-generated
 	@echo "=== Cleaning build artifacts ==="
 	@rm -f $(LATEX_DIR)/icpclib.pdf $(LATEX_DIR)/icpclib-finals.pdf
 	@rm -f $(LATEX_DIR)/icpclib-finals.tex
-	@rm -f $(PDF_DIR)/lib.pdf $(PDF_DIR)/lib_finals.pdf
 
 # ============================================================
 # Install dependencies

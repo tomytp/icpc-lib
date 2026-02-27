@@ -4,6 +4,8 @@
 //
 // complexity: O(1) per arithmetic op, O(log MOD) for division/inversion.
 
+#include "src/math/mint.cpp"
+
 template <long long D> 
 struct quad {
     mint x, y;

@@ -32,6 +32,34 @@ def is_ident_char(c: str) -> bool:
     return c == '_' or c.isalnum()
 
 
+def transform_include_strings(s: str) -> str:
+    """Transform #include "..." to avoid lstlisting string parsing issues.
+
+    lstlisting's C++ string detector can get confused by quoted header names
+    in #include directives, causing subsequent code to appear red. We bypass
+    the string tokenizer by wrapping the "..." in an @...@ escape region and
+    applying the string color manually via \textcolor.
+
+    The path must have LaTeX special characters escaped since it will be
+    processed as raw LaTeX inside the escape region.
+    """
+    def escape_path(path: str) -> str:
+        path = path.replace('\\', r'\textbackslash{}')
+        path = path.replace('_', r'\_')
+        path = path.replace('^', r'\^{}')
+        path = path.replace('&', r'\&')
+        path = path.replace('%', r'\%')
+        path = path.replace('#', r'\#')
+        path = path.replace('~', r'\textasciitilde{}')
+        return path
+
+    return re.sub(
+        r'^(#include\s*)"([^"]*)"',
+        lambda m: m.group(1) + r'@\textcolor{string}{"' + escape_path(m.group(2)) + r'"}@',
+        s
+    )
+
+
 def inject_custom_type_markup(s: str) -> str:
     """Add LaTeX markup for custom types."""
     out = []
@@ -75,6 +103,9 @@ def escape_title(s: str) -> str:
     s = s.replace('&', '\\&')
     s = s.replace('%', '\\%')
     s = s.replace('#', '\\#')
+    # Protect [ and ] so they aren't parsed as \subsection's optional arg delimiters
+    s = s.replace('[', '{[}')
+    s = s.replace(']', '{]}')
     return s
 
 
@@ -144,12 +175,12 @@ def parse_header(path: Path) -> dict:
         return result
 
     # First line: name and flags
+    # Flags are written as "Name [flag1, flag2]" where '[' is preceded by whitespace
     first = lines[0]
-    if '[' in first and first.endswith(']'):
-        idx = first.find('[')
-        result['name'] = first[:idx].strip()
-        flags_str = first[idx+1:-1]
-        result['flags'] = set(split_flags(flags_str))
+    m = re.match(r'^(.*\S)\s+\[([^\]]*)\]\s*$', first)
+    if m:
+        result['name'] = m.group(1).strip()
+        result['flags'] = set(split_flags(m.group(2)))
     else:
         name = first.strip()
         if name:  # Only override if we found a non-empty name
@@ -339,12 +370,12 @@ def generate_listing(path: Path, custom_title: str = None,
             else:
                 h = hash_region(code_lines, start_line, line_idx)
                 prefix = f"@\\hashprefix{{{h} }}@"
-                # Apply custom type markup (only for C++)
-                marked = inject_custom_type_markup(raw)
+                # Apply custom type markup and fix #include string rendering (only for C++)
+                marked = inject_custom_type_markup(transform_include_strings(raw))
                 output.append(f"{prefix}{marked}")
         else:
             if not comment and is_cpp:
-                marked = inject_custom_type_markup(raw)
+                marked = inject_custom_type_markup(transform_include_strings(raw))
                 output.append(marked)
             else:
                 output.append(raw)
