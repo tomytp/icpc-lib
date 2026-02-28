@@ -3,11 +3,10 @@
 # Targets:
 #   full    - Build complete PDF with all code (default)
 #   finals  - Build finals PDF (25-page subset from finals.yaml)
-#   fast    - Quick single-pass build (no TOC update)
 #   clean   - Remove generated files
 #
 
-.PHONY: all full finals fast clean clean-generated clean-aux help install-dependencies install-hooks validate-finals
+.PHONY: all full finals clean clean-generated clean-aux help install-dependencies install-hooks validate-finals
 
 # Directories
 LATEX_DIR := latex
@@ -30,9 +29,10 @@ all: full
 full: generate-tex
 	@echo "=== Building full PDF ==="
 	@mkdir -p $(PDF_DIR)
-	cd $(LATEX_DIR) && $(PDFLATEX) icpclib.tex
-	cd $(LATEX_DIR) && $(PDFLATEX) icpclib.tex
-	mv $(LATEX_DIR)/icpclib.pdf $(FULL_PDF)
+	cd $(LATEX_DIR) && python3 generate_full.py
+	cd $(LATEX_DIR) && $(PDFLATEX) icpclib-full.tex
+	cd $(LATEX_DIR) && $(PDFLATEX) icpclib-full.tex
+	mv $(LATEX_DIR)/icpclib-full.pdf $(FULL_PDF)
 	@$(MAKE) clean-aux
 	@echo "=== Full PDF created: $(FULL_PDF) ==="
 
@@ -48,17 +48,6 @@ finals: generate-tex
 	mv $(LATEX_DIR)/icpclib-finals.pdf $(FINALS_PDF)
 	@$(MAKE) clean-aux
 	@echo "=== Finals PDF created: $(FINALS_PDF) ==="
-
-# ============================================================
-# Fast build - single pass, no TOC update
-# ============================================================
-fast: generate-tex
-	@echo "=== Fast build (single pass) ==="
-	@mkdir -p $(PDF_DIR)
-	cd $(LATEX_DIR) && $(PDFLATEX) icpclib.tex
-	mv $(LATEX_DIR)/icpclib.pdf $(FULL_PDF)
-	@$(MAKE) clean-aux
-	@echo "=== PDF created: $(FULL_PDF) ==="
 
 # ============================================================
 # Generate .tex files from source code
@@ -84,8 +73,8 @@ clean-generated:
 
 clean: clean-aux clean-generated
 	@echo "=== Cleaning build artifacts ==="
-	@rm -f $(LATEX_DIR)/icpclib.pdf $(LATEX_DIR)/icpclib-finals.pdf
-	@rm -f $(LATEX_DIR)/icpclib-finals.tex
+	@rm -f $(LATEX_DIR)/icpclib.pdf $(LATEX_DIR)/icpclib-finals.pdf $(LATEX_DIR)/icpclib-full.pdf
+	@rm -f $(LATEX_DIR)/icpclib-finals.tex $(LATEX_DIR)/icpclib-full.tex
 
 # ============================================================
 # Install dependencies
@@ -130,7 +119,6 @@ help:
 	@echo "Targets:"
 	@echo "  make full                 Build complete PDF (default)"
 	@echo "  make finals               Build 25-page finals subset"
-	@echo "  make fast                 Quick single-pass build"
 	@echo "  make clean                Remove LaTeX build artifacts"
 	@echo "  make clean-all            Remove all generated files"
 	@echo "  make validate-finals      Check finals.yaml references exist"
