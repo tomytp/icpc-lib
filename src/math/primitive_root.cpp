@@ -24,7 +24,7 @@ ll generator(ll p){
 
     forn(res,2, p+1) {
         bool ok = true;
-        for (ll i=0; i<fact.size() && ok; ++i)
+        for (ll i=0; i<sz(fact) && ok; ++i)
             ok &= modpow (res, phi / fact[i], p) != 1;
         if (ok)  return res;
     }
