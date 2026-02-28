@@ -17,7 +17,7 @@ template<typename T> struct segtree {
   T neutral;
   vector<T> tree;
 
-  segtree<T>(ll _n, T _neutral = T()) {
+  segtree(ll _n, T _neutral = T()) {
     n = _n, neutral = _neutral;
     tree.resize(2*n+1, neutral);
   }

@@ -110,6 +110,18 @@ install-dependencies:
 		python3-yaml
 
 # ============================================================
+# Tests
+# ============================================================
+.PHONY: test
+
+test:
+	python3 tests/run.py
+
+# Run a specific test: make test-structures/dsu
+test-%:
+	python3 tests/run.py "$*"
+
+# ============================================================
 # Help
 # ============================================================
 help:
@@ -124,6 +136,8 @@ help:
 	@echo "  make validate-finals      Check finals.yaml references exist"
 	@echo "  make install-hooks        Configure git to use .githooks/ (local)"
 	@echo "  make install-dependencies Install required packages"
+	@echo "  make test                 Run all stress tests"
+	@echo "  make test-structures/dsu  Run a specific test"
 	@echo ""
 	@echo "Output:"
 	@echo "  pdf/lib.pdf               Full library"

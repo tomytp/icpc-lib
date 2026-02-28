@@ -42,7 +42,7 @@ template<typename T, typename U> struct segtree {
   vector<bool> dirty;
   vector<U> prop;
 
-  explicit segtree(ll ts, T tid = T(), U tnoop = U()) {
+  segtree(ll ts, T tid = T(), U tnoop = U()) {
     id = tid, noop = tnoop;
     for (s = 1, h = 1; s < ts; ) s *= 2, h++;
 
