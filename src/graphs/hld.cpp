@@ -8,6 +8,8 @@
 //
 // complexity: O((log N)^2) per op, O(N) build
 
+#include "src/structures/segtree_lazy.cpp"
+
 template <bool VALS_EDGES> struct HLD {
     ll N, tim = 0;
     vector<v64> adj;
