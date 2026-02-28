@@ -18,3 +18,4 @@ Biblioteca de algoritmos, estruturas de dados e primitivas para Maratonas de Pro
 - Código: [`src/`](./src/)
   - Exemplos: [`src/graphs/dijkstra.cpp`](./src/graphs/dijkstra.cpp), [`src/structures/fenwick_tree.cpp`](./src/structures/fenwick_tree.cpp), [`src/geometry/convex_hull.cpp`](./src/geometry/convex_hull.cpp)
 - Artefatos de build: [`pdf/`](./pdf/)
+
