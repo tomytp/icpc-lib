@@ -63,3 +63,64 @@ chapters:
   extra:
     - template.cpp
     - pragmas.cpp
+
+# Theoretical guide subsections to include (by slug, without numeric prefix)
+# Chapter keys match directory names in latex/theoretical/content/ (without NN_ prefix)
+# Subsection values match file names in each chapter directory (without NN_ prefix and .tex)
+theoretical:
+  identities:
+    - series
+    - binomial_identities
+
+  number_theory:
+    - large_prime_gaps
+    - some_primes
+    - number_of_divisors
+    - fermat_theorems
+    - exponent_modulo
+    - mobius_inversion
+    - chicken_mcnugget
+
+  geometry:
+    - pythagorean_triples
+    - heron_formula
+    - colinear_points
+    - coplanar_points
+    - trigonometry
+    - centroid_polygon
+    - two_ears_theorem
+
+  probability:
+    - moment_generating_functions
+    - distributions
+
+  graphs:
+    - planar_graphs
+    - counting_mst
+    - prufer_sequence
+    - erdos_gallai
+    - matching_multipartite
+    - dilworth_theorem
+    - sum_subtrees
+    - eulerian_subgraphs
+
+  counting_problems:
+    - stirling_first
+    - stirling_second
+    - counting_functions
+    - derangement
+    - bell_numbers
+    - eulerian_numbers
+    - burnside_lemma
+    - catalan_numbers
+    - central_binomial
+
+  dynamic_programming:
+    - divide_and_conquer
+
+  other:
+    - branching_factors
+    - lagrange
+    - rational_root
+    - slope_trick
+    - manhattan_distance

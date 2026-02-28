@@ -1,0 +1,23 @@
+\subsection{Identities}
+
+$$ \sum_{d|n} \varphi(d) = n$$
+
+$$ \sum_{\substack{i < n \\ \text{gcd}(i, n) = 1}} i = n \cdot \frac{\varphi(n)}{2} $$
+
+$$ |\{(x, y) : \, 1 \leq x, y \leq n, \, \text{gcd}(x, y) = 1\}| = \sum_{d = 1}^n \mu(d) \left \lfloor \frac{n}{d} \right \rfloor^2$$
+
+$$\sum_{x = 1}^n \sum_{y = 1}^n \text{gcd}(x, y)
+= \sum_{k = 1}^n k \sum_{k|l}^{n} \left \lfloor \frac{n}{l} \right \rfloor^2 \mu\left(\frac{l}{k}\right)$$
+
+$$\sum_{x = 1}^n \sum_{y = x}^n \text{gcd}(x, y) = \sum_{g = 1}^n \sum_{g|d}^n g \cdot \varphi\left(\frac{d}{g}\right)$$
+
+$$\sum_{x = 1}^n \sum_{y = 1}^n \text{lcm}(x, y)
+= \sum_{d = 1}^n d \, \mu(d) \sum_{d|l}^{n} l \binom{\lfloor \frac{n}{l} \rfloor + 1}{2}^2$$
+
+$$\sum_{x = 1}^n \sum_{y = x+1}^n \text{lcm}(x, y) = \sum_{g = 1}^n \sum_{g|d}^n d \cdot \varphi\left(\frac{d}{g}\right) \cdot \frac{d}{g} \cdot \frac 1 2$$
+
+$$\sum_{x \in A} \sum_{y \in A} \text{gcd}(x, y)
+= \sum_{t = 1}^n \left(\sum_{l | t} \frac{t}{l} \mu(l)\right) \left(\sum_{t|a} \text{freq}[a]\right)^2$$
+
+$$\sum_{x \in A} \sum_{y \in A} \text{lcm}(x, y)
+= \sum_{t = 1}^n \left(\sum_{l | t} \frac{l}{t} \mu(l)\right) \left(\sum_{a \in A, \, t|a} a\right)^2$$

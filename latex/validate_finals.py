@@ -18,6 +18,28 @@ except ImportError:
 
 REPO_ROOT = Path(__file__).parent.parent.resolve()
 SRC_DIR = REPO_ROOT / "src"
+THEORETICAL_CONTENT_DIR = REPO_ROOT / "latex" / "theoretical" / "content"
+
+
+def strip_numeric_prefix(name: str) -> str:
+    """Strip leading 'NN_' numeric prefix from a directory/file name."""
+    parts = name.split('_', 1)
+    if len(parts) == 2 and parts[0].isdigit():
+        return parts[1]
+    return name
+
+
+def find_theoretical_file(chapter_slug: str, subsection_slug: str) -> Path | None:
+    """Find the .tex file for a theoretical chapter+subsection by slug."""
+    for chapter_dir in THEORETICAL_CONTENT_DIR.iterdir():
+        if not chapter_dir.is_dir():
+            continue
+        if strip_numeric_prefix(chapter_dir.name) != chapter_slug:
+            continue
+        for sub_file in chapter_dir.iterdir():
+            if sub_file.suffix == '.tex' and strip_numeric_prefix(sub_file.stem) == subsection_slug:
+                return sub_file
+    return None
 
 
 def main() -> int:
@@ -36,9 +58,10 @@ def main() -> int:
     with config_file.open() as f:
         config = yaml.safe_load(f)
 
-    chapters = config.get("chapters") or {}
     missing = []
 
+    # Validate code chapters
+    chapters = config.get("chapters") or {}
     for chapter, files in chapters.items():
         if not files:
             continue
@@ -46,6 +69,16 @@ def main() -> int:
             path = SRC_DIR / chapter / filename
             if not path.exists():
                 missing.append(f"  src/{chapter}/{filename}")
+
+    # Validate theoretical chapters
+    theoretical = config.get("theoretical") or {}
+    for chapter_slug, subsections in theoretical.items():
+        if not subsections:
+            continue
+        for subsection_slug in subsections:
+            path = find_theoretical_file(chapter_slug, subsection_slug)
+            if path is None:
+                missing.append(f"  theoretical/content/{chapter_slug}/{subsection_slug}.tex")
 
     if missing:
         print("ERROR: finals.yaml references files that do not exist:", file=sys.stderr)
@@ -58,7 +91,9 @@ def main() -> int:
         )
         return 1
 
-    print(f"OK: all {sum(len(f) for f in chapters.values() if f)} files in finals.yaml exist.")
+    code_count = sum(len(f) for f in chapters.values() if f)
+    th_count = sum(len(s) for s in theoretical.values() if s)
+    print(f"OK: {code_count} code files and {th_count} theoretical subsections in finals.yaml exist.")
     return 0
 
 

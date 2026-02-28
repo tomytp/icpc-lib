@@ -17,6 +17,7 @@ SCRIPT_DIR = Path(__file__).parent.resolve()
 SRC_DIR = SCRIPT_DIR.parent / "src"
 GENERATED_DIR = SCRIPT_DIR / "generated"
 CHAPTERS_DIR = SCRIPT_DIR / "chapters"
+THEORETICAL_CONTENT_DIR = SCRIPT_DIR / "theoretical" / "content"
 
 # File extensions to process
 CODE_EXTENSIONS = {'.cpp', '.c', '.h', '.hpp', '.sh', ''}  # Empty string for files without extension (like makefile)
@@ -31,6 +32,19 @@ CHAPTER_TITLES = {
     'geometry': 'Computational Geometry',
     'extra': 'Extra (Templates and Utilities)',
 }
+
+
+def strip_numeric_prefix(name: str) -> str:
+    """Strip leading 'NN_' numeric prefix from a directory/file name."""
+    parts = name.split('_', 1)
+    if len(parts) == 2 and parts[0].isdigit():
+        return parts[1]
+    return name
+
+
+def slug_to_display_name(slug: str) -> str:
+    """Convert an underscore slug to a Title Case display name."""
+    return ' '.join(word.capitalize() for word in slug.split('_'))
 
 
 def clean_generated():
@@ -172,6 +186,76 @@ def generate_all():
         chapter_file = CHAPTERS_DIR / f"{category}.tex"
         print(f"  [gen]  {chapter_file.relative_to(SCRIPT_DIR)}")
         generate_chapter_file(category, tex_files)
+
+    # Generate theoretical chapter files
+    print(f"\n=== Generating theoretical chapter files ===")
+    generate_theoretical_chapters()
+
+
+def generate_theoretical_chapters() -> None:
+    """
+    Scan theoretical/content/ and generate:
+    - chapters/th_{slug}.tex for each chapter directory
+    - chapters/theoretical_master.tex that tags + includes all chapters
+    """
+    if not THEORETICAL_CONTENT_DIR.exists():
+        print(f"  [skip] theoretical/content/ not found", file=sys.stderr)
+        return
+
+    CHAPTERS_DIR.mkdir(exist_ok=True)
+
+    chapter_slugs = []  # clean slugs in sorted order
+
+    for chapter_dir in sorted(THEORETICAL_CONTENT_DIR.iterdir()):
+        if not chapter_dir.is_dir() or chapter_dir.name.startswith('.'):
+            continue
+
+        slug = strip_numeric_prefix(chapter_dir.name)
+        display_name = slug_to_display_name(slug)
+        chapter_slugs.append(slug)
+
+        # Collect subsection files sorted by filename
+        subsection_files = sorted(
+            f for f in chapter_dir.iterdir()
+            if f.is_file() and f.suffix == '.tex'
+        )
+
+        # Generate chapters/th_{slug}.tex
+        chapter_file = CHAPTERS_DIR / f"th_{slug}.tex"
+        lines = [
+            f"% Auto-generated — do not edit directly",
+            f"\\section{{{display_name}}}",
+            "",
+        ]
+        for sub_file in subsection_files:
+            # Path relative to latex/ (where pdflatex runs)
+            rel = f"theoretical/content/{chapter_dir.name}/{sub_file.stem}"
+            lines.append(f"\\input{{{rel}}}")
+        lines.append("")
+
+        with chapter_file.open('w', encoding='utf-8') as f:
+            f.write('\n'.join(lines))
+        print(f"  [gen]  {chapter_file.relative_to(SCRIPT_DIR)}")
+
+    # Generate chapters/theoretical_master.tex
+    master_file = CHAPTERS_DIR / "theoretical_master.tex"
+    lines = [
+        "% Auto-generated — do not edit directly",
+        "",
+        "% Tag all following TOC entries as 'theoretical' for etoc filtering",
+        "\\etocdepthtag.toc{theoretical}",
+        "",
+        "% Restart section numbering independently from the code lib",
+        "\\setcounter{section}{0}",
+        "",
+    ]
+    for slug in chapter_slugs:
+        lines.append(f"\\icpclibchapter{{th_{slug}}}")
+    lines.append("")
+
+    with master_file.open('w', encoding='utf-8') as f:
+        f.write('\n'.join(lines))
+    print(f"  [gen]  {master_file.relative_to(SCRIPT_DIR)}")
 
 
 def main():

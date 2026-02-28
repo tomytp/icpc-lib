@@ -21,13 +21,30 @@
 
 \vspace{2mm}
 
-% Compact table of contents
+% Two table of contents blocks: code lib and theoretical guide
 \begingroup
 \footnotesize
 \setlength{\columnsep}{3mm}
+\etocsettocstyle{}{}
+
+% Code Contents (4 columns, hides theoretical entries)
+{\small\bfseries Code Contents}\par\vspace{0.5mm}
+\etocsettagdepth{code}{subsection}
+\etocsettagdepth{theoretical}{none}
 \begin{multicols}{4}
 \tableofcontents
 \end{multicols}
+
+\vspace{1mm}
+
+% Theoretical Contents (4 columns, hides code entries)
+{\small\bfseries Theoretical Contents}\par\vspace{0.5mm}
+\etocsettagdepth{code}{none}
+\etocsettagdepth{theoretical}{subsection}
+\begin{multicols}{4}
+\tableofcontents
+\end{multicols}
+
 \endgroup
 
 \vspace{2mm}
@@ -37,6 +54,9 @@
 % Main content in 3 columns
 \begin{multicols*}{3}
 
+% Tag all code entries for TOC filtering
+\etocdepthtag.toc{code}
+
 % Include all chapters
 \icpclibchapter{structures}
 \icpclibchapter{graphs}
@@ -45,6 +65,9 @@
 \icpclibchapter{dp}
 \icpclibchapter{geometry}
 \icpclibchapter{extra}
+
+% Theoretical guide (auto-generated: tags entries, resets section counter, includes chapters)
+\input{chapters/theoretical_master.tex}
 
 \end{multicols*}
 

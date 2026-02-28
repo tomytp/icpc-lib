@@ -1,0 +1,16 @@
+\subsection{Mobius Inversion}
+
+If $g(n) = \sum_{d|n} f(d)$, then $f(n) = \sum_{d|n} g(d) \mu(\frac{n}{d})$.
+
+A more useful definition is: $\sum_{d|n} \mu(d) = [n = 1]$
+
+Example, sum of LCM:
+
+\begin{align*}
+    \sum_{i = 1}^n \sum_{j = 1}^n \text{lcm}(i, j) &=
+    \sum_{k = 1}^n\sum_{i=1}^n\sum_{j=1}^n [\text{gcd}(i, j) = k] \frac{ij}{k} \\
+    &= \sum_{k = 1}^n\sum_{a=1}^{\lfloor \frac{n}{k} \rfloor}\sum_{b=1}^{\lfloor \frac{n}{k} \rfloor} [\text{gcd}(a, b) = 1] abk \\
+    &= \sum_{k = 1}^n k \sum_{a=1}^{\lfloor \frac{n}{k} \rfloor} a \sum_{b=1}^{\lfloor \frac{n}{k} \rfloor} b \sum_{d=1}^{\lfloor \frac{n}{k} \rfloor}[d|a]\,[d|b] \, \mu(d) \\
+    &= \sum_{k = 1}^n k \sum_{d=1}^{\lfloor \frac{n}{k} \rfloor}  \mu(d) \left(\sum_{a=1}^{\lfloor \frac{n}{k} \rfloor} [d|a] \, a\right) \left(\sum_{b=1}^{\lfloor \frac{n}{k} \rfloor} [d|b] \, b\right) \\
+    &= \sum_{k = 1}^n k \sum_{d=1}^{\lfloor \frac{n}{k} \rfloor}  \mu(d) \left(\sum_{p=1}^{\lfloor \frac{n}{kd} \rfloor} p\right) \left(\sum_{q=1}^{\lfloor \frac{n}{kd} \rfloor} q\right) \\
+\end{align*}

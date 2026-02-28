@@ -30,6 +30,38 @@
 \usepackage[pdfusetitle,hidelinks]{hyperref}
 
 % ============================================================
+% Theoretical guide extensions
+% ============================================================
+% Table packages used by theoretical content
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{colortbl}
+\usepackage{tabu}
+\usepackage{diagbox}
+\usepackage{caption}
+
+% Float placement
+\usepackage{float}
+\usepackage{placeins}
+
+% Other packages used by theoretical content
+\usepackage{enumitem}
+\usepackage{relsize}
+\usepackage{rotating}
+\usepackage{url}
+\usepackage{textcomp}
+
+% Image path for theoretical guide diagrams (img/ inside theoretical/)
+\graphicspath{{theoretical/}}
+
+% Custom commands used by theoretical content
+\newcommand{\mc}[2]{\multicolumn{#1}{c}{#2}}
+\newcommand{\stirlingfirst}[2]{\genfrac{[}{]}{0pt}{}{#1}{#2}}
+\newcommand{\stirlingsecond}[2]{\genfrac{\{}{\}}{0pt}{}{#1}{#2}}
+\definecolor{Gray}{gray}{0.85}
+\newcolumntype{a}{>{\columncolor{Gray}}c}
+
+% ============================================================
 % Color definitions
 % ============================================================
 \definecolor{keyword}{HTML}{0000FF}
@@ -187,6 +219,8 @@
 % Table of contents styling
 % ============================================================
 \usepackage{tocloft}
+% etoc must be loaded after tocloft (TOC filtering for code vs theoretical)
+\usepackage{etoc}
 \setlength{\cftbeforesecskip}{1pt}
 \setlength{\cftbeforesubsecskip}{0pt}
 \renewcommand{\cftsecfont}{\small\bfseries}

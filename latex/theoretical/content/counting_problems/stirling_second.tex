@@ -1,0 +1,13 @@
+\subsection{Stirling Numbers of the Second Kind} These are the number of ways to partition $[n]$ into exactly $k$ non-empty sets. They obey the recurrence:
+  \begin{equation*}
+    \stirlingsecond{n}{k} = k\stirlingsecond{n-1}{k} + \stirlingsecond{n-1}{k-1}
+  \end{equation*}
+
+  \begin{equation*}
+    \stirlingsecond{0}{0} = 1, \stirlingsecond{n}{0} = \stirlingsecond{0}{n} = 0
+  \end{equation*}
+
+  A ``closed'' formula for it is:
+  \begin{equation*}
+    \stirlingsecond{n}{k} = \frac{1}{k!}\sum_{j=0}^k (-1)^{k-j} \binom{k}{j} j^n
+  \end{equation*}

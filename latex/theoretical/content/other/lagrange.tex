@@ -1,0 +1,11 @@
+\subsection{Lagrange}
+
+Given a set of $k+1$ points
+$$(x_0, y_0), \dots, (x_j, y_j), \dots, (x_k, y_k)$$
+where no two $x_j$ are the same, the interpolation polynomial in the Lagrange form is a linear combination
+$$L(x) := \sum_{j=0}^{k}{y_jl_j(x)}$$
+of Lagrange basis polynomials
+\begin{align*}
+l_j(x) &:= \prod_{\substack{0 \leq m \leq k \\ m \neq j}} \frac{x - x_m}{x_j - x_m} \\
+&= \frac{(x-x_0)}{(x_j-x_0)} \cdots \frac{(x-x_{j-1})}{(x_j-x_{j-1})} \frac{(x-x_{j+1})}{(x_j-x_{j+1})} \cdots \frac{(x-x_k)}{(x_j-x_k)}
+\end{align*}
