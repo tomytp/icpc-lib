@@ -9,7 +9,7 @@
 
 #include "src/math/mod_functions.cpp"
 
-ll generator(ll p){
+ll primitive_root(ll p){
     v64 fact;
     ll phi = p-1,  n = phi;
     // mudar p-1 para caso nao primo
