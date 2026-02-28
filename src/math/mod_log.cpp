@@ -6,7 +6,7 @@
 //
 // complexity: O(sqrt(m) * log(sqrt(m)))
 
-ll modLog(ll a, ll b, ll m) {
+ll mod_log(ll a, ll b, ll m) {
 	ll n = (ll) sqrt(m) + 1, e = 1, f = 1, j = 1;
 	map<ll, ll> mp;
 	while (j <= n && (e = f = e * a % m) != b % m)
