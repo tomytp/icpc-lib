@@ -6,18 +6,7 @@
 //
 // complexity: O(7 log^3 N) per query
 
-
-ull modmul(ull a, ull b, ull M){ 
-    ll ret = a*b - M * ull(1.L / M*a*b);    
-    return ret + M * (ret < 0) - M * (ret >= (ll)M);
-};
-
-ull modpow(ull b, ull e, ull mod){
-    ull ans = 1;
-    for(; e; b = modmul(b, b, mod), e /= 2)
-        if(e & 1) ans = modmul(ans, b, mod);
-    return ans;
-}
+#include "src/math/mod_functions.cpp"
 
 bool isPrime(ull n){
     if(n < 2 || n % 6 % 4 != 1) return (n | 1) == 3;
