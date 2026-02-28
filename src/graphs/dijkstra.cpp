@@ -4,10 +4,8 @@
 //
 // complexity: O((N + M) log N), O(N + M)
 
-vector<vector<p64>> g;
-
 // d = distance | p = from/path
-void dijkstra(ll s, v64 &d, v64& p) {
+void dijkstra(ll s, v64 &d, v64& p, vector<vector<p64>>& g) {
     ll n = sz(g);
     d.assign(n, INF);
     p.assign(n, -1);
@@ -22,10 +20,7 @@ void dijkstra(ll s, v64 &d, v64& p) {
 
         if (d_u != d[u]) continue;
 
-        for (auto edge : g[u]) {
-            ll v = edge.first;
-            ll w_v = edge.second;
-
+        for (auto [v, w_v] : g[u]) {
             if (d[u] + w_v < d[v]) {
                 d[v] = d[u] + w_v;
                 p[v] = u;

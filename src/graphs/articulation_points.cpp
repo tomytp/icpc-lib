@@ -1,10 +1,9 @@
-// Articulation Points
+// Articulation Points / Bridges / Biconnected Components
 //
-// Computa os articulation points e bridges de um grafo
+// is_art[i] = true se i eh ponto de articulacao        (ART)
+// bridges: lista de arestas ponte                      (BRIDGE)
+// bcc: lista de componentes biconexas (em arestas) (BCC)
 //
-// art[i] armazena o numero de novas componentes criadas ao deletar vertice i
-// se art[i] >= 1, entao vertice i eh ponto de articulacao
-// 
 // O(n+m)
 
 
@@ -15,7 +14,7 @@ struct TJ {
 	
     vector<bool> is_art; // ART
     vector<p64> bridges; // BRIDGE
-    stack<p64> st; // BCC
+    vector<p64> st; // BCC
     vector<vector<p64>> bcc; // BCC
 
     TJ(ll n, vector<v64>& g): n(n), g(g){
@@ -33,7 +32,7 @@ struct TJ {
             if(to==p) continue;
 
             if(tin[to]==-1){
-                st.push({v,to}); // BCC
+                st.push_back({v,to}); // BCC
 
                 dfs(to,v);
                 low[v] = min(low[v], low[to]);
@@ -44,7 +43,7 @@ struct TJ {
                 if(low[to]>=tin[v]){ // BCC
                   vector<p64> c; // BCC
                   while(1){ // BCC
-                    auto e=st.top(); st.pop(); // BCC
+                    auto e=st.back(); st.pop_back(); // BCC
                     c.push_back(e); // BCC
                     if(e.first==v && e.second==to) break; // BCC
                   } // BCC
@@ -54,7 +53,7 @@ struct TJ {
                 ch++;
             }else{
                 low[v]=min(low[v],tin[to]);
-                if(tin[to]<tin[v]) st.push({v,to});   // BCC
+                if(tin[to]<tin[v]) st.push_back({v,to});   // BCC
             }
         }
         if(p==-1 && ch>1) is_art[v] = true;   // ART

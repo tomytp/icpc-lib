@@ -5,7 +5,7 @@
 // complexity: O(E V^2) worst-case, O(E)
 
 struct dinitz {
-    const bool scaling = true;
+    const bool scaling;
     ll lim;
     struct edge {
         ll to, cap, rev, flow;
@@ -17,7 +17,7 @@ struct dinitz {
     vector<vector<edge>> g;
     v64 lev, beg;
     ll F;
-    dinitz(ll n) : g(n), F(0) {}
+    dinitz(ll n, bool scaling_) : scaling(scaling_), g(n), F(0){}
 
     void add(ll a, ll b, ll c) {
         g[a].emplace_back(b, c, sz(g[b]), false);
@@ -40,12 +40,12 @@ struct dinitz {
         return lev[t] != -1;
     }
 
-    ll dfs(ll v, ll s, ll f = INF) {
-        if (!f || v == s) return f;
+    ll dfs(ll v, ll t, ll f = INF) {
+        if (!f || v == t) return f;
         for (ll& i = beg[v]; i < sz(g[v]); i++) {
             auto& e = g[v][i];
             if (lev[e.to] != lev[v] + 1) continue;
-            ll foi = dfs(e.to, s, min(f, e.cap - e.flow));
+            ll foi = dfs(e.to, t, min(f, e.cap - e.flow));
             if (!foi) continue;
             e.flow += foi, g[e.to][e.rev].flow -= foi;
             return foi;
@@ -54,9 +54,19 @@ struct dinitz {
     }
 
     ll max_flow(ll s, ll t) {
-        for (lim = scaling ? (1<<30) : 1; lim; lim /= 2)
+        for (lim = scaling ? (1ll<<30) : 1; lim; lim /= 2)
             while (bfs(s, t)) while (ll ff = dfs(s, t)) F += ff;
         return F;
+    }
+
+    vector<p64> min_cut() {
+        vector<p64> cut;
+        forn(u, 0, sz(g))
+            if (lev[u] != -1)
+                for (auto& e : g[u])
+                    if (lev[e.to] == -1 && !e.res)
+                        cut.push_back({u, e.to});
+        return cut;
     }
 
     void reset() {
