@@ -111,6 +111,37 @@
 \lstset{style=icpclib}
 
 % ============================================================
+% Listings configuration for Python
+% ============================================================
+\lstdefinestyle{icpclibpy}{
+    language=Python,
+    basicstyle=\ttfamily\fontsize{7.5pt}{8.5pt}\selectfont,
+    keywordstyle=\color{keyword}\bfseries,
+    commentstyle=\color{comment}\itshape,
+    stringstyle=\color{string},
+    showstringspaces=false,
+    breaklines=true,
+    breakatwhitespace=false,
+    breakindent=0pt,
+    postbreak={},
+    tabsize=4,
+    columns=fullflexible,
+    keepspaces=true,
+    xleftmargin=0pt,
+    xrightmargin=0pt,
+    aboveskip=2pt,
+    belowskip=2pt,
+    frame=none,
+    escapeinside={@}{@},
+    literate=
+        {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+        {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+        {ã}{{\~a}}1 {õ}{{\~o}}1 {ñ}{{\~n}}1
+        {Ã}{{\~A}}1 {Õ}{{\~O}}1 {Ñ}{{\~N}}1
+        {ç}{{\c{c}}}1 {Ç}{{\c{C}}}1
+}
+
+% ============================================================
 % Layout configuration
 % ============================================================
 \setlength{\columnseprule}{0.4pt}

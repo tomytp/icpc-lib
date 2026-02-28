@@ -12,115 +12,104 @@ team:
     - "Miguel Batista"
     - "Joao Arthur Marques"
 
-# Chapters and files to include
-# Order within chapters is preserved
 chapters:
-  structures:
-    - fenwick_tree.cpp
-    - segtree.cpp
-    - segtree_lazy.cpp
-    - sparse_table.cpp
-    - dsu.cpp
-    - treap.cpp
-    - ordered_set.cpp
-    - cht.cpp
-
-  graphs:
-    - dijkstra.cpp
-    - dinitz.cpp
-    - min_cost_max_flow.cpp
-    - articulation_points.cpp
-    - scc.cpp
-    - 2sat.cpp
-    - topo_sort.cpp
-    - lca_binary_lifting.cpp
-    - hld.cpp
-    - centroid_decomp.cpp
-
-  math:
-    - mint.cpp
-    - mod_functions.cpp
-    - sieve.cpp
-    - fft.cpp
-    - matrix.cpp
-    - gauss.cpp
-
-  strings:
-    - kmp.cpp
-    - aho_corasick.cpp
-    - suffarray.cpp
-
   dp:
     - dnc_dp.cpp
     - sos_dp.cpp
 
-  geometry:
-    - geo_int.cpp
-    - geo_double.cpp
-    - convex_hull.cpp
-    - halfplane.cpp
-
   extra:
     - template.cpp
     - pragmas.cpp
-
-# Theoretical guide subsections to include (by slug, without numeric prefix)
-# Chapter keys match directory names in latex/theoretical/content/ (without NN_ prefix)
-# Subsection values match file names in each chapter directory (without NN_ prefix and .tex)
-theoretical:
-  identities:
-    - series
-    - binomial_identities
-
-  number_theory:
-    - large_prime_gaps
-    - some_primes
-    - number_of_divisors
-    - fermat_theorems
-    - exponent_modulo
-    - mobius_inversion
-    - chicken_mcnugget
+    - random.cpp
+    - makefile
+    - hash.sh
+    - stress.sh
+    - tester.sh
 
   geometry:
-    - pythagorean_triples
-    - heron_formula
-    - colinear_points
-    - coplanar_points
-    - trigonometry
-    - centroid_polygon
-    - two_ears_theorem
-
-  probability:
-    - moment_generating_functions
-    - distributions
+    - circumcircle.cpp
+    - convex_hull.cpp
+    - geo_double.cpp
+    - geo_int.cpp
+    - halfplane.cpp
+    - in_polygon.cpp
+    - minimum_enclosing_circle.cpp
+    - plot_polygon.py
+    - polygon_cut.cpp
+    - sweepline.cpp
 
   graphs:
-    - planar_graphs
-    - counting_mst
-    - prufer_sequence
-    - erdos_gallai
-    - matching_multipartite
-    - dilworth_theorem
-    - sum_subtrees
-    - eulerian_subgraphs
+    - 2sat.cpp
+    - articulation_points.cpp
+    - centroid_decomp.cpp
+    - centroid_tree.cpp
+    - dijkstra.cpp
+    - dinitz.cpp
+    - dmst.cpp
+    - dominator_tree.cpp
+    - floyd_warshall.cpp
+    - hld.cpp
+    - lca_binary_lifting.cpp
+    - lca.cpp
+    - min_cost_max_flow.cpp
+    - scc.cpp
+    - topo_sort.cpp
+    - virtual_tree.cpp
 
+  math:
+    - crt.cpp
+    - euclid.cpp
+    - fft.cpp
+    - gauss_z2.cpp
+    - gauss.cpp
+    - matrix.cpp
+    - miller_rabin.cpp
+    - mint.cpp
+    - mod_functions.cpp
+    - mod_log.cpp
+    - modsqrt.cpp
+    - primitive_root.cpp
+    - quad.cpp
+    - sieve.cpp
+
+  strings:
+    - aho_corasick.cpp
+    - kmp.cpp
+    - suffarray.cpp
+    - trie.cpp
+    - z_function.cpp
+
+  structures:
+    - bit_range.cpp
+    - cht.cpp
+    - dsu_rb.cpp
+    - dsu.cpp
+    - dynamic_connectivity.cpp
+    - fenwick_tree.cpp
+    - hashmap.cpp
+    - mo.cpp
+    - ordered_set.cpp
+    - perseg.cpp
+    - segtree_lazy.cpp
+    - segtree.cpp
+    - sparse_table.cpp
+    - treap.cpp
+
+
+theoretical:
   counting_problems:
-    - stirling_first
-    - stirling_second
-    - counting_functions
-    - derangement
-    - bell_numbers
-    - eulerian_numbers
     - burnside_lemma
     - catalan_numbers
-    - central_binomial
 
-  dynamic_programming:
-    - divide_and_conquer
+  graphs:
+    - sum_subtrees
 
-  other:
-    - branching_factors
-    - lagrange
-    - rational_root
-    - slope_trick
-    - manhattan_distance
+  number_theory:
+    - chicken_mcnugget
+    - identities
+    - large_prime_gaps
+    - lucas_theorem
+    - mobius_inversion
+    - number_of_divisors
+    - prime_counting_function
+    - some_primes

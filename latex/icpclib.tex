@@ -66,8 +66,18 @@
 \icpclibchapter{geometry}
 \icpclibchapter{extra}
 
-% Theoretical guide (auto-generated: tags entries, resets section counter, includes chapters)
-\input{chapters/theoretical_master.tex}
+% Theoretical guide
+\etocdepthtag.toc{theoretical}
+% Restart section numbering independently from the code lib.
+% Redefine \theHsection so hyperref uses a 'th.' prefix for anchor names,
+% avoiding duplicate destination warnings when section numbers repeat.
+\renewcommand{\theHsection}{th.\arabic{section}}
+\setcounter{section}{0}
+
+\icpclibchapter{th_counting_problems}
+\icpclibchapter{th_graphs}
+\icpclibchapter{th_number_theory}
+% END THEORETICAL CHAPTERS
 
 \end{multicols*}
 

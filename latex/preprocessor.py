@@ -334,7 +334,9 @@ def generate_listing(path: Path, custom_title: str = None,
         output.append(f"\\complexity{{{complexity}}}")
 
     # Code listing
-    output.append("\\begin{lstlisting}")
+    is_py = path.suffix.lower() == '.py'
+    lstlisting_opts = "[style=icpclibpy]" if is_py else ""
+    output.append(f"\\begin{{lstlisting}}{lstlisting_opts}")
 
     # Track brace depth for hash computation (only for C++ files)
     depth = 0
