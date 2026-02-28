@@ -2,7 +2,7 @@
 //
 // Finds the smallest primitive root modulo a prime P.
 // Factorizes P-1 and checks that for every prime factor F
-// of P-1, the candidate G satisfies G^((P-1)/F) ≢ 1 (mod P).
+// of P-1, the candidate G satisfies G^((P-1)/F) != 1 (mod P).
 //
 // complexity: O(time_to_factor(p-1) + ans * |factors(P-1)| * log P)
 // can be adapted to p not prime
