@@ -1,6 +1,6 @@
 // Discrete Logarithm (Baby-step Giant-step)
 //
-// Finds the smallest x >= 1 such that a^x ≡ b (mod m),
+// Finds the smallest x >= 1 such that a^x = b (mod m),
 // or returns -1 if no solution exists.
 // Uses Baby-step Giant-step with a hash map for O(sqrt(m)) lookups.
 //
