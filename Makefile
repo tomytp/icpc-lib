@@ -31,11 +31,11 @@ full: generate-tex
 	@echo "=== Building full PDF ==="
 	@mkdir -p $(PDF_DIR)
 	@mkdir -p $(LATEX_BUILD_DIR)
-	cd $(LATEX_DIR) && python3 generate_full.py
-	cd $(LATEX_DIR) && $(PDFLATEX) icpclib-full.tex
-	cd $(LATEX_DIR) && $(PDFLATEX) icpclib-full.tex
-	mv $(LATEX_BUILD_DIR)/icpclib-full.pdf $(FULL_PDF)
-	@$(MAKE) clean-aux
+	@cd $(LATEX_DIR) && python3 generate_full.py
+	@cd $(LATEX_DIR) && $(PDFLATEX) icpclib-full.tex > /dev/null
+	@cd $(LATEX_DIR) && $(PDFLATEX) icpclib-full.tex > /dev/null
+	@mv $(LATEX_BUILD_DIR)/icpclib-full.pdf $(FULL_PDF)
+	@$(MAKE) --no-print-directory clean-aux
 	@echo "=== Full PDF created: $(FULL_PDF) ==="
 
 # ============================================================
@@ -45,11 +45,11 @@ finals: generate-tex
 	@echo "=== Building finals PDF ==="
 	@mkdir -p $(PDF_DIR)
 	@mkdir -p $(LATEX_BUILD_DIR)
-	cd $(LATEX_DIR) && python3 generate_finals.py
-	cd $(LATEX_DIR) && $(PDFLATEX) icpclib-finals.tex
-	cd $(LATEX_DIR) && $(PDFLATEX) icpclib-finals.tex
-	mv $(LATEX_BUILD_DIR)/icpclib-finals.pdf $(FINALS_PDF)
-	@$(MAKE) clean-aux
+	@cd $(LATEX_DIR) && python3 generate_finals.py
+	@cd $(LATEX_DIR) && $(PDFLATEX) icpclib-finals.tex > /dev/null
+	@cd $(LATEX_DIR) && $(PDFLATEX) icpclib-finals.tex > /dev/null
+	@mv $(LATEX_BUILD_DIR)/icpclib-finals.pdf $(FINALS_PDF)
+	@$(MAKE) --no-print-directory clean-aux
 	@echo "=== Finals PDF created: $(FINALS_PDF) ==="
 
 # ============================================================
@@ -59,17 +59,15 @@ finals: generate-tex
 
 generate-tex:
 	@echo "=== Generating .tex files from source ==="
-	cd $(LATEX_DIR) && python3 generate_tex.py
+	@cd $(LATEX_DIR) && python3 generate_tex.py
 
 # ============================================================
 # Clean targets
 # ============================================================
 clean-aux:
-	@echo "=== Cleaning auxiliary build files ==="
 	@rm -rf $(LATEX_BUILD_DIR)
 
 clean-generated:
-	@echo "=== Cleaning generated .tex files ==="
 	@rm -rf $(LATEX_DIR)/generated
 
 clean: clean-aux clean-generated

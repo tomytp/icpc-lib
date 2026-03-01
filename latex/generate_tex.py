@@ -61,7 +61,7 @@ def generate_all():
         if not category_dir.is_dir() or category_dir.name.startswith('.'):
             continue
 
-        print(f"\n=== {category_dir.name} ===")
+        category_printed = False
 
         for src_file in sorted(category_dir.iterdir()):
             if not src_file.is_file() or src_file.suffix not in CODE_EXTENSIONS:
@@ -73,10 +73,13 @@ def generate_all():
             # Skip if output is newer than source AND newer than preprocessor.py
             preprocessor_mtime = (SCRIPT_DIR / "preprocessor.py").stat().st_mtime
             if out_file.exists() and out_file.stat().st_mtime >= src_file.stat().st_mtime and out_file.stat().st_mtime >= preprocessor_mtime:
-                print(f"  [skip] {src_file.name}")
                 skipped += 1
                 success += 1
                 continue
+
+            if not category_printed:
+                print(f"\n=== {category_dir.name} ===")
+                category_printed = True
 
             print(f"  [gen]  {src_file.name} -> {out_file.relative_to(SCRIPT_DIR)}")
 
