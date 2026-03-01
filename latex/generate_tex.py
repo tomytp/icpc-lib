@@ -12,6 +12,7 @@ import subprocess
 from pathlib import Path
 
 from common import SCRIPT_DIR
+import preprocessor
 
 SRC_DIR = SCRIPT_DIR.parent / "src"
 GENERATED_DIR = SCRIPT_DIR / "generated"
@@ -33,19 +34,11 @@ def generate_tex_for_file(src_path: Path, out_path: Path) -> bool:
     out_path.parent.mkdir(parents=True, exist_ok=True)
 
     try:
-        result = subprocess.run(
-            [sys.executable, str(SCRIPT_DIR / "preprocessor.py"), str(src_path)],
-            capture_output=True,
-            text=True,
-            cwd=str(SCRIPT_DIR)
-        )
-
-        if result.returncode != 0:
-            print(f"  ERROR processing {src_path}: {result.stderr}", file=sys.stderr)
-            return False
+        # Import directly to avoid starting >60 python processes
+        latex_content = preprocessor.generate_listing(src_path)
 
         with out_path.open('w', encoding='utf-8') as f:
-            f.write(result.stdout)
+            f.write(latex_content)
 
         return True
 
@@ -77,8 +70,9 @@ def generate_all():
             total += 1
             out_file = GENERATED_DIR / category_dir.name / f"{src_file.stem}.tex"
 
-            # Skip if output is newer than source
-            if out_file.exists() and out_file.stat().st_mtime >= src_file.stat().st_mtime:
+            # Skip if output is newer than source AND newer than preprocessor.py
+            preprocessor_mtime = (SCRIPT_DIR / "preprocessor.py").stat().st_mtime
+            if out_file.exists() and out_file.stat().st_mtime >= src_file.stat().st_mtime and out_file.stat().st_mtime >= preprocessor_mtime:
                 print(f"  [skip] {src_file.name}")
                 skipped += 1
                 success += 1
