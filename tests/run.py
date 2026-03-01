@@ -21,7 +21,7 @@ Run modes:
 """
 
 from pathlib import Path
-import argparse, subprocess, sys, os
+import argparse, subprocess, sys, os, concurrent.futures, io
 
 TESTS_DIR = Path(__file__).parent
 ROOT_DIR = TESTS_DIR.parent
@@ -44,14 +44,14 @@ def bold(t):   return f"{BOLD}{t}{RST}"
 
 # ─── Compilation ──────────────────────────────────────────────────────────────
 
-def compile_file(src: Path, out: Path) -> bool:
+def compile_file(src: Path, out: Path, out_file=sys.stdout) -> bool:
     r = subprocess.run(
         [CXX] + CXXFLAGS + [str(src), "-o", str(out)],
         capture_output=True, text=True,
     )
     if r.returncode != 0:
-        print(red(f"  Compile error in {src.relative_to(ROOT_DIR)}:"))
-        print(r.stderr)
+        print(red(f"  Compile error in {src.relative_to(ROOT_DIR)}:"), file=out_file)
+        print(r.stderr, file=out_file)
         return False
     return True
 
@@ -68,9 +68,9 @@ def run_proc(args, stdin=None, timeout=5, pass_fds=()):
         return None
 
 
-def run_test(test_dir: Path, n_iters: int, keep_bins: bool = False) -> bool:
+def run_test(test_dir: Path, n_iters: int, keep_bins: bool = False, out_file=sys.stdout) -> bool:
     name = str(test_dir.relative_to(TESTS_DIR))
-    print(f"\n{bold('=== ' + name + ' ===')}")
+    print(f"\n{bold('=== ' + name + ' ===')}", file=out_file)
 
     sol_src     = test_dir / "solution.cpp"
     gen_src     = test_dir / "gen.cpp"
@@ -78,7 +78,7 @@ def run_test(test_dir: Path, n_iters: int, keep_bins: bool = False) -> bool:
     checker_src = test_dir / "checker.cpp"
 
     if not sol_src.exists() or not gen_src.exists():
-        print(yellow("  Skipping: missing solution.cpp or gen.cpp"))
+        print(yellow("  Skipping: missing solution.cpp or gen.cpp"), file=out_file)
         return True
 
     sol_bin     = test_dir / ".solution"
@@ -87,55 +87,48 @@ def run_test(test_dir: Path, n_iters: int, keep_bins: bool = False) -> bool:
     checker_bin = test_dir / ".checker"
     bins = [sol_bin, gen_bin]
 
-    if not compile_file(sol_src, sol_bin):     return False
-    if not compile_file(gen_src, gen_bin):     return False
-
     has_brute   = brute_src.exists()
     has_checker = checker_src.exists()
 
+    compile_tasks = [(sol_src, sol_bin), (gen_src, gen_bin)]
     if has_brute:
-        if not compile_file(brute_src, brute_bin): return False
+        compile_tasks.append((brute_src, brute_bin))
         bins.append(brute_bin)
     if has_checker:
-        if not compile_file(checker_src, checker_bin): return False
+        compile_tasks.append((checker_src, checker_bin))
         bins.append(checker_bin)
 
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        futures = {executor.submit(compile_file, src, out, out_file): src for src, out in compile_tasks}
+        for future in concurrent.futures.as_completed(futures):
+            if not future.result():
+                return False
+
     if not has_brute and not has_checker:
-        print(yellow("  Warning: no brute.cpp or checker.cpp — only tested compilation."))
+        print(yellow("  Warning: no brute.cpp or checker.cpp — only tested compilation."), file=out_file)
 
     # ── Stress loop ────────────────────────────────────────────────────────────
-    failed     = False
-    fail_seed  = None
-    fail_input = fail_expected = fail_got = fail_msg = None
-
-    for seed in range(1, n_iters + 1):
+    def run_seed(seed):
         # 1. Generate input
         gen_r = run_proc([str(gen_bin), str(seed)], timeout=5)
         if gen_r is None:
-            print(red(f"\n  Generator TLE at seed {seed}"))
-            failed = True; break
+            return {'failed': True, 'msg': f"Generator TLE at seed {seed}"}
         test_input = gen_r.stdout
 
         # 2. Run solution
         sol_r = run_proc([str(sol_bin)], stdin=test_input, timeout=5)
         if sol_r is None:
-            print(red(f"\n  Solution TLE at seed {seed}"))
-            failed = True; fail_seed = seed; fail_input = test_input; break
+            return {'failed': True, 'seed': seed, 'input': test_input, 'msg': f"Solution TLE at seed {seed}"}
         if sol_r.returncode != 0:
-            failed = True; fail_seed = seed; fail_input = test_input
-            fail_msg = sol_r.stderr
-            break
+            return {'failed': True, 'seed': seed, 'input': test_input, 'msg': sol_r.stderr}
 
         # 3a. Brute comparison
         if has_brute:
             brute_r = run_proc([str(brute_bin)], stdin=test_input, timeout=10)
             if brute_r is None:
-                print(red(f"\n  Brute TLE at seed {seed}"))
-                failed = True; break
+                return {'failed': True, 'msg': f"Brute TLE at seed {seed}"}
             if sol_r.stdout.strip() != brute_r.stdout.strip():
-                failed = True; fail_seed = seed; fail_input = test_input
-                fail_expected = brute_r.stdout; fail_got = sol_r.stdout
-                break
+                return {'failed': True, 'seed': seed, 'input': test_input, 'expected': brute_r.stdout, 'got': sol_r.stdout}
 
         # 3b. Checker validation
         elif has_checker:
@@ -150,13 +143,32 @@ def run_test(test_dir: Path, n_iters: int, keep_bins: bool = False) -> bool:
             os.close(inp_r); os.close(out_r)
 
             if check_r is None or check_r.returncode != 0:
-                failed = True; fail_seed = seed; fail_input = test_input
-                fail_got = sol_r.stdout
-                fail_msg = (check_r.stderr if check_r else "TLE")
-                break
+                return {'failed': True, 'seed': seed, 'input': test_input, 'got': sol_r.stdout, 'msg': (check_r.stderr if check_r else "TLE")}
+        
+        return {'failed': False}
 
-        if seed % 50 == 0 or seed == n_iters:
-            print(f"  {green('OK')} {seed}/{n_iters}", end="\r")
+    failed     = False
+    fail_seed  = None
+    fail_input = fail_expected = fail_got = fail_msg = None
+
+    completed = 0
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        futures = {executor.submit(run_seed, seed): seed for seed in range(1, n_iters + 1)}
+        for future in concurrent.futures.as_completed(futures):
+            res = future.result()
+            if res['failed']:
+                failed = True
+                fail_seed = res.get('seed', futures[future])
+                fail_input = res.get('input')
+                fail_expected = res.get('expected')
+                fail_got = res.get('got')
+                fail_msg = res.get('msg')
+                for f in futures:
+                    f.cancel()
+                break
+            completed += 1
+            if out_file == sys.stdout and (completed % 50 == 0 or completed == n_iters):
+                print(f"  {green('OK')} {completed}/{n_iters}", end="\r", file=out_file)
 
     # ── Cleanup ────────────────────────────────────────────────────────────────
     if not keep_bins:
@@ -165,18 +177,20 @@ def run_test(test_dir: Path, n_iters: int, keep_bins: bool = False) -> bool:
 
     # ── Report ─────────────────────────────────────────────────────────────────
     if failed:
-        print(f"\n  {red('FAILED')} at seed {fail_seed}")
+        print(f"\n  {red('FAILED')} at seed {fail_seed}", file=out_file)
         if fail_input:
-            print(f"\n  Input:\n{fail_input.rstrip()}")
+            print(f"\n  Input:\n{fail_input.rstrip()}", file=out_file)
         if fail_expected:
-            print(f"\n  Expected (brute):\n{fail_expected.rstrip()}")
+            print(f"\n  Expected (brute):\n{fail_expected.rstrip()}", file=out_file)
         if fail_got:
-            print(f"\n  Got:\n{fail_got.rstrip()}")
+            print(f"\n  Got:\n{fail_got.rstrip()}", file=out_file)
         if fail_msg:
-            print(f"\n  {red('Error:')} {fail_msg.rstrip()}")
+            print(f"\n  {red('Error:')} {fail_msg.rstrip()}", file=out_file)
         return False
 
-    print(f"\n  {green('PASSED')} ({n_iters} iterations)")
+    if out_file != sys.stdout:
+        print(f"  {green('OK')} {completed}/{n_iters}", file=out_file)
+    print(f"\n  {green('PASSED')} ({n_iters} iterations)", file=out_file)
     return True
 
 
@@ -322,8 +336,19 @@ def main():
     else:
         print(f"Found {bold(str(len(tests)))} test(s)")
         ok = True
-        for t in tests:
-            ok = run_test(t, args.iters, args.keep_bins) and ok
+        
+        def run_test_captured(t):
+            buf = io.StringIO()
+            res = run_test(t, args.iters, args.keep_bins, out_file=buf)
+            return res, buf.getvalue()
+
+        with concurrent.futures.ThreadPoolExecutor(max_workers=os.cpu_count()) as executor:
+            futures = {executor.submit(run_test_captured, t): t for t in tests}
+            for future in concurrent.futures.as_completed(futures):
+                res, out = future.result()
+                sys.stdout.write(out)
+                sys.stdout.flush()
+                ok = ok and res
 
     print()
     if ok:
