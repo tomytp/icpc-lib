@@ -67,8 +67,13 @@ bool col(pt p, pt q, pt r) { // se p, q e r sao colin.
 	return cmp(sarea(p, q, r), 0) == 0;
 }
 
-bool ccw(pt p, pt q, pt r) { // se p, q, r sao ccw
-	return cmp(sarea(p, q, r),0) > 0; // talvez vc queira = !!!!!!!
+bool ccw(pt p, pt q, pt r, bool strict = true) { // true if p, q, r are 
+    return cmp(sarea(p, q, r)) > 0 || (!strict && cmp(sarea(p, q, r)) == 0);
+}
+
+bool isinseg(pt p, line r) { // se p pertence ao seg de r
+	pt a = r.p - p, b = r.q - p;
+	return cmp(a ^ b) == 0 && cmp(a * b) <= 0;
 }
 
 ld polarea(vector<pt> v) { // area do poligono

@@ -47,8 +47,8 @@ ll norm_sq(pt p){ return p*p;}
 
 ll dist_sq(pt p, pt q){ return norm_sq(p - q);}
 
-bool ccw(pt p, pt q, pt r) { // true if p, q, r are 
-    return sarea2(p, q, r) > 0;
+bool ccw(pt p, pt q, pt r, bool strict = true) {
+    return sarea2(p, q, r) > 0 || (!strict && sarea2(p, q, r) == 0);
 }
 
 int quad(pt p) { // quadrant of a point
