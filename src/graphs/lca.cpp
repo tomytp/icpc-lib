@@ -18,7 +18,8 @@ struct LCA {
 	LCA(vector<v64>& C, ll root) : time(sz(C)), dep(sz(C)), rmq((dfs(C,root,-1), ret)) {}
 	void dfs(vector<v64>& C, ll v, ll par) {
 		time[v] = T++;
-        if(par != -1) dep[v] = dep[par] + 1;
+        if(par != -1) dep[v] = dep[par] + 1;            futures = {executor.submit(run_test_captured, t): t for t in tests}
+
 		for (ll y : C[v]) if (y != par) {
 			path.push_back(v), ret.push_back(time[v]);
 			dfs(C, y, v);

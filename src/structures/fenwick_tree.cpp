@@ -29,7 +29,7 @@ struct Bit {
     ll upper_bound(ll x) {
         ll p = 0;
         for (ll i = __lg(n); i+1; i--) 
-            if (p + (1<<i) <= n and bit[p + (1<<i)] <= x)
+            if (p + (1<<i) <= n && bit[p + (1<<i)] <= x)
                 x -= bit[p += (1 << i)];
         return p;
     }
