@@ -1,6 +1,6 @@
 # Biblioteca de Algoritmos — PUC‑Rio
 
-Biblioteca de algoritmos, estruturas de dados e primitivas para Maratonas de Programação/ICPC da PUC‑Rio. Os códigos são em C++17, organizados em arquivos autocontidos (snippets) prontos para uso em competições.
+Biblioteca de algoritmos, estruturas de dados e primitivas para Maratonas de Programação/ICPC da PUC‑Rio. Os códigos são em C++20, organizados em arquivos autocontidos (snippets) prontos para uso em competições.
 
 ## Escopo
 - Conteúdo mantido: `src/` (snippets em C++) e `latex/` (gerador de PDF).
@@ -8,11 +8,16 @@ Biblioteca de algoritmos, estruturas de dados e primitivas para Maratonas de Pro
 
 ## Estrutura
 - `src/`: algoritmos por tópico (`graphs/`, `math/`, `geometry/`, `strings/`, `structures/`, `misc/`, `extra/`).
-- `latex/`: gerador (`getlatex.py`, `getlatex.sh`, `preamble.tex`).
-- `pdf/`: PDFs gerados (ex.: [`pdf/biblioteca.pdf`](./pdf/biblioteca.pdf)).
+- `latex/`: scripts de geração e templates LaTeX (`generate_full.py`, etc.).
+- `pdf/`: PDFs gerados (ex.: [`pdf/lib.pdf`](./pdf/lib.pdf), [`pdf/lib_finals.pdf`](./pdf/lib_finals.pdf)).
+- `tests/`: framework de stress testing.
 
-## Build
-- Gerar PDF: `cd latex && ./getlatex.sh`
+## Build e Testes
+- Gerar PDF completo: `make full` (ou apenas `make`)
+- Gerar PDF para a final (25 páginas): `make finals`
+- Limpar arquivos gerados: `make clean`
+- Rodar todos os testes: `make test`
+- Rodar teste específico (exemplo): `make test-structures/dsu`
 
 ## Navegação rápida
 - Código: [`src/`](./src/)
