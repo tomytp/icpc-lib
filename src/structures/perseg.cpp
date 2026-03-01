@@ -1,88 +1,51 @@
-// Rollback Segment Tree (Min)
-//
-// Segment tree supporting range min with versioned updates via a change log enabling O(1) rollback per change.
-//
-// complexity: O(log N) per update/query, O(N + U)
+// Persistent Segment Tree - O(log n) per query/update
+// Supports point updates and range queries across versions
 
-struct node {
-    ll lm, rm;
-    ll mn;
-    unique_ptr<node> lc, rc;
-
-    node(ll l, ll r, const vector<ll>& a) : lm(l), rm(r) {
-        if (lm == rm) { 
-            mn = a[lm];
-             return; 
-        }
-
-        ll m = (lm + rm) >> 1;
-        lc = make_unique<node>(lm, m, a);
-        rc = make_unique<node>(m+1, rm, a);
-        pull();
-    }
-
-    static ll comb(ll a, ll b) {
-        return min(a, b);
-    }
-
-    void pull() {
-        mn = comb(lc->mn, rc->mn);
-    }
-
-    void upd(ll lq, ll rq, ll x, vector<pair<node*,ll>>& log) {
-        if (lq > rm || lm > rq) return;
-        if (lq <= lm && rm <= rq) {
-            if (mn < x) {
-                log.emplace_back(this, mn);
-                mn = x;
-            }
-            return;
-        }
-
-        lc->upd(lq, rq, x, log);
-        rc->upd(lq, rq, x, log);
-        
-        ll nxt = comb(lc->mn, rc->mn);
-        
-        if (mn < nxt) {
-            log.emplace_back(this, mn);
-            mn = nxt;
-        }
-    }
-
-    ll get(ll lq, ll rq) const {
-        if (lq > rm || lm > rq) return INF;
-        if (lq <= lm && rm <= rq)  return mn;
-        ll res = min(lc->get(lq, rq), rc->get(lq, rq));
-        return max(res, mn);
-    }
+struct Node {
+	ll val;
+	ll l, r;
 };
 
-struct segtree {
-    unique_ptr<node> root;
-    vector<pair<node*,ll>> log;
+struct perseg {
+	ll n, cnt = 0;
+	vector<Node> nd;
+	v64 rt;
 
-    segtree(const v64& a) {
-        root = make_unique<node>(0, sz(a)-1, a);
-    }
-
-    void upd(ll l, ll r, ll x){
-        root->upd(l, r, x, log);
-    }
-
-    ll get(ll l, ll r){
-        return root->get(l, r);
-    }
-
-    ll version() const {
-        return sz(log);
-    }
-
-    void rollback(ll ver){
-        while (sz(log) > ver){
-            auto [p, old] = log.back();
-            log.pop_back();
-            p->mn = old;
-        }
-    }
+	perseg(v64& v, ll q = 0) : n(sz(v)) {
+		nd.reserve(2*n + 18*(n+q));
+		rt.reserve(q + 2);
+		rt.push_back(cnt++);
+		build(nd.data(), cnt, rt[0], 0, n-1, v);
+	}
+	static ll build(Node* d, ll& cnt, ll p, ll l, ll r, v64& v) {
+		if (l == r) return d[p].val = v[l];
+		d[p].l = cnt++; d[p].r = cnt++;
+		ll m = (l+r)/2;
+		return d[p].val = build(d, cnt, d[p].l, l, m, v) + build(d, cnt, d[p].r, m+1, r, v);
+	}
+	ll query(ll a, ll b, ll t) {
+		return query(nd.data(), a, b, rt[t], 0, n-1);
+	}
+	static ll query(Node* d, ll a, ll b, ll p, ll l, ll r) {
+		if (b < l || r < a) return 0;
+		if (a <= l && r <= b) return d[p].val;
+		ll m = (l+r)/2;
+		return query(d, a, b, d[p].l, l, m) + query(d, a, b, d[p].r, m+1, r);
+	}
+	ll set(ll a, ll val, ll t) {
+		ll nr = cnt++;
+		set(nd.data(), cnt, a, val, rt[t], nr, 0, n-1);
+		rt.push_back(nr);
+		return (ll)rt.size()-1;
+	}
+	static ll set(Node* d, ll& cnt, ll a, ll val, ll lp, ll p, ll l, ll r) {
+		if (l == r) return d[p].val = val;
+		ll m = (l+r)/2;
+		if (a <= m) {
+			d[p].l = cnt++; d[p].r = d[lp].r;
+			return d[p].val = set(d, cnt, a, val, d[lp].l, d[p].l, l, m) + d[d[p].r].val;
+		}
+		d[p].l = d[lp].l; d[p].r = cnt++;
+		return d[p].val = d[d[p].l].val + set(d, cnt, a, val, d[lp].r, d[p].r, m+1, r);
+	}
 };
