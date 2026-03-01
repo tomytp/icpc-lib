@@ -165,15 +165,10 @@
 \newcommand{\teamname}[1]{\renewcommand{\@teamname}{#1}}
 \newcommand{\universityname}[1]{\renewcommand{\@universityname}{#1}}
 
-% Track current chapter and section
-\newcommand{\@currentchapter}{}
-\newcommand{\setchapter}[1]{\renewcommand{\@currentchapter}{#1}}
-
 % Header setup helper - used for both fancy and plain styles
 \newcommand{\@setupheader}{%
     \fancyhf{}%
     \fancyhead[L]{\small\textbf{\@universityname} \textbar\ \@teamname}%
-    \fancyhead[C]{\small\@currentchapter}%
     \fancyhead[R]{\small\thepage}%
     \renewcommand{\headrulewidth}{0.4pt}%
     \renewcommand{\footrulewidth}{0pt}%
@@ -201,24 +196,6 @@
 
 % Custom type highlighting command
 \newcommand{\typ}[1]{\textcolor{type}{\textbf{#1}}}
-
-% Import a code file
-% Usage: \icpclibimport{path/to/file.cpp}
-% or: \icpclibimport[-c "Custom Title"]{path/to/file.cpp}
-\newcommand{\icpclibimport}[2][]{%
-    \immediate\write18{python3 preprocessor.py "#2" "#1"}%
-    \input{|"python3 preprocessor.py \\"#2\\" \\"#1\\""}%
-}
-
-% Alternative: direct input of pre-generated .tex
-\newcommand{\icpclibinput}[1]{\input{#1}}
-
-% Chapter command - sets header and includes chapter file
-% Usage: \icpclibchapter{structures}
-\newcommand{\icpclibchapter}[1]{%
-    \setchapter{#1}%
-    \input{chapters/#1.tex}%
-}
 
 % Section for code entry with metadata
 % Usage: \codeentry{Title}{Hash}{Time}{Memory}

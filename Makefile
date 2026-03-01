@@ -67,13 +67,12 @@ clean-aux:
 	@rm -f $(LATEX_DIR)/*.synctex.gz
 
 clean-generated:
-	@echo "=== Cleaning generated .tex files and chapters ==="
+	@echo "=== Cleaning generated .tex files ==="
 	@rm -rf $(LATEX_DIR)/generated
-	@rm -f $(LATEX_DIR)/chapters/*.tex
 
 clean: clean-aux clean-generated
 	@echo "=== Cleaning build artifacts ==="
-	@rm -f $(LATEX_DIR)/icpclib.pdf $(LATEX_DIR)/icpclib-finals.pdf $(LATEX_DIR)/icpclib-full.pdf
+	@rm -f $(LATEX_DIR)/icpclib-finals.pdf $(LATEX_DIR)/icpclib-full.pdf
 	@rm -f $(LATEX_DIR)/icpclib-finals.tex $(LATEX_DIR)/icpclib-full.tex
 
 # ============================================================
