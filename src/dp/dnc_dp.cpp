@@ -4,7 +4,7 @@
 //
 // complexity: O(K N log N) with O(1) cost, O(N)
 
-vector<v64> dp; // dp[n+1][2]
+vector<vll> dp; // dp[n+1][2]
 
 void solve(ll k, ll l, ll r, ll lk, ll rk) {
     if (l > r) return;

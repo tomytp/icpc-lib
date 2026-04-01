@@ -7,9 +7,9 @@
 
 struct sat {
     ll n, tot;
-    vector<v64> g;
-    v64 vis, comp, id, ans;
-    v64 s;
+    vector<vll> g;
+    vll vis, comp, id, ans;
+    vll s;
 
     sat() {}
     sat(ll n_) : n(n_), tot(n), g(2*n) {}
@@ -48,7 +48,7 @@ struct sat {
     void add_true(ll x) { // x = T
         add_impl(~x, x);
     }
-    void at_most_one(v64 v) { // no max um verdadeiro
+    void at_most_one(vll v) { // no max um verdadeiro
         g.resize(2*(tot+sz(v)));
         for (ll i = 0; i < sz(v); i++) {
             add_impl(tot+i, ~v[i]);
@@ -60,10 +60,10 @@ struct sat {
         tot += sz(v);
     }
 
-    pair<bool, v64> solve() {
-        ans = v64(n, -1);
+    pair<bool, vll> solve() {
+        ans = vll(n, -1);
         ll t = 0;
-        vis = comp = id = v64(2*tot, 0);
+        vis = comp = id = vll(2*tot, 0);
         for (ll i = 0; i < 2*tot; i++) if (!vis[i]) dfs(i, t);
         for (ll i = 0; i < tot; i++)
             if (comp[2*i] == comp[2*i+1]) return {false, {}};

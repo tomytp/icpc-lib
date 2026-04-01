@@ -7,7 +7,7 @@
 namespace aho {
     map<char, ll> to[MAX];
     ll link[MAX], idx, term[MAX], exit[MAX], sobe[MAX];
-    vector<ll> max_match(MAX, 0);
+    vll max_match(MAX, 0);
 
     void insert(string& s) {
         ll at = 0;
@@ -47,9 +47,9 @@ namespace aho {
         }
         return ans;
     }
-    vector<ll> match_vec(string& s) {
+    vll match_vec(string& s) {
         ll at = 0, n = sz(s);
-        vector<ll> v(n, 0);
+        vll v(n, 0);
         forn(i, 0, n){
             char c = s[i];
             while (at != -1 && !to[at].count(c)) at = link[at];

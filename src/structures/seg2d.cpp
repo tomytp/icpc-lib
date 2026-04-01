@@ -21,9 +21,9 @@
 
 struct seg2d{
 	ll n;
-	vector<v64> seg;
+	vector<vll> seg;
 
-	seg2d(ll n_, vector<v64>& init) : n(n_), seg(2 * (n+1), v64(2 * (n+1), 0)) {
+	seg2d(ll n_, vector<vll>& init) : n(n_), seg(2 * (n+1), vll(2 * (n+1), 0)) {
 		forn(i,0,n) forn(j,0,n)
 			seg[i + n][j + n] = init[i][j];
 		for (ll x = 2*n; x; x--) for (ll y = 2*n; y; y--) {

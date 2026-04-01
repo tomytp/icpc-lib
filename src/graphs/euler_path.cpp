@@ -17,8 +17,8 @@
 
 template<bool directed=false> struct euler {
 	ll n;
-	vector<vector<p64>> g;
-	v64 used;
+	vector<vector<pll>> g;
+	vll used;
 
 	euler(ll n_) : n(n_), g(n) {}
 	void add(ll a, ll b) {
@@ -28,12 +28,12 @@ template<bool directed=false> struct euler {
 		if (!directed) g[b].emplace_back(a, at);
 	}
 #warning chamar para o src certo!
-	pair<bool, vector<p64>> get_path(ll src) {
+	pair<bool, vector<pll>> get_path(ll src) {
 		if (!used.size()) return {true, {}};
-		v64 beg(n, 0);
+		vll beg(n, 0);
 		for (ll& i : used) i = 0;
 		// {{vertice, anterior}, label}
-		vector<pair<p64, ll>> ret, st = {{{src, -1}, -1}};
+		vector<pair<pll, ll>> ret, st = {{{src, -1}, -1}};
 		while (st.size()) {
 			ll at = st.back().first.first;
 			ll& it = beg[at];
@@ -48,12 +48,12 @@ template<bool directed=false> struct euler {
 			}
 		}
 		if (ret.size() != used.size()+1) return {false, {}};
-		vector<p64> ans;
+		vector<pll> ans;
 		for (auto i : ret) ans.emplace_back(i.first.first, i.second);
 		reverse(ans.begin(), ans.end());
 		return {true, ans};
 	}
-	pair<bool, vector<p64>> get_cycle() {
+	pair<bool, vector<pll>> get_cycle() {
 		if (!used.size()) return {true, {}};
 		ll src = 0;
 		while (!g[src].size()) src++;

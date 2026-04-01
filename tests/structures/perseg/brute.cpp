@@ -5,13 +5,13 @@
 int main() {
     _;
     ll n, q; cin >> n >> q;
-    vector<v64> vers(1, v64(n));
+    vector<vll> vers(1, vll(n));
     forn(i, 0, n) cin >> vers[0][i];
     while (q--) {
         ll t; cin >> t;
         if (t == 1) {
             ll ver, idx, val; cin >> ver >> idx >> val;
-            v64 nv = vers[ver];
+            vll nv = vers[ver];
             nv[idx] = val;
             vers.push_back(nv);
         } else {

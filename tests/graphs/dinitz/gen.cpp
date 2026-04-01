@@ -16,7 +16,7 @@ int main(int argc, char* argv[]) {
     rng.seed(atoll(argv[1]));
     ll n = uniform(2, 8);
 
-    vector<p64> cands;
+    vector<pll> cands;
     forn(u, 0, n) forn(v, 0, n) if (u != v) cands.push_back({u, v});
     shuffle(cands.begin(), cands.end(), rng);
     ll m = uniform(0, min(sz(cands), 15ll));

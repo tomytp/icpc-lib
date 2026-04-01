@@ -9,7 +9,7 @@
 
 using namespace __gnu_pbds;
 
-#define ordered_set tree<p64, null_type,less<p64>, rb_tree_tag,tree_order_statistics_node_update> 
+#define ordered_set tree<pll, null_type,less<pll>, rb_tree_tag,tree_order_statistics_node_update> 
 
 int main() {
     ordered_set s;

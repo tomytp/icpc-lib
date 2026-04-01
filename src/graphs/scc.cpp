@@ -6,17 +6,17 @@
 
 vector<bool> visited;
 
-void dfs(ll v, vector<v64>& g, vector<ll> &out) {
+void dfs(ll v, vector<vll>& g, vll &out) {
     visited[v] = true;
     for(auto u : g[v]) if(!visited[u]) dfs(u, g, out);
     out.push_back(v);
 }
 
-vector<v64> scc(vector<v64>& g) {
+vector<vll> scc(vector<vll>& g) {
     int n = sz(g);
-    v64 order, roots(n, 0);
+    vll order, roots(n, 0);
 
-    vector<v64> adj_rev(n);
+    vector<vll> adj_rev(n);
     forn(u, 0, n) for (ll v : g[u]) adj_rev[v].push_back(u);
 
     visited.assign(n, false);
@@ -27,14 +27,14 @@ vector<v64> scc(vector<v64>& g) {
     ll curr_comp = 0;
     for (auto v : order) {
         if (!visited[v]) {
-            v64 component; dfs(v, adj_rev, component);
+            vll component; dfs(v, adj_rev, component);
             for (auto u : component) roots[u] = curr_comp;
             curr_comp++;
         }
     }
 
-    set<p64> edges;
-    vector<v64> cond_g(curr_comp);
+    set<pll> edges;
+    vector<vll> cond_g(curr_comp);
     forn(u, 0, n) {
         for (auto v : g[u]) {
             if (roots[u] != roots[v] && !edges.count({roots[u], roots[v]})) {

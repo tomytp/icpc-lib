@@ -31,12 +31,12 @@ Node *merge(Node *a, Node *b) {
 }
 void pop(Node*& a) { a->prop(); a = merge(a->l, a->r); }
 
-pair<ll, v64> dmst(ll n, ll src, vector<Edge>& g) {
+pair<ll, vll> dmst(ll n, ll src, vector<Edge>& g) {
 	dsu_rb uf(n);
 	vector<Node*> heap(n);
 	for (Edge e : g) heap[e.b] = merge(heap[e.b], new Node{e});
 	ll res = 0;
-	v64 seen(n, -1), path(n), par(n);
+	vll seen(n, -1), path(n), par(n);
 	seen[src] = src;
 	vector<Edge> Q(n), in(n, {-1,-1}), comp;
 	deque<tuple<ll, ll, vector<Edge>>> cycs;

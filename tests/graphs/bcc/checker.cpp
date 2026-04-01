@@ -8,7 +8,7 @@
 
 #include "src/extra/template.cpp"
 
-bool connected_subgraph(ll n, vector<vector<ll>>& adj, vector<ll>& verts) {
+bool connected_subgraph(ll n, vector<vll>& adj, vll& verts) {
     if (verts.empty()) return true;
     set<ll> vert_set(verts.begin(), verts.end());
     set<ll> vis;
@@ -26,22 +26,22 @@ int main(int argc, char* argv[]) {
     ifstream inf(argv[1]), ouf(argv[3]);
 
     ll n, m; inf >> n >> m;
-    vector<p64> all_edges(m);
+    vector<pll> all_edges(m);
     for (auto& [u, v] : all_edges) inf >> u >> v;
 
-    map<p64, ll> edge_cnt;
+    map<pll, ll> edge_cnt;
     for (auto [u, v] : all_edges)
         edge_cnt[{min(u, v), max(u, v)}]++;
 
     ll k; ouf >> k;
-    map<p64, ll> covered;
+    map<pll, ll> covered;
 
     for (ll b = 0; b < k; b++) {
         ll bsz; ouf >> bsz;
-        vector<p64> bcc(bsz);
+        vector<pll> bcc(bsz);
         for (auto& [u, v] : bcc) {
             ouf >> u >> v;
-            p64 e = {min(u, v), max(u, v)};
+            pll e = {min(u, v), max(u, v)};
             if (!edge_cnt.count(e)) {
                 cerr << "WA: BCC " << b << " contains edge " << u << " " << v << " not in input\n";
                 return 1;
@@ -56,12 +56,12 @@ int main(int argc, char* argv[]) {
         // Collect vertices of this BCC
         set<ll> vert_set;
         for (auto [u, v] : bcc) { vert_set.insert(u); vert_set.insert(v); }
-        vector<ll> verts(vert_set.begin(), vert_set.end());
+        vll verts(vert_set.begin(), vert_set.end());
 
         if (bsz == 1) {
             // Must be a bridge: removing it must disconnect its endpoints
             ll eu = bcc[0].first, ev = bcc[0].second;
-            vector<vector<ll>> adj(n);
+            vector<vll> adj(n);
             bool skipped = false;
             for (auto [u, v] : all_edges) {
                 if (!skipped && min(u,v) == min(eu,ev) && max(u,v) == max(eu,ev)) {
@@ -84,7 +84,7 @@ int main(int argc, char* argv[]) {
         } else {
             // Must be 2-edge-connected: removing any single edge keeps BCC vertices connected
             for (ll i = 0; i < bsz; i++) {
-                vector<vector<ll>> adj(n);
+                vector<vll> adj(n);
                 for (ll j = 0; j < bsz; j++) {
                     if (j == i) continue;
                     adj[bcc[j].first].push_back(bcc[j].second);

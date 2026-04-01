@@ -12,10 +12,10 @@
 // escrito pelo gpt, cuidado
 
 const ll MAX = 100'005;
-vector<ll> g[MAX];
+vll g[MAX];
 ll siz[MAX], rem[MAX];
 
-void dfs(v64& path, ll i, ll l=-1, ll d=0) {
+void dfs(vll& path, ll i, ll l=-1, ll d=0) {
     path.push_back(d);
     for (ll j : g[i]) if (j != l && !rem[j]) dfs(path, j, i, d+1);
 }
@@ -38,10 +38,10 @@ ll decomp(ll i, ll k) {
 
     // gasta O(n) aqui - dfs sem ir pros caras removidos
     ll ans = 0;
-    v64 cnt(siz[i]);
+    vll cnt(siz[i]);
     cnt[0] = 1;
     for (ll j : g[c]) if (!rem[j]) {
-        v64 path;
+        vll path;
         dfs(path, j);
         for (ll d : path) if (0 <= k-d-1 && k-d-1 < siz[i])
             ans += cnt[k-d-1];

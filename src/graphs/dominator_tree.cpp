@@ -5,10 +5,10 @@
 //
 // complexity: O((N+M) log N), O(N+M) mem
 
-v64 DomTree(vector<v64>& graph, ll src) {
+vll DomTree(vector<vll>& graph, ll src) {
     ll n = sz(graph);
-    vector<v64> tree(n), trans(n), buck(n);
-    v64 semi(n), par(n), dom(n), label(n), atob(n, -1), btoa(n, -1),
+    vector<vll> tree(n), trans(n), buck(n);
+    vll semi(n), par(n), dom(n), label(n), atob(n, -1), btoa(n, -1),
         link(n, -1);
 
     function<ll(ll, ll)> find=[&](ll u, ll d){
@@ -40,7 +40,7 @@ v64 DomTree(vector<v64>& graph, ll src) {
         }
         if(u) link[u] = par[u];
     }
-    v64 ret(n, -1);
+    vll ret(n, -1);
     forn(u,1,t) {
         if(dom[u] != semi[u]) dom[u] = dom[dom[u]];
         ret[btoa[u]] = btoa[dom[u]];

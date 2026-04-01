@@ -8,7 +8,7 @@ class BIT{
     ll bit[2][MAX+2];
     ll n;
 public:
-    BIT(ll n2, v64& v) {
+    BIT(ll n2, vll& v) {
         n = n2;
         for (ll i = 1; i <= n; i++)
             bit[1][min(n+1, i+(i&-i))] += bit[1][i] += v[i-1];

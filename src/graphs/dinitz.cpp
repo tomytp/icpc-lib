@@ -15,7 +15,7 @@ struct dinitz {
     };
 
     vector<vector<edge>> g;
-    v64 lev, beg;
+    vll lev, beg;
     ll F;
     dinitz(ll n, bool scaling_) : scaling(scaling_), g(n), F(0){}
 
@@ -25,8 +25,8 @@ struct dinitz {
     }
 
     bool bfs(ll s, ll t) {
-        lev = v64(sz(g), -1); lev[s] = 0;
-        beg = v64(sz(g), 0);
+        lev = vll(sz(g), -1); lev[s] = 0;
+        beg = vll(sz(g), 0);
         queue<ll> q; q.push(s);
         while (sz(q)) {
             ll u = q.front(); q.pop();
@@ -59,8 +59,8 @@ struct dinitz {
         return F;
     }
 
-    vector<p64> min_cut() {
-        vector<p64> cut;
+    vector<pll> min_cut() {
+        vector<pll> cut;
         forn(u, 0, sz(g))
             if (lev[u] != -1)
                 for (auto& e : g[u])

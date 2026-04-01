@@ -9,15 +9,15 @@ struct Node {
 struct perseg {
 	ll n, cnt = 0;
 	vector<Node> nd;
-	v64 rt;
+	vll rt;
 
-	perseg(v64& v, ll q = 0) : n(sz(v)) {
+	perseg(vll& v, ll q = 0) : n(sz(v)) {
 		nd.reserve(2*n + 18*(n+q));
 		rt.reserve(q + 2);
 		rt.push_back(cnt++);
 		build(nd.data(), cnt, rt[0], 0, n-1, v);
 	}
-	static ll build(Node* d, ll& cnt, ll p, ll l, ll r, v64& v) {
+	static ll build(Node* d, ll& cnt, ll p, ll l, ll r, vll& v) {
 		if (l == r) return d[p].val = v[l];
 		d[p].l = cnt++; d[p].r = cnt++;
 		ll m = (l+r)/2;

@@ -4,14 +4,14 @@
 int main() {
     _;
     ll n, m; cin >> n >> m;
-    vector<v64> g(n);
+    vector<vll> g(n);
     forn(i, 0, m) {
         ll u, v; cin >> u >> v;
         g[u].push_back(v);
         g[v].push_back(u);
     }
     TJ tj(n, g);
-    v64 arts;
+    vll arts;
     forn(i, 0, n) if (tj.is_art[i]) arts.push_back(i);
     cout << sz(arts) << ln;
     for (ll v : arts) cout << v << ln;

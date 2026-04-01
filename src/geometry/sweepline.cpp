@@ -11,7 +11,7 @@
 map<ll, set<line, cmp_sweepline>> sweepline_begin; // dado um x, diz quais linhas comecam naquele x
 map<ll, set<line, cmp_sweepline>> sweepline_end;   // dado um x, diz quais linhas terminam naquele x
 
-void process_beg(set<line, cmp_sweepline>& v, set<line, cmp_sweepline>& active_line, vector<ll>& parent){
+void process_beg(set<line, cmp_sweepline>& v, set<line, cmp_sweepline>& active_line, vll& parent){
     for(auto x : v){
         active_line.insert(x);
         // processar uma linha que esta sendo adicionada

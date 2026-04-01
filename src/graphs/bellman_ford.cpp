@@ -6,7 +6,7 @@
 // complexity: O(N*M), O(N + M)
 
 // d = distance | p = from/path | edges: {u, v, w} directed
-void bellman_ford(ll s, ll n, v64& d, v64& p, vector<tuple<ll,ll,ll>> edges) {
+void bellman_ford(ll s, ll n, vll& d, vll& p, vector<tuple<ll,ll,ll>> edges) {
     d.assign(n, INF);
     p.assign(n, -1);
     d[s] = 0;

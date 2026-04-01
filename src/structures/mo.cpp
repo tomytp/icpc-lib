@@ -30,13 +30,13 @@ inline ll hilbert(ll x, ll y) {
 }
 
 #define HILBERT true
-vector<ll> MO(vector<pair<ll, ll>> &q) {
+vll MO(vector<pair<ll, ll>> &q) {
     ans = 0;
     ll m = sz(q);
-    vector<ll> ord(m);
+    vll ord(m);
     iota(ord.begin(), ord.end(), 0);
 #if HILBERT
-    vector<ll> h(m);
+    vll h(m);
     for (ll i = 0; i < m; i++) h[i] = hilbert(q[i].first, q[i].second);
     sort(ord.begin(), ord.end(), [&](ll l, ll r) { return h[l] < h[r]; });
 #else
@@ -46,7 +46,7 @@ vector<ll> MO(vector<pair<ll, ll>> &q) {
         return q[l].second < q[r].second;
     });
 #endif
-    vector<ll> ret(m);
+    vll ret(m);
     ll l = 0, r = -1;
 
     for (ll i : ord) {

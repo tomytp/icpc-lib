@@ -5,12 +5,12 @@
 // complexity: O(|s|) per op, O(total keys)
 
 struct trie {
-    vector<v64> to;
-    v64 end, pref;
+    vector<vll> to;
+    vll end, pref;
     ll sigma; char norm;
 
     trie(ll sigma_=26, char norm_='a') : sigma(sigma_), norm(norm_) {
-        to = {v64(sigma)};
+        to = {vll(sigma)};
         end = {0}, pref = {0};
     }
 
@@ -20,7 +20,7 @@ struct trie {
             ll &nxt = to[x][c-norm];
             if (!nxt) {
                 nxt = sz(to);
-                to.push_back(v64(sigma));
+                to.push_back(vll(sigma));
                 end.push_back(0), pref.push_back(0);
             }
             x = nxt, pref[x]++;

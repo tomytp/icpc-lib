@@ -3,9 +3,9 @@
 //
 // O(n)
 
-v64 get_z(string s) {
+vll get_z(string s) {
 	ll n = sz(s);
-	v64 z(n, 0);
+	vll z(n, 0);
 
 	ll l = 0, r = 0;
 	forn(i, 1, n) {

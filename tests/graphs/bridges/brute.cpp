@@ -6,12 +6,12 @@
 int main() {
     _;
     ll n, m; cin >> n >> m;
-    vector<p64> edges(m);
+    vector<pll> edges(m);
     for (auto& [u, v] : edges) cin >> u >> v;
 
     // BFS from s to t, skipping edge at index skip_e
     auto connected = [&](ll s, ll t, ll skip_e) -> bool {
-        v64 vis(n, 0);
+        vll vis(n, 0);
         vis[s] = 1;
         queue<ll> q; q.push(s);
         while (!q.empty()) {
@@ -26,7 +26,7 @@ int main() {
         return vis[t];
     };
 
-    vector<p64> bridges;
+    vector<pll> bridges;
     forn(i, 0, m) {
         auto [u, v] = edges[i];
         if (!connected(u, v, i))

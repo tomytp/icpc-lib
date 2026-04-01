@@ -10,7 +10,7 @@
 //
 // complexity: O(n * 2^n), O(2^n) mem
 
-v64 sos_dp_sub(v64 f) {
+vll sos_dp_sub(vll f) {
     ll n = __builtin_ctzll(sz(f));
     assert((1ll<<n) == sz(f));
 
@@ -20,7 +20,7 @@ v64 sos_dp_sub(v64 f) {
     return f;
 }
 
-v64 sos_dp_super(v64 f) {
+vll sos_dp_super(vll f) {
     ll n = __builtin_ctzll(sz(f));
     assert((1ll<<n) == sz(f));
 

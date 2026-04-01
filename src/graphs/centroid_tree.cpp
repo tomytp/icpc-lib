@@ -8,8 +8,8 @@
 // O(n log(n)) de tempo e memoria
 
 const ll MAX = 100'005;
-vector<v64> g(MAX), dist(MAX);
-v64 siz(MAX), rem(MAX), p(MAX);
+vector<vll> g(MAX), dist(MAX);
+vll siz(MAX), rem(MAX), p(MAX);
 
 ll dfs_sz(ll i, ll l=-1) {
     siz[i] = 1;

@@ -6,7 +6,7 @@
 //
 // complexity: O(N^3), O(N^2)
 
-bool floyd_warshall(ll n, vector<v64>& d) {
+bool floyd_warshall(ll n, vector<vll>& d) {
     forn(k,0,n)
     forn(i,0,n)
     forn(j,0,n)

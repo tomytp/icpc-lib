@@ -7,10 +7,10 @@
 
 #include "src/extra/template.cpp"
 
-ll brute_flow(ll n, ll s, ll t, map<p64,ll> cap) {
+ll brute_flow(ll n, ll s, ll t, map<pll,ll> cap) {
     ll flow = 0;
     while (true) {
-        v64 par(n, -1); par[s] = s;
+        vll par(n, -1); par[s] = s;
         queue<ll> q; q.push(s);
         while (!q.empty() && par[t] == -1) {
             ll u = q.front(); q.pop();
@@ -34,11 +34,11 @@ int main(int argc, char* argv[]) {
 
     ll F; ouf >> F;
     ll k; ouf >> k;
-    set<p64> cut_set;
+    set<pll> cut_set;
     forn(i, 0, k) { ll u, v; ouf >> u >> v; cut_set.insert({u, v}); }
 
     // Build capacity map
-    map<p64, ll> cap;
+    map<pll, ll> cap;
     for (auto [u, v, c] : edges) cap[{u, v}] += c;
 
     // 1. Verify F = true max flow

@@ -1,14 +1,14 @@
 // Hungarian algorithm — min-cost perfect matching
 // a[i][j] = cost of assigning worker i to job j (n workers, m >= n jobs)
 // Returns {min cost, assignment}: assignment[i] = j
-pair<ll, v64> hungarian(const vector<v64> &a) {
+pair<ll, vll> hungarian(const vector<vll> &a) {
 	if (a.empty()) return {0, {}};
 	ll n = sz(a) + 1, m = sz(a[0]) + 1;
-	v64 u(n), v(m), p(m), ans(n - 1);
+	vll u(n), v(m), p(m), ans(n - 1);
 	forn(i, 1, n) {
 		p[0] = i;
 		ll j0 = 0; // "dummy" worker 0
-		v64 dist(m, INF), pre(m, -1);
+		vll dist(m, INF), pre(m, -1);
 		vector<bool> done(m + 1);
 		do { // dijkstra
 			done[j0] = true;

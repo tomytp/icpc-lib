@@ -12,11 +12,11 @@
 
 template <bool VALS_EDGES> struct HLD {
     ll N, tim = 0;
-    vector<v64> adj;
-    v64 parent, siz, head, pos;
+    vector<vll> adj;
+    vll parent, siz, head, pos;
     vector<Node> vseg;
     std::unique_ptr<segtree<Node, Update>> seg;
-    HLD(vector<v64> adj_, v64 vals)
+    HLD(vector<vll> adj_, vll vals)
         : N(sz(adj_)), adj(adj_), parent(N, -1), siz(N, 1),
           head(N),pos(N),vseg(N, {0}){ dfsSz(0); dfsHld(0);
             seg = make_unique<segtree<Node, Update>>(N);

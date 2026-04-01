@@ -5,7 +5,7 @@
 // complexity: O(alpha(N)) amortized per op, O(N)
 
 struct dsu {
-    v64 id, len;
+    vll id, len;
 
     dsu(ll n) : id(n), len(n, 1) { iota(id.begin(), id.end(), 0); }
 

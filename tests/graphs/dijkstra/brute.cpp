@@ -6,7 +6,7 @@ int main() {
     vector<tuple<ll, ll, ll>> edges(m);
     for (auto& [u, v, w] : edges) cin >> u >> v >> w;
 
-    v64 d(n, INF);
+    vll d(n, INF);
     d[s] = 0;
     forn(iter, 0, n-1)
         for (auto& [u, v, w] : edges)

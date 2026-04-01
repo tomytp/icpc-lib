@@ -5,12 +5,12 @@
 // complexity: O(N log N) build, O(1) query; O(N log N) space
 
 struct sparse {
-    vector<v64> m;
+    vector<vll> m;
     
-    sparse(v64& v) {
+    sparse(vll& v) {
         ll n = sz(v);
         ll logn = 64 - __builtin_clzll(n - 1);
-        m.resize(n+1, v64(logn+1));
+        m.resize(n+1, vll(logn+1));
 
         forn(i, 0, n) m[i][0] = v[i];
 

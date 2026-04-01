@@ -2,8 +2,8 @@
 using namespace std;
 
 typedef long long ll;
-typedef pair<ll, ll> p64;
-typedef vector<ll> v64;
+typedef pair<ll, ll> pll;
+typedef vector<ll> vll;
 
 #define forn(i, s, e) for (ll i = (s); i < (e); i++)
 #define sz(u) ((ll) u.size())

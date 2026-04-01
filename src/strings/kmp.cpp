@@ -4,8 +4,8 @@
 //
 // complexity: O(n + m), O(n)
 
-v64 pi(string& s) {
-    v64 p(sz(s));
+vll pi(string& s) {
+    vll p(sz(s));
     for (ll i = 1, j = 0; i < sz(s); i++) {
         while (j && s[j] != s[i]) j = p[j-1];
         if (s[j] == s[i]) j++;
@@ -14,8 +14,8 @@ v64 pi(string& s) {
     return p;
 }
 
-v64 match(string& pat, string& s) {
-    v64 p = pi(pat), match;
+vll match(string& pat, string& s) {
+    vll p = pi(pat), match;
     for (ll i = 0, j = 0; i < sz(s); i++) {
         while (j && pat[j] != s[i]) j = p[j-1];
         if (pat[j] == s[i]) j++;
@@ -24,10 +24,10 @@ v64 match(string& pat, string& s) {
     return match;
 }
     
-struct KMPaut : vector<v64> {
+struct KMPaut : vector<vll> {
     KMPaut(){}
-    KMPaut (string& s) : vector<v64>(26, v64(sz(s)+1)) {
-        v64 p = pi(s);
+    KMPaut (string& s) : vector<vll>(26, vll(sz(s)+1)) {
+        vll p = pi(s);
         auto& aut = *this;
         aut[s[0]-'a'][0] = 1;
         for (char c = 0; c < 26; c++)

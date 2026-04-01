@@ -6,7 +6,7 @@
 int main() {
     _;
     ll n, q; cin >> n >> q;
-    v64 a(n);
+    vll a(n);
     forn(i, 0, n) cin >> a[i];
     perseg ps(a, q);
     while (q--) {

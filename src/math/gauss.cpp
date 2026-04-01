@@ -13,7 +13,7 @@ pair<ll, vector<T>> gauss(vector<vector<T>> a, vector<T> b) {
     ll n = sz(a), m = sz(a[0]);
     forn(i, 0, n) a[i].push_back(b[i]);
 
-    v64 where(m, -1);
+    vll where(m, -1);
     for (ll col = 0, row = 0; col < m && row < n; col++) {
         ll sel = row;
         forn(i, row, n)

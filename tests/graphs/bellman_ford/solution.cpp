@@ -7,7 +7,7 @@ int main() {
     vector<tuple<ll,ll,ll>> edges(m);
     for (auto& [u, v, w] : edges) cin >> u >> v >> w;
 
-    v64 d, p;
+    vll d, p;
     bellman_ford(s, n, d, p, edges);
     forn(i, 0, n) {
         cout << d[i];

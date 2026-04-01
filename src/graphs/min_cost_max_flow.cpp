@@ -18,7 +18,7 @@ template<typename T> struct mcmf {
     };
 
     vector<vector<edge>> g;
-    v64 par_idx, par;
+    vll par_idx, par;
     T inf;
     vector<T> dist;
 
@@ -116,8 +116,8 @@ template<typename T> struct mcmf {
     }
 
     // Optional: returns original edges where flow == cap
-    vector<p64> recover() {
-        vector<p64> used;
+    vector<pll> recover() {
+        vector<pll> used;
         forn(i, 0, sz(g)) for (edge e : g[i])
             if(e.flow == e.cap && !e.res) used.push_back({i, e.to});
         return used;

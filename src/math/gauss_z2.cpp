@@ -12,7 +12,7 @@
 template<ll D> struct gauss_z2 {
 	bitset<D> basis[D], keep[D];
 	ll rk, in, dim;
-	v64 id;
+	vll id;
  
 	gauss_z2 () : rk(0), in(-1), id(D, -1) {};
 
@@ -39,12 +39,12 @@ template<ll D> struct gauss_z2 {
 		}
 		return {true, c};
 	}
-	pair<bool, v64> recover(bitset<D> v) {
+	pair<bool, vll> recover(bitset<D> v) {
 		auto [span, bc] = coord(v);
 		if (not span) return {false, {}};
 		bitset<D> aux;
 		for (ll i = dim - 1; i >= 0; i--) if (bc[i]) aux ^= keep[i];
-		v64 oc;
+		vll oc;
 		for (ll i = dim - 1; i >= 0; i--) if (aux[i]) oc.push_back(id[i]);
 		return {true, oc};
 	}

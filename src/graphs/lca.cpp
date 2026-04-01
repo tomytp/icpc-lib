@@ -12,11 +12,11 @@
 
 struct LCA {
 	ll T = 0;
-	v64 time, path, ret, dep;
+	vll time, path, ret, dep;
 	sparse rmq;
 
-	LCA(vector<v64>& C, ll root) : time(sz(C)), dep(sz(C)), rmq((dfs(C,root,-1), ret)) {}
-	void dfs(vector<v64>& C, ll v, ll par) {
+	LCA(vector<vll>& C, ll root) : time(sz(C)), dep(sz(C)), rmq((dfs(C,root,-1), ret)) {}
+	void dfs(vector<vll>& C, ll v, ll par) {
 		time[v] = T++;
         if(par != -1) dep[v] = dep[par] + 1;            
 		for (ll y : C[v]) if (y != par) {

@@ -23,7 +23,7 @@ NO_PRINT = "noprint"
 
 CUSTOM_TYPES = {
     "ll", "ull", "ld", "i64", "u64",
-    "p64", "pii", "pll", "v64", "vll",
+    "pii", "pll", "vll",
     "vi", "vii", "vvi"
 }
 

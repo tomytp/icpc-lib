@@ -3,7 +3,7 @@
 int main() {
     _;
     ll n, q; cin >> n >> q;
-    vector<v64> g(n);
+    vector<vll> g(n);
     while (q--) {
         ll t, u, v; cin >> t >> u >> v;
         if (t == 1) {

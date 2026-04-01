@@ -9,15 +9,15 @@
 
 struct TJ {
     ll n, timer=0;
-    vector<v64>& g;
-    v64 tin, low;
+    vector<vll>& g;
+    vll tin, low;
 	
     vector<bool> is_art; // ART
-    vector<p64> bridges; // BRIDGE
-    vector<p64> st; // BCC
-    vector<vector<p64>> bcc; // BCC
+    vector<pll> bridges; // BRIDGE
+    vector<pll> st; // BCC
+    vector<vector<pll>> bcc; // BCC
 
-    TJ(ll n, vector<v64>& g): n(n), g(g){
+    TJ(ll n, vector<vll>& g): n(n), g(g){
         tin.assign(n,-1);
         low.resize(n);
         is_art.assign(n, false); // ART
@@ -41,7 +41,7 @@ struct TJ {
                 if(low[to]>=tin[v] && p!=-1) is_art[v] = true; // ART
 
                 if(low[to]>=tin[v]){ // BCC
-                  vector<p64> c; // BCC
+                  vector<pll> c; // BCC
                   while(1){ // BCC
                     auto e=st.back(); st.pop_back(); // BCC
                     c.push_back(e); // BCC

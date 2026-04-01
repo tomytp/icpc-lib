@@ -4,7 +4,7 @@
 int main() {
     _;
     ll n, m; cin >> n >> m;
-    vector<v64> g(n);
+    vector<vll> g(n);
     forn(i, 0, m) {
         ll u, v; cin >> u >> v;
         g[u].push_back(v);

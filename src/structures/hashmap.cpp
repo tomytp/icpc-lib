@@ -12,12 +12,12 @@ struct chash {
     ll operator()(ll x) const { return __builtin_bswap64(x*C); }
 };
 
-// for p64
+// for pll
 struct chash {
-    size_t operator()(const p64& p) const {
+    size_t operator()(const pll& p) const {
         return p.first ^ __builtin_bswap64(p.second);
     }
 };
 
 __gnu_pbds::gp_hash_table<ll, ll, chash> h({},{},{},{},{1<<16});
-__gnu_pbds::gp_hash_table<p64, ll, chash> h({},{},{},{},{1<<16});
+__gnu_pbds::gp_hash_table<pll, ll, chash> h({},{},{},{},{1<<16});

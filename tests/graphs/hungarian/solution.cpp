@@ -13,7 +13,7 @@
 int main() {
     _;
     ll n; cin >> n;
-    vector<v64> a(n, v64(n));
+    vector<vll> a(n, vll(n));
     forn(i, 0, n) forn(j, 0, n) cin >> a[i][j];
     auto [cost, assign] = hungarian(a);
     cout << cost << ln;

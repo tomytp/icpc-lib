@@ -8,7 +8,7 @@
 // build - O(n log(n))
 // lca - O(log(n))
 
-vector<v64> g(MAX);
+vector<vll> g(MAX);
 ll n, p;
 ll parent[MAXLOG][MAX];
 ll in[MAX], out[MAX];

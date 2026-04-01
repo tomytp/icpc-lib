@@ -5,7 +5,7 @@
 
 
 void compress(){
-    v64 vals;
+    vll vals;
     sort(vals.begin(), vals.end());
     vals.erase(unique(vals.begin(), vals.end()), vals.end());
  

@@ -7,9 +7,9 @@
 // complexity: O(N)
 
 
-pair<v64, v64> sieve(ll n){
-    v64 lp(n+1);
-    v64 pr;
+pair<vll, vll> sieve(ll n){
+    vll lp(n+1);
+    vll pr;
     forn(i, 2, n+1) {
         if (lp[i] == 0) {
             lp[i] = i;
@@ -25,9 +25,9 @@ pair<v64, v64> sieve(ll n){
     return {pr, lp};
 }
 
-v64 calc_mu(v64& lp) {
+vll calc_mu(vll& lp) {
     ll n = sz(lp) - 1;
-    v64 ans(n);
+    vll ans(n);
     ans[1] = 1;
     forn(i,2,n) {
         ll p = lp[i], x = i/p;
@@ -37,9 +37,9 @@ v64 calc_mu(v64& lp) {
     return ans;
 }
 
-v64 calc_d(v64& lp) {
+vll calc_d(vll& lp) {
     ll n = sz(lp) - 1;
-    v64 ans(n);
+    vll ans(n);
     ans[1] = 1;
     forn(i, 2, n) {
         ll p = lp[i], x = i / p;

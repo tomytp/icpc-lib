@@ -16,9 +16,9 @@
 #include "src/graphs/lca.cpp"
 
 const ll MAX = 100'005;
-vector<pair<ll, ll>> virt[MAX];
+vector<pll> virt[MAX];
 
-ll build_virt(vector<ll> v, LCA& lca) {
+ll build_virt(vll v, LCA& lca) {
 	auto cmp = [&](ll i, ll j) { return lca.time[i] < lca.time[j]; };
 	sort(v.begin(), v.end(), cmp);
 	for (ll i = sz(v)-1; i; i--) v.push_back(lca.lca(v[i], v[i-1]));

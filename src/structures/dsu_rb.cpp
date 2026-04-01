@@ -7,7 +7,7 @@
 // complexity: O(log N) per find/unite, O(1) per checkpoint/rollback
 
 struct dsu_rb {
-    v64 id, len;
+    vll id, len;
     ll allbip = true;
     stack<pair<ll&, ll>> st;
 

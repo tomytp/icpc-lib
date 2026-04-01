@@ -6,9 +6,9 @@
 
 struct Bit {
     ll n;
-    v64 bit;
+    vll bit;
     Bit(ll _n = 0) : n(_n), bit(n + 1) {}
-    Bit(v64& v) : n(sz(v)), bit(n + 1) {
+    Bit(vll& v) : n(sz(v)), bit(n + 1) {
         for (ll i = 1; i <= n; i++) {
             bit[i] += v[i - 1];
             ll j = i + (i & -i);

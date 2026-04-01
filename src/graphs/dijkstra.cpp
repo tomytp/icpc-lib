@@ -5,13 +5,13 @@
 // complexity: O((N + M) log N), O(N + M)
 
 // d = distance | p = from/path
-void dijkstra(ll s, v64 &d, v64& p, vector<vector<p64>>& g) {
+void dijkstra(ll s, vll &d, vll& p, vector<vector<pll>>& g) {
     ll n = sz(g);
     d.assign(n, INF);
     p.assign(n, -1);
 
     d[s] = 0;
-    priority_queue<p64> pq;
+    priority_queue<pll> pq;
     pq.push({0, s});
     while (!pq.empty()) {
         ll u = pq.top().second;
