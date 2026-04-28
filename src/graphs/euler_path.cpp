@@ -22,24 +22,24 @@ template<bool directed=false> struct euler {
 
 	euler(ll n_) : n(n_), g(n) {}
 	void add(ll a, ll b) {
-		ll at = used.size();
+		ll at = sz(used);
 		used.push_back(0);
 		g[a].emplace_back(b, at);
 		if (!directed) g[b].emplace_back(a, at);
 	}
 #warning chamar para o src certo!
 	pair<bool, vector<pll>> get_path(ll src) {
-		if (!used.size()) return {true, {}};
+		if (!sz(used)) return {true, {}};
 		vll beg(n, 0);
 		for (ll& i : used) i = 0;
 		// {{vertice, anterior}, label}
 		vector<pair<pll, ll>> ret, st = {{{src, -1}, -1}};
-		while (st.size()) {
+		while (sz(st)) {
 			ll at = st.back().first.first;
 			ll& it = beg[at];
-			while (it < g[at].size() and used[g[at][it].second]) it++;
-			if (it == g[at].size()) {
-				if (ret.size() and ret.back().first.second != at)
+			while (it < sz(g[at]) && used[g[at][it].second]) it++;
+			if (it == sz(g[at])) {
+				if (sz(ret) && ret.back().first.second != at)
 					return {false, {}};
 				ret.push_back(st.back()), st.pop_back();
 			} else {
@@ -47,18 +47,18 @@ template<bool directed=false> struct euler {
 				used[g[at][it].second] = 1;
 			}
 		}
-		if (ret.size() != used.size()+1) return {false, {}};
+		if (sz(ret) != sz(used)+1) return {false, {}};
 		vector<pll> ans;
 		for (auto i : ret) ans.emplace_back(i.first.first, i.second);
 		reverse(ans.begin(), ans.end());
 		return {true, ans};
 	}
 	pair<bool, vector<pll>> get_cycle() {
-		if (!used.size()) return {true, {}};
+		if (!sz(used)) return {true, {}};
 		ll src = 0;
-		while (!g[src].size()) src++;
+		while (!sz(g[src])) src++;
 		auto ans = get_path(src);
-		if (!ans.first or ans.second[0].first != ans.second.back().first)
+		if (!ans.first || ans.second[0].first != ans.second.back().first)
 			return {false, {}};
 		ans.second[0].second = ans.second.back().second;
 		ans.second.pop_back();
