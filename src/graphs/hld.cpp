@@ -4,6 +4,8 @@
 // the path from any leaf to the root contains at most log(n) light edges.
 // All values initialized to the segtree default. Root must be 0.
 //
+// head[u]: Highest node (closest to root) of the heavy path containing u.
+// pos[u]: Position of node u in the Segment Tree array (DFS order).
 // Uses a Lazy Segment Tree  
 //
 // complexity: O((log N)^2) per op, O(N) build
@@ -14,15 +16,19 @@ template <bool VALS_EDGES> struct HLD {
     ll N, tim = 0;
     vector<vll> adj;
     vll parent, siz, head, pos;
-    vector<Node> vseg;
     std::unique_ptr<segtree<Node, Update>> seg;
-    HLD(vector<vll> adj_, vll vals)
+    HLD(vector<vll> adj_)
         : N(sz(adj_)), adj(adj_), parent(N, -1), siz(N, 1),
-          head(N),pos(N),vseg(N, {0}){ dfsSz(0); dfsHld(0);
+          head(N),pos(N){ dfsSz(0); dfsHld(0);
             seg = make_unique<segtree<Node, Update>>(N);
-            seg->set_leaves(vseg);
         }
-    void dfsSz(ll v) { // get heavy son
+    void set_leaves(const vector<Node>& lvs) {
+        // if VALS_EDGES lvs[i] is the weight of i -> parent[i]
+        vector<Node> leaves(N); 
+        forn(i, 0, N) leaves[pos[i]] = lvs[i]; 
+        seg->set_leaves(leaves);
+    }
+    void dfsSz(ll v) { // get heavy son 
         for (ll& u : adj[v]) {
             adj[u].erase(find(adj[u].begin(), adj[u].end(), v));
             parent[u] = v;
@@ -47,19 +53,23 @@ template <bool VALS_EDGES> struct HLD {
         if (pos[u] > pos[v]) swap(u, v);
         op(pos[u] + VALS_EDGES, pos[v]);
     }
-    void modifyPath(ll u, ll v, ll val) { 
+    void modifyPath(ll u, ll v, Update upd) { 
         process(u, v, [&](ll l, ll r) { 
-            seg->update(l, r, {val}); // Modify depending on problem 
+            seg->update(l, r, upd); 
         });
     }
-    ll queryPath(ll u, ll v) { // Modify depending on problem
-        ll res = -INF;
+    Node queryPath(ll u, ll v) { 
+        Node res = Node();
+        // Non-commutative ops require exact merge order.
         process(u, v, [&](ll l, ll r) {
-                res = max(res, seg->query(l, r).val);
+            res = res*seg->query(l, r);
         });
         return res;
     }
-    ll querySubtree(ll v) { // modifySubtree is similar
-        return seg->query(pos[v] + VALS_EDGES, pos[v] + siz[v] - 1).val;
+    Node querySubtree(ll v) { 
+        return seg->query(pos[v] + VALS_EDGES, pos[v] + siz[v] - 1);
+    }
+    void modifySubtree(ll v, Update upd) {
+        seg->update(pos[v] + VALS_EDGES, pos[v] + siz[v] - 1, upd);
     }
 };
