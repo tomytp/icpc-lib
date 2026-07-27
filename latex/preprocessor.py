@@ -204,29 +204,25 @@ def preprocess_text(text: str) -> str:
     # Remove lines starting with #w (KACTL convention)
     filtered = '\n'.join([ln for ln in text.splitlines() if not ln.startswith('#w')]) + '\n'
 
-    try:
-        proc = subprocess.run(
-            ["clang", "-E", "-x", "c++", "-dD", "-P", "-"],
-            input=filtered.encode('utf-8'),
-            stdout=subprocess.PIPE,
-            stderr=subprocess.DEVNULL,
-            check=True,
-        )
-        out = proc.stdout.decode('utf-8', errors='ignore')
-    except Exception:
+    # -fpreprocessed is mandatory: it strips comments but suppresses macro
+    # expansion, #include resolution and (with -dD) the dump of the compiler's
+    # builtin #defines. Without it the hash is salted by the compiler's
+    # identity and version, so CI and local builds disagree.
+    for cmd in (["cpp", "-dD", "-P", "-fpreprocessed", "-"],
+                ["clang", "-E", "-x", "c++", "-dD", "-P", "-fpreprocessed", "-"]):
         try:
             proc = subprocess.run(
-                ["cpp", "-dD", "-P", "-fpreprocessed", "-"],
+                cmd,
                 input=filtered.encode('utf-8'),
                 stdout=subprocess.PIPE,
                 stderr=subprocess.DEVNULL,
                 check=True,
             )
-            out = proc.stdout.decode('utf-8', errors='ignore')
+            return proc.stdout.decode('utf-8', errors='ignore')
         except Exception:
-            out = filtered
+            continue
 
-    return out
+    return filtered
 
 
 def compute_hash(text: str) -> str:
