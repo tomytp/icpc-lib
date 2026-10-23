@@ -6,21 +6,16 @@
 
 struct sparse {
     vector<vll> m;
-    
-    sparse(vll& v) {
+    sparse(vll& v) : m(1, v) {
         ll n = sz(v);
-        ll logn = 64 - __builtin_clzll(n - 1);
-        m.resize(n+1, vll(logn+1));
-
-        forn(i, 0, n) m[i][0] = v[i];
-
-        for (ll j = 1; (1 << j) <= n; j++)
-        for (ll i = 0; i + (1 << j) <= n; i++)
-            m[i][j] = min(m[i][j-1], m[i + (1 << (j-1))][j-1]);    
+        for (ll j = 1; (1LL << j) <= n; j++) {
+            m.emplace_back(n - (1LL << j) + 1);
+            forn(i, 0, sz(m[j]))
+                m[j][i] = min(m[j-1][i], m[j-1][i + (1LL << (j-1))]);
+        }
     }
-    
-    ll query(ll a, ll b) { 
-        ll j = __builtin_clzll(1) - __builtin_clzll(b - a + 1);
-        return min(m[a][j], m[b - (1 << j) + 1][j]);
+    ll query(ll a, ll b) {  // min de [a, b], exige a <= b
+        ll j = __lg(b - a + 1);
+        return min(m[j][a], m[j][b - (1LL << j) + 1]);
     }
 };
