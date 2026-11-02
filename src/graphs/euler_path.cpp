@@ -8,11 +8,15 @@
 // Se for get_path, na primeira posicao o id vai ser -1
 // get_path(src) tenta achar um caminho ou ciclo euleriano
 // comecando no vertice 'src'.
+// src certo: direcionado -> vertice com saida - entrada = 1;
+// nao-direcionado -> vertice de grau impar; se nao houver, qualquer
+// vertice com aresta. Com src errado retorna false.
 // Se achar um ciclo, o primeiro e ultimo vertice serao 'src'.
-// Se for um P3, um possiveo retorno seria [0, 1, 2, 0]
+// Se for um C3, um possivel retorno seria [0, 1, 2, 0]
 // get_cycle() acha um ciclo euleriano se o grafo for euleriano.
-// Se for um P3, um possivel retorno seria [0, 1, 2]
-// (vertie inicial nao repete)
+// Se for um C3, um possivel retorno seria [0, 1, 2]
+// (vertice inicial nao repete)
+// Sem arestas: retorna {true, {}}.
 // O(n+m)
 
 template<bool directed=false> struct euler {
