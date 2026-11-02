@@ -50,7 +50,7 @@ struct sat {
     }
     void at_most_one(vll v) { // no max um verdadeiro
         g.resize(2*(tot+sz(v)));
-        for (ll i = 0; i < sz(v); i++) {
+        forn(i, 0, sz(v)) {
             add_impl(tot+i, ~v[i]);
             if (i) {
                 add_impl(tot+i, tot+i-1);
@@ -64,8 +64,8 @@ struct sat {
         ans = vll(n, -1);
         ll t = 0;
         vis = comp = id = vll(2*tot, 0);
-        for (ll i = 0; i < 2*tot; i++) if (!vis[i]) dfs(i, t);
-        for (ll i = 0; i < tot; i++)
+        forn(i, 0, 2*tot) if (!vis[i]) dfs(i, t);
+        forn(i, 0, tot)
             if (comp[2*i] == comp[2*i+1]) return {false, {}};
         return {true, ans};
     }
