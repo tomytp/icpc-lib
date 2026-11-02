@@ -7,19 +7,17 @@
 // suffix_array - O(n log(n))
 // kasai - O(n)
 
-vll suffix_array(string s) {
-    s.push_back('$'); // 0 caso vll (CHECAR SE PODE)
-    ll n = sz(s), N = max(n, 260ll);
+vll suffix_array(string& s) {
+    ll n = sz(s)+1, N = max(n, 257ll);
     vll sa(n), ra(n);
     forn(i, 0, n) sa[i] = i, ra[i] = s[i];
 
     for(ll k = 0; k < n; k ? k *= 2 : k++) {
         vll nsa(sa), nra(n), cnt(N);
 
-        for(int i = 0; i < n; i++) nsa[i] = (nsa[i]-k+n)%n, cnt[ra[i]]++;
-        
+        forn(i, 0, n) nsa[i] = (nsa[i]-k+n)%n, cnt[ra[i]]++;
         forn(i, 1, N) cnt[i] += cnt[i-1];
-        for(ll i = n-1; i+1; i--) sa[--cnt[ra[nsa[i]]]] = nsa[i];
+        for(ll i = n-1; i >= 0; i--) sa[--cnt[ra[nsa[i]]]] = nsa[i];
 
         for(ll i = 1, r = 0; i < n; i++) nra[sa[i]] = r += ra[sa[i]] !=
             ra[sa[i-1]] || ra[(sa[i]+k)%n] != ra[(sa[i-1]+k)%n];
