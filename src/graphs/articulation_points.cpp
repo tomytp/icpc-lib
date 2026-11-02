@@ -26,10 +26,10 @@ struct TJ {
 
     void dfs(ll v, ll p=-1){
         tin[v]=low[v]=timer++;
-        ll ch=0;
+        ll ch=0; bool pe=false;
 
         for(ll to:g[v]){
-            if(to==p) continue;
+            if(to==p && !pe){ pe=true; continue; }
 
             if(tin[to]==-1){
                 st.push_back({v,to}); // BCC
