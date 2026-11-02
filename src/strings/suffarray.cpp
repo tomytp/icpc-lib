@@ -27,7 +27,7 @@ vll suffix_array(string& s) {
     return vll(sa.begin()+1, sa.end());
 }
  
-vll kasai(string s, vll sa) {
+vll kasai(string& s, vll& sa) {
     ll n = sz(s), k = 0;
     vll ra(n), lcp(n);
     forn(i, 0, n) ra[sa[i]] = i;
