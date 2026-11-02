@@ -1,8 +1,8 @@
 // Order-Statistic Tree (PBDS)
 //
 // Set ordenado com acesso por posicao.
-// s.find_by_order(k) -> iterador pro k-esimo (0-indexado), end() se k >= sz(s)
-// s.order_of_key(x)  -> quantidade de elementos < x
+// s.find_by_order(k): iterador pro k-esimo (0-indexado); end() se k >= sz(s).
+// s.order_of_key(x): quantidade de elementos < x.
 // Para multiset, use ordered_set<pll> com {valor, id unico}.
 //
 // complexity: O(log N) per op, O(N)

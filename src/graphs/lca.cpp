@@ -1,12 +1,9 @@
 // LCA com Euler tour + Sparse Table (RMQ)
 //
-// Constroi com o grafo (lista de adjacencia) e a raiz
-// DFS recursiva: arvore-linha com N ~ 5e5 pode estourar pilha pequena
+// Constroi com o grafo (lista de adjacencia) e a raiz.
+// DFS recursiva: arvore-linha com N ~ 5e5 pode estourar pilha pequena.
 //
-// Complexidades:
-// build - O(n log(n))
-// lca - O(1)
-// dist - O(1)
+// complexity: build O(n log n), lca e dist O(1)
 
 #include "src/structures/sparse_table.cpp"
 

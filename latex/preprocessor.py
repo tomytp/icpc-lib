@@ -84,7 +84,6 @@ def inject_custom_type_markup(s: str) -> str:
 def escape_latex(s: str) -> str:
     """Escape special LaTeX characters."""
     s = s.replace('\\', '\\textbackslash{}')
-    s = s.replace('^', '\\^{}')
     s = s.replace('_', '\\_')
     s = s.replace('&', '\\&')
     s = s.replace('%', '\\%')
@@ -93,6 +92,7 @@ def escape_latex(s: str) -> str:
     s = s.replace('{', '\\{')
     s = s.replace('}', '\\}')
     s = s.replace('~', '\\textasciitilde{}')
+    s = s.replace('^', '\\textasciicircum{}')
     return s
 
 

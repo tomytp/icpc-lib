@@ -1,7 +1,9 @@
 // Minimum Enclosing Circle
-// calcula o minimum enclosing circle, probalistico mas e O(n)
-// so se o pt for de double!!
-// talvez usar r*(1+eps);
+//
+// Menor circulo que contem todos os pontos. Aleatorizado.
+// So funciona com pt de double; talvez usar r * (1 + eps) na comparacao.
+//
+// complexity: O(n) esperado
 
 pair<pt, ld> mec(vector<pt> v) {
 	shuffle(v.begin(), v.end(), mt19937(time(0)));

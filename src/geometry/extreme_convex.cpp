@@ -1,6 +1,8 @@
 // Extremal Vertex in Convex Polygon
-// Dado comparador, calcula o maior vertice nessa ordem
-// O(log(n))
+//
+// Dado um comparador, acha o maior vertice do poligono convexo nessa ordem.
+//
+// complexity: O(log n)
 
 #include "src/geometry/geo_int.cpp"
 

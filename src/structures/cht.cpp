@@ -1,13 +1,9 @@
 // Convex Hull Trick Dinamico
 //
-// para double, use INF = 1/.0, div(a, b) = a/b
-// update(x) atualiza o ponto de intersecao da reta x
-// overlap(x) verifica se a reta x sobrepoe a proxima
-// add(a, b) adiciona reta da forma ax + b
-// query(x) computa maximo de ax + b para entre as retas
+// add(a, b): adiciona a reta ax + b. query(x): maximo de ax + b entre as retas.
+// Para double, use INF = 1/.0 e div(a, b) = a/b.
 //
-// O(log(n)) amortizado por insercao
-// O(log(n)) por query
+// complexity: O(log n) amortizado por add, O(log n) por query
 
 struct Line {
     mutable ll a, b, p;

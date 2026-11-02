@@ -1,6 +1,9 @@
 // Circumcircle and Circumradius
-// ccRadius: calcula o circumraio funciona com pt de int
-// ccCentar: calcula o circumcentro funciona somente com pt de double
+//
+// ccRadius: raio do circulo circunscrito; funciona com pt de int.
+// ccCenter: centro do circulo circunscrito; so funciona com pt de double.
+//
+// complexity: O(1)
 
 ld ccRadius(pt a, pt b, pt c) {
     ld s = sarea(a,b,c);

@@ -1,10 +1,10 @@
 // Articulation Points / Bridges / Biconnected Components
 //
-// is_art[i] = true se i eh ponto de articulacao        (ART)
-// bridges: lista de arestas ponte                      (BRIDGE)
-// bcc: lista de componentes biconexas (em arestas) (BCC)
+// is_art[i]: i e ponto de articulacao (ART).
+// bridges: lista de arestas ponte (BRIDGE).
+// bcc: lista de componentes biconexas, em arestas (BCC).
 //
-// O(n+m)
+// complexity: O(n + m)
 
 
 struct TJ {

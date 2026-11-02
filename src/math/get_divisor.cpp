@@ -1,7 +1,8 @@
 // Flattened Divisor Sieve (CSR format)
-// Precomputes all divisors up to n. 
-// Faster than vector<vll> for cache reasons 
-// Time Complexity: O(n log n) | Space Complexity: O(n log n)
+//
+// Precomputes all divisors up to n. Faster than vector<vll> for cache reasons.
+//
+// complexity: O(n log n), O(n log n)
 
 tuple<vll, vll, vll> get_divisor(ll n) {
     vll head(n);

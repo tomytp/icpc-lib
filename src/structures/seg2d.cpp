@@ -1,21 +1,12 @@
 // SegTree 2D Iterativa
 //
-// Consultas 0-based
-// seg2d<node> S(n, init); init[x][y] = valor inicial em (x, y)
-// Query: comb do retangulo ((x1, y1), (x2, y2))
-// Update: muda o valor da posicao (x, y) para val
-// node::comb precisa ser associativa E comutativa (soma, min, max, xor, gcd...),
-// a ordem dos elementos nao e preservada
-// Nao pergunte como que essa coisa funciona
+// seg2d<node> S(n, init), init[x][y] = valor inicial em (x, y). 0-indexado.
+// query(x1, y1, x2, y2): comb do retangulo. update(x, y, val): muda o valor de (x, y).
+// node::comb deve ser associativa e comutativa (soma, min, max, xor, gcd...).
+// Manhattan <= d: nx = x + y, ny = x - y + (n - 1), seg de tamanho 2n - 1;
+// query em [nx - d, nx + d] x [ny - d, ny + d], limitando a [0, 2n - 2].
 //
-// Para query com distancia de manhattan <= d, faca
-// nx = x+y, ny = x-y
-// Update em (nx, ny), query em ((nx-d, ny-d), (nx+d, ny+d))
-//
-// Complexidades:
-// build - O(n^2)
-// query - O(log^2(n))
-// update - O(log^2(n))
+// complexity: build O(n^2), query e update O(log^2 n)
 
 struct node {
 	ll val = 0;

@@ -1,9 +1,9 @@
 // 2-SAT
 //
-// solve() retorna um par, o first fala se eh possivel
-// atribuir, o second fala se cada variavel eh verdadeira
+// solve() retorna um par: first diz se existe atribuicao valida,
+// second[i] diz se a variavel i e verdadeira.
 //
-// O(|V|+|E|) = O(#variaveis + #restricoes)
+// complexity: O(#variaveis + #restricoes)
 
 struct sat {
     ll n, tot;

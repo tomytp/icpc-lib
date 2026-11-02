@@ -1,6 +1,8 @@
 // Polygon Cut
-// Corta um poligono deixando somente a parte ccw com a reta l dada
-// O(n)
+//
+// Corta o poligono pela reta l, mantendo so a parte ccw em relacao a l.
+//
+// complexity: O(n)
 
 vector<pt> polygonCut(const vector<pt>& poly, line l) {
 	vector<pt> res;

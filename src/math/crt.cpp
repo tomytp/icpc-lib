@@ -1,8 +1,10 @@
 // Chinese Remainder Theorem
-// se x = a(mod m) e x = b(mod n) então existe unico c<mmc(m,n) tal que x = c(mod mmc(m,n))
-// se e só se mdc(m,n)| (b-a)
-// essa funcao acha c e é -INF se for impossivel
-// aqui 0<=a<m e 0<=b<n
+//
+// Dados x = a (mod m) e x = b (mod n), com 0 <= a < m e 0 <= b < n, acha o unico
+// c < mmc(m, n) com x = c (mod mmc(m, n)). Existe se e so se mdc(m, n) divide b - a;
+// senao retorna -INF.
+//
+// complexity: O(log(min(m, n)))
 
 #include "src/math/euclid.cpp"
 

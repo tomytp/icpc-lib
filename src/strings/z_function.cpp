@@ -1,7 +1,8 @@
-// Z-funtion
-// For any index i, finds the lcp between s[i..n) ans s
+// Z-function
 //
-// O(n)
+// z[i] = lcp between s[i..n) and s.
+//
+// complexity: O(n)
 
 vll get_z(string s) {
 	ll n = sz(s);

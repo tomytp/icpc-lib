@@ -1,11 +1,10 @@
 // Gauss
 //
-// Resolve sistema linear
-// Retornar um par com o numero de solucoes
-// e alguma solucao, caso exista
+// Resolve o sistema linear.
+// Retorna {numero de solucoes, alguma solucao (se existir)}.
+// Escrito pelo gpt, cuidado.
 //
-// O(n^2 * m)
-// escrito pelo gpt, cuidado
+// complexity: O(n^2 m)
 
 template<typename T>
 pair<ll, vector<T>> gauss(vector<vector<T>> a, vector<T> b) {

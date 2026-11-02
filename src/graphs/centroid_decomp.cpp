@@ -1,15 +1,11 @@
 // Centroid Decomposition - pares a distancia k
 //
-// Objetivo: contar #pares (u,v) com dist(u,v)=k na arvore.
-// Ideia: em cada centroide c, para cada subarvore j:
-//   - path = profundidades d partindo de j (sem nos removidos)
-//   - somar cnt[k-d-1] ANTES de atualizar (evita dupla contagem entre subarvores)
-//   - depois, cnt[d+1]++ (a aresta (c,j) soma 1)
+// Conta os pares (u, v) com dist(u, v) = k na arvore.
+// Em cada centroide, para cada subarvore, soma cnt[k-d-1] antes de inserir
+// as profundidades d dela, para nao contar o mesmo par duas vezes.
+// rem e restaurado no final, entao da para chamar de novo com outro k.
 //
-// Funcoes: dfs_sz (tamanhos), centroid (acha centroide), dfs (coleta depths), decomp (divide e combina).
-// Complexidade: O(n log n) tempo; O(n) memoria.
-// Cuidados: limites de cnt, k==0 trata a parte se quiser contar (u,u); rem[c] permanece marcado.
-// escrito pelo gpt, cuidado
+// complexity: O(n log n), O(n)
 
 const ll MAX = 100'005;
 vll g[MAX];

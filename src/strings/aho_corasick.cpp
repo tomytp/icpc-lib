@@ -1,14 +1,11 @@
 // Aho-Corasick Automaton
 //
-// Builds a trie with failure links for multi-pattern matching; insert is O(|s| log sigma),
-// build is O(total length * log sigma), and queries run in O(|text| log sigma) amortized.
-// Node v represents the string read from the root to v. After build():
-//   link: failure link, node of the longest proper suffix of v that is in the trie (-1 for root)
-//   ext:  exit link, nearest node in the link chain that is the end of a pattern (-1 if none)
-//   term: number of patterns that end exactly at v
-//   cnt:  number of patterns that are suffixes of v (term summed over the link chain)
-//   mx:   length of the longest pattern that is a suffix of v (0 if none)
-// To list every pattern matched at v, follow v, ext[v], ext[ext[v]], ... (skip v if !term[v]).
+// Trie with failure links for multi-pattern matching. Node v = string from the root to v.
+// After build(): link[v] = longest proper suffix of v in the trie (-1 for root);
+// ext[v] = nearest pattern end in the link chain (-1 if none);
+// term[v] = patterns ending exactly at v; cnt[v] = patterns that are suffixes of v;
+// mx[v] = length of the longest pattern that is a suffix of v (0 if none).
+// Patterns matched at v: follow v, ext[v], ext[ext[v]], ... (skip v if !term[v]).
 //
 // complexity: O((sum |patterns| + |text|) log sigma)
 

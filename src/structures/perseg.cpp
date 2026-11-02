@@ -1,8 +1,10 @@
-// Persistent Segment Tree - O(log n) per query/update
-// Supports point updates and range queries across versions
-// 0-indexed, query on closed interval [a, b]. Version 0 is the initial array.
-// set(a, val, t) creates a new version from version t and returns its id.
-// q must be >= the total number of set() calls (memory is preallocated).
+// Persistent Segment Tree
+//
+// Point updates and range queries across versions. 0-indexed, query on [a, b].
+// Version 0 is the initial array. set(a, val, t) creates a new version from
+// version t and returns its id. q must be >= the number of set() calls.
+//
+// complexity: O(log n) per query/update, O(n + q log n) memory
 
 struct Node {
 	ll val;

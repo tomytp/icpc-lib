@@ -1,11 +1,8 @@
 // Suffix Array - O(n log n)
 //
-// kasai recebe o suffix array e calcula lcp[i],
-// o lcp entre s[sa[i],...,n-1] e s[sa[i+1],..,n-1]
+// kasai recebe o suffix array e calcula lcp[i] = lcp entre os sufixos s[sa[i]..] e s[sa[i+1]..].
 //
-// Complexidades:
-// suffix_array - O(n log(n))
-// kasai - O(n)
+// complexity: suffix_array O(n log n), kasai O(n)
 
 vll suffix_array(string& s) {
     ll n = sz(s)+1, N = max(n, 257ll);

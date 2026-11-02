@@ -1,18 +1,12 @@
 // Virtual Tree
 //
-// Comprime uma arvore dado um conjunto S de vertices, de forma que
-// o conjunto de vertices da arvore comprimida contenha S e seja
-// minimal e fechado sobre a operacao de LCA
-// Se |S| = k, a arvore comprimida tem menos que 2k vertices
-// As arestas de virt possuem a distancia do vertice ate o vizinho em arestas 
-// virt deve ter tamanho n; so as listas dos vertices usados sao limpas
-// Retorna a raiz da virtual tree (S nao pode ser vazio)
-// 
-// Precisa: 
-// lca::time deve ser a ordem de visitacao no dfs
-// lca::lca, lca::dist
+// Comprime a arvore num conjunto S: o resultado contem S, e fechado por LCA
+// e tem menos de 2|S| vertices. S nao pode ser vazio. Retorna a raiz.
+// virt[u] = arestas descendo {filho, distancia em arestas}; virt deve ter tamanho n
+// e so as listas dos vertices usados sao limpas.
+// Precisa de lca.cpp (lca::time, lca::lca, lca::dist).
 //
-// O(k * T), T tempo do lca::lca
+// complexity: O(k log k + k * T), T = tempo do lca::lca
 
 #include "src/graphs/lca.cpp"
 

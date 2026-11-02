@@ -1,7 +1,9 @@
 // Point Inside Convex Polygon
-// responde se um ponto está dentro do poligono convexo com binary search
-// se strict = true ele nao considera pontos na borda como interior
-// O(log(n))
+//
+// Diz se um ponto esta dentro do poligono convexo (busca binaria).
+// Com strict = true, pontos na borda nao contam como interior.
+//
+// complexity: O(log n)
 
 #include "src/geometry/geo_int.cpp"
 

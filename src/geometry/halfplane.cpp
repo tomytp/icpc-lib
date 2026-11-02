@@ -1,8 +1,8 @@
 // Halfplane Intersection
-// Acha o ponto mais extremo na direção dada
-// só entra retas nao verticais, processar as retas verticais antes e encodar essa info no minx e maxx
-// se quiser o ponto mais acima, fazer best_dir = (0,1)
-// dependendo do best_dir, best = (+-INF, +-INF)
+//
+// Acha o ponto mais extremo da intersecao na direcao best_dir.
+// So entram retas nao verticais: processe as verticais antes e codifique-as em minx e maxx.
+// Para o ponto mais acima, use best_dir = (0, 1); conforme best_dir, best = (+-INF, +-INF).
 
 mt19937_64 rng((ll) chrono::steady_clock::now().time_since_epoch().count());
 

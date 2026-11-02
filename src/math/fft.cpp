@@ -1,4 +1,3 @@
-
 // NTT Convolution
 //
 // Implements iterative NTT over supported primes.

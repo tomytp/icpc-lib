@@ -1,12 +1,9 @@
 // LCA com binary lifting
 //
-// Assume que um vertice eh ancestral dele mesmo, ou seja,
-// se a eh ancestral de b, lca(a, b) = a
-// Constroi com o grafo (lista de adjacencia) e a raiz
+// Constroi com o grafo (lista de adjacencia) e a raiz.
+// Um vertice e ancestral dele mesmo: se a e ancestral de b, lca(a, b) = a.
 //
-// Complexidades:
-// build - O(n log(n))
-// lca - O(log(n))
+// complexity: build O(n log n), lca O(log n)
 
 struct LCA_BL {
     ll n, LOG, p = 0;

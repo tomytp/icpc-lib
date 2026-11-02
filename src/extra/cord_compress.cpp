@@ -1,7 +1,8 @@
 // 1D Coordinate Compression
-// Maps large or sparse values to a dense range [0, N-1].
-// Uses sort, unique, and lower_bound for fast mapping. 
-// Time Complexity: O(N log N) | Space Complexity: O(N)
+//
+// Maps large or sparse values to a dense range [0, N-1] using sort, unique and lower_bound.
+//
+// complexity: O(N log N), O(N)
 
 
 void compress(){

@@ -1,6 +1,8 @@
 // Discrete Square Root
-// Tonelli-Shanks para encontrar x tq x^2 = a (mod p)
-// O(sqrt(p))
+//
+// Tonelli-Shanks: acha x tal que x^2 = a (mod p).
+//
+// complexity: O(log^2 p)
 
 #include "src/math/mod_functions.cpp"
 

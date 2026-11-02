@@ -1,7 +1,9 @@
 // Point Inside Polygon
-// responde se um ponto está dentro do poligono com ray casting
-// se strict = true ele nao considera pontos na borda como interior
-// O(n)
+//
+// Diz se um ponto esta dentro do poligono (ray casting).
+// Com strict = true, pontos na borda nao contam como interior.
+//
+// complexity: O(n)
 
 #include "src/geometry/geo_double.cpp"
 

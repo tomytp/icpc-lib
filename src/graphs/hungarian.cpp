@@ -1,7 +1,8 @@
 // Hungarian algorithm — min-cost perfect matching
-// a[i][j] = cost of assigning worker i to job j (n workers, m >= n jobs)
-// m < n loops forever: transpose a first. Negative costs ok.
-// Returns {min cost, assignment}: assignment[i] = j (0-indexed)
+//
+// a[i][j] = cost of assigning worker i to job j (n workers, m >= n jobs).
+// If m < n it loops forever: transpose a first. Negative costs are ok.
+// Returns {min cost, assignment}, assignment[i] = j (0-indexed).
 //
 // complexity: O(N^2 M), O(N + M) extra memory
 

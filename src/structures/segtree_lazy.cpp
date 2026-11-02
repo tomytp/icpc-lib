@@ -1,11 +1,9 @@
 // Segment Tree (Range Query + Range Update)
 //
-// Tree for range queries with a customizable combine; supports range updates and range queries.
-// Intervalos [i, j] fechados e 0-indexados.
-// Node::operator*      -> combina dois nos
-// Update::operator()   -> aplica o update em um no
-// Update::operator+    -> composicao: (a + b) = aplica a, depois b
-// Exemplo abaixo: soma com add/set em intervalo (folhas devem ter cnt = 1).
+// Seg lazy generica, intervalos [i, j] fechados e 0-indexados.
+// Node::operator* combina dois nos. Update::operator() aplica o update num no.
+// Update::operator+ compoe: (a + b) = aplica a, depois b.
+// Exemplo: soma com add/set em intervalo (folhas devem ter cnt = 1).
 //
 // complexity: O(log N) per op, O(N) to build
 

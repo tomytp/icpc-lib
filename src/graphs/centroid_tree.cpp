@@ -1,11 +1,9 @@
 // Centroid Tree
 //
-// Constroi a centroid tree
-// p[i] eh o pai de i na centroid-tree
-// dist[i][k] = distancia na arvore original entre i
-// e o k-esimo ancestral na arvore da centroid
+// p[i]: pai de i na centroid tree.
+// dist[i][k]: distancia na arvore original entre i e seu k-esimo ancestral na centroid tree.
 //
-// O(n log(n)) de tempo e memoria
+// complexity: O(n log n) de tempo e memoria
 
 const ll MAX = 100'005;
 vector<vll> g(MAX), dist(MAX);

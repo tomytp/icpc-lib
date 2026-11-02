@@ -1,5 +1,8 @@
 // Minkowski Sum
-// Soma poligonos de tamanho a e b em O(a+b)
+//
+// Soma de Minkowski de dois poligonos de tamanhos a e b.
+//
+// complexity: O(a + b)
 
 #include "src/geometry/geo_int.cpp"
 
