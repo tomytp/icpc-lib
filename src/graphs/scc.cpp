@@ -1,8 +1,11 @@
 // Strongly Connected Components (Kosaraju)
 //
 // Computes SCCs using two DFS passes and builds the condensation graph.
+// roots[v] = id of v's SCC; ids are in topological order of the condensation
+// (every edge goes from a smaller id to a larger one). Vertices 0-indexed.
+// Recursive DFS: a path of ~1.3e5 vertices overflows an 8MB stack.
 //
-// complexity: O(N + M), O(N + M)
+// complexity: O(N + M log M), O(N + M)
 
 vector<bool> visited;
 
@@ -12,9 +15,9 @@ void dfs(ll v, vector<vll>& g, vll &out) {
     out.push_back(v);
 }
 
-vector<vll> scc(vector<vll>& g) {
+vector<vll> scc(vector<vll>& g, vll& roots) {
     int n = sz(g);
-    vll order, roots(n, 0);
+    vll order; roots.assign(n, 0);
 
     vector<vll> adj_rev(n);
     forn(u, 0, n) for (ll v : g[u]) adj_rev[v].push_back(u);
