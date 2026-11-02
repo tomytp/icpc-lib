@@ -11,27 +11,27 @@ vll suffix_array(string& s) {
     ll n = sz(s)+1, N = max(n, 257ll);
     vll sa(n), ra(n);
     forn(i, 0, n) sa[i] = i, ra[i] = s[i];
-
+ 
     for(ll k = 0; k < n; k ? k *= 2 : k++) {
         vll nsa(sa), nra(n), cnt(N);
-
+ 
         forn(i, 0, n) nsa[i] = (nsa[i]-k+n)%n, cnt[ra[i]]++;
         forn(i, 1, N) cnt[i] += cnt[i-1];
         for(ll i = n-1; i >= 0; i--) sa[--cnt[ra[nsa[i]]]] = nsa[i];
-
+ 
         for(ll i = 1, r = 0; i < n; i++) nra[sa[i]] = r += ra[sa[i]] !=
             ra[sa[i-1]] || ra[(sa[i]+k)%n] != ra[(sa[i-1]+k)%n];
         ra = nra;
-        if (ra[sa[n-1]] == n-1) break; 
+        if (ra[sa[n-1]] == n-1) break;
     }
     return vll(sa.begin()+1, sa.end());
 }
-
+ 
 vll kasai(string s, vll sa) {
     ll n = sz(s), k = 0;
     vll ra(n), lcp(n);
     forn(i, 0, n) ra[sa[i]] = i;
-
+ 
     for (ll i = 0; i < n; i++, k -= !!k) {
         if (ra[i] == n-1) { k = 0; continue; }
         ll j = sa[ra[i]+1];
