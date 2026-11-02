@@ -3,9 +3,10 @@
 // finds the minimum cost arborescence rooted at src in a
 // weighted directed graph. returns {cost, parent} where
 // parent[u] is the predecessor of u in the optimal tree.
-// returns {-1, {}} if no arborescence exists.
+// returns {-1, {}} if no arborescence exists
+// (with negative weights, check par.empty() instead of cost == -1).
 //
-// complexity: O(M log N), O(N+M) me
+// complexity: O(M log N), O(N+M) memory
 
 #include "src/structures/dsu_rb.cpp"
 
@@ -34,7 +35,8 @@ void pop(Node*& a) { a->prop(); a = merge(a->l, a->r); }
 pair<ll, vll> dmst(ll n, ll src, vector<Edge>& g) {
 	dsu_rb uf(n);
 	vector<Node*> heap(n);
-	for (Edge e : g) heap[e.b] = merge(heap[e.b], new Node{e});
+	vector<Node> pool(sz(g)); // avoids new (no memory leak)
+	forn(i,0,sz(g)) pool[i] = {g[i]}, heap[g[i].b] = merge(heap[g[i].b], &pool[i]);
 	ll res = 0;
 	vll seen(n, -1), path(n), par(n);
 	seen[src] = src;
