@@ -1,5 +1,8 @@
 // Persistent Segment Tree - O(log n) per query/update
 // Supports point updates and range queries across versions
+// 0-indexed, query on closed interval [a, b]. Version 0 is the initial array.
+// set(a, val, t) creates a new version from version t and returns its id.
+// q must be >= the total number of set() calls (memory is preallocated).
 
 struct Node {
 	ll val;
@@ -11,8 +14,8 @@ struct perseg {
 	vector<Node> nd;
 	vll rt;
 
-	perseg(vll& v, ll q = 0) : n(sz(v)) {
-		nd.reserve(2*n + 18*(n+q));
+	perseg(vll& v, ll q) : n(sz(v)) {
+		nd.resize(2*n + (__lg(n)+2)*q);
 		rt.reserve(q + 2);
 		rt.push_back(cnt++);
 		build(nd.data(), cnt, rt[0], 0, n-1, v);
