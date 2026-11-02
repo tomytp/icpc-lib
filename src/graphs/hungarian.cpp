@@ -1,6 +1,10 @@
 // Hungarian algorithm — min-cost perfect matching
 // a[i][j] = cost of assigning worker i to job j (n workers, m >= n jobs)
-// Returns {min cost, assignment}: assignment[i] = j
+// m < n loops forever: transpose a first. Negative costs ok.
+// Returns {min cost, assignment}: assignment[i] = j (0-indexed)
+//
+// complexity: O(N^2 M), O(N + M) extra memory
+
 pair<ll, vll> hungarian(const vector<vll> &a) {
 	if (a.empty()) return {0, {}};
 	ll n = sz(a) + 1, m = sz(a[0]) + 1;
