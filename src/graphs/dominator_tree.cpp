@@ -2,6 +2,8 @@
 //
 // builds the dominator tree given a directed graph and a source.
 // returns a vector where ret[u] is the immediate dominator of u.
+// ret[src] = -1 and ret[u] = -1 for u unreachable from src.
+// Recursive DFS: a path-like graph with N ~ 2e5 may overflow a small stack.
 //
 // complexity: O((N+M) log N), O(N+M) mem
 
