@@ -1,8 +1,14 @@
 // Dinic's Maximum Flow (with Scaling)
 //
 // Computes max flow using Dinic's algorithm with optional capacity scaling to speed up BFS levels.
+// add(a, b, c): aresta direcionada a -> b com capacidade c
+//   (nao-direcionada: add(a, b, c) e add(b, a, c))
+// max_flow acumula em F; chamar de novo continua de onde parou, use reset() para zerar.
+// min_cut() so e valido depois de max_flow (usa lev da ultima BFS);
+//   retorna as arestas originais do lado de s para o lado de t.
+// Scaling comeca em 2^30: com capacidades maiores continua correto, mas perde eficiencia.
 //
-// complexity: O(E V^2) worst-case, O(E)
+// complexity: O(V^2 E) geral, O(V E log U) com scaling, O(E sqrt V) em grafo unitario; O(V + E) memoria
 
 struct dinitz {
     const bool scaling;
