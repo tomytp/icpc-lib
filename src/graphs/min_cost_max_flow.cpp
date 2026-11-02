@@ -4,6 +4,8 @@
 // min_cost_flow(s, t) -> Maximum flow with minimum cost from s to t.
 // For DAGs, SPFA can be replaced with DP to avoid O(nm) initial cost.
 // If no negative cost edges exist, SPFA is not needed.
+// Nao suporta ciclos de custo negativo (SPFA entra em loop).
+// Chamar de novo continua a partir do fluxo atual (nao zera).
 //
 // complexity: O(nm + f * m log n), O(n + m)
 
@@ -12,7 +14,7 @@ template<typename T> struct mcmf {
         ll to, rev, flow, cap; // destination, reverse edge id, current flow, capacity
         bool res; // is reverse edge
         T cost; // cost per unit of flow
-        edge() : to(0), rev(0), flow(0), cap(0), cost(0), res(false) {}
+        edge() : to(0), rev(0), flow(0), cap(0), res(false), cost(0) {}
         edge(ll to_, ll rev_, ll flow_, ll cap_, T cost_, bool res_)
             : to(to_), rev(rev_), flow(flow_), cap(cap_), res(res_), cost(cost_) {}
     };
@@ -25,7 +27,7 @@ template<typename T> struct mcmf {
     mcmf(ll n) : g(n), par_idx(n), par(n), inf(numeric_limits<T>::max()/3) {}
 
     void add(ll u, ll v, ll w, T cost) { // edge from u to v with capacity w and cost
-        edge a = edge(v, sz(g[v]), 0, w, cost, false);
+        edge a = edge(v, sz(g[v]) + (u == v), 0, w, cost, false); // + (u == v): self-loop
         edge b = edge(u, sz(g[u]), 0, 0, -cost, true);
 
         g[u].push_back(a);
@@ -84,7 +86,7 @@ template<typename T> struct mcmf {
 
     pair<ll, T> min_cost_flow(ll s, ll t, ll flow = INF) {
         vector<T> pot(sz(g), 0);
-        pot = spfa(s); // change shortest path algorithm here
+        pot = spfa(s); // change shortest path algorithm here (pot = 0 se nao usar spfa)
         // no negative costs: nothing needed
         // DAG: use DP instead
         ll f = 0;
@@ -115,7 +117,8 @@ template<typename T> struct mcmf {
         return make_pair(f, ret);
     }
 
-    // Optional: returns original edges where flow == cap
+    // Optional: returns original edges where flow == cap (saturadas)
+    // para arestas com fluxo parcial, troque por e.flow > 0
     vector<pll> recover() {
         vector<pll> used;
         forn(i, 0, sz(g)) for (edge e : g[i])
