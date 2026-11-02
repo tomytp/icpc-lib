@@ -3,6 +3,9 @@
 // Decomposes a tree into vertex disjoint heavy paths and light edges such that 
 // the path from any leaf to the root contains at most log(n) light edges.
 // All values initialized to the segtree default. Root must be 0.
+// adj must be undirected (u in adj[v] and v in adj[u]).
+// With the sum Node, call set_leaves with cnt = 1 (otherwise updates do nothing).
+// Recursive DFS: a line tree with N ~ 5e5 may overflow a small stack.
 //
 // head[u]: Highest node (closest to root) of the heavy path containing u.
 // pos[u]: Position of node u in the Segment Tree array (DFS order).
