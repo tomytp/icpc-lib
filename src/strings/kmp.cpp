@@ -23,15 +23,14 @@ vll match(string& pat, string& s) {
     }
     return match;
 }
-    
+
 struct KMPaut : vector<vll> {
     KMPaut(){}
     KMPaut (string& s) : vector<vll>(26, vll(sz(s)+1)) {
         vll p = pi(s);
         auto& aut = *this;
         aut[s[0]-'a'][0] = 1;
-        for (char c = 0; c < 26; c++)
-            for (int i = 1; i <= sz(s); i++)
-                aut[c][i] = s[i]-'a' == c ? i+1 : aut[c][p[i-1]];
+        forn(c, 0, 26) forn(i, 1, sz(s)+1)
+            aut[c][i] = s[i]-'a' == c ? i+1 : aut[c][p[i-1]];
     }
 };
