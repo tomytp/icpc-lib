@@ -1,62 +1,63 @@
 // Mo's Algorithm (Offline Range Queries)
 //
-// Answers offline range queries by ordering them (block or Hilbert curve) to get small pointer movement and amortized updates.
+// Responde queries offline em intervalos [l, r] fechados e 0-indexados,
+// ordenando-as (Hilbert ou blocos) para mover pouco os ponteiros.
+// Preencha o estado do problema, insert(p), erase(p) e ans.
 //
-// complexity: O((N + Q) sqrt N), O(N)
+// complexity: O((N + Q) sqrt N), O(N + Q)
 
-const ll MAX = 2e5+10;
-const ll SQ = sqrt(MAX);
-ll ans;
+struct Mo {
+    ll n, ans = 0;
+    // estado do problema aqui
 
-inline void insert(ll p) {
-}
+    Mo(ll n) : n(n) {}
 
-inline void erase(ll p) {
-}
+    void insert(ll p) {
+    }
 
-inline ll hilbert(ll x, ll y) {
-    static ll N = 1 << (__builtin_clzll(0ll) - __builtin_clzll(MAX));
-    ll rx, ry, s;
-    ll d = 0;
-    for (s = N/2; s > 0; s /= 2) {
-        rx = (x & s) > 0, ry = (y & s) > 0;
-        d += s * ll(s) * ((3 * rx) ^ ry);
-        if (ry == 0) {
-            if (rx == 1) x = N-1 - x, y = N-1 - y;
-            swap(x, y);
+    void erase(ll p) {
+    }
+
+    ll hilbert(ll x, ll y, ll N) {
+        ll d = 0;
+        for (ll s = N / 2; s > 0; s /= 2) {
+            ll rx = (x & s) > 0, ry = (y & s) > 0;
+            d += s * s * ((3 * rx) ^ ry);
+            if (ry == 0) {
+                if (rx == 1) x = N - 1 - x, y = N - 1 - y;
+                swap(x, y);
+            }
         }
+        return d;
     }
-    return d;
-}
 
-#define HILBERT true
-vll MO(vector<pair<ll, ll>> &q) {
-    ans = 0;
-    ll m = sz(q);
-    vll ord(m);
-    iota(ord.begin(), ord.end(), 0);
-#if HILBERT
-    vll h(m);
-    for (ll i = 0; i < m; i++) h[i] = hilbert(q[i].first, q[i].second);
-    sort(ord.begin(), ord.end(), [&](ll l, ll r) { return h[l] < h[r]; });
-#else
-    sort(ord.begin(), ord.end(), [&](ll l, ll r) {
-        if (q[l].first / SQ != q[r].first / SQ) return q[l].first < q[r].first;
-        if ((q[l].first / SQ) % 2) return q[l].second > q[r].second;
-        return q[l].second < q[r].second;
-    });
-#endif
-    vll ret(m);
-    ll l = 0, r = -1;
-
-    for (ll i : ord) {
-        ll ql, qr;
-        tie(ql, qr) = q[i];
-        while (r < qr) insert(++r);
-        while (l > ql) insert(--l);
-        while (l < ql) erase(l++);
-        while (r > qr) erase(r--);
-        ret[i] = ans;
+    vll run(vector<pll>& q, bool use_hilbert = true) {
+        ll m = sz(q);
+        vll ord(m), ret(m);
+        iota(ord.begin(), ord.end(), 0);
+        if (use_hilbert) {
+            ll N = 1ll << (__lg(max(n, 1ll)) + 1);
+            vll h(m);
+            forn(i, 0, m) h[i] = hilbert(q[i].first, q[i].second, N);
+            sort(ord.begin(), ord.end(), [&](ll l, ll r) { return h[l] < h[r]; });
+        } 
+        if (!use_hilbert) {
+            ll SQ = max(1ll, (ll) sqrt(n));
+            sort(ord.begin(), ord.end(), [&](ll l, ll r) {
+                if (q[l].first / SQ != q[r].first / SQ) return q[l].first < q[r].first;
+                if ((q[l].first / SQ) % 2) return q[l].second > q[r].second;
+                return q[l].second < q[r].second;
+            });
+        }
+        ll l = 0, r = -1;
+        for (ll i : ord) {
+            auto [ql, qr] = q[i];
+            while (r < qr) insert(++r);
+            while (l > ql) insert(--l);
+            while (l < ql) erase(l++);
+            while (r > qr) erase(r--);
+            ret[i] = ans;
+        }
+        return ret;
     }
-    return ret;
-}
+};

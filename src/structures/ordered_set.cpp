@@ -1,6 +1,9 @@
 // Order-Statistic Tree (PBDS)
 //
-// Wraps __gnu_pbds tree to support order_of_key and find_by_order operations on a sorted set.
+// Set ordenado com acesso por posicao.
+// s.find_by_order(k) -> iterador pro k-esimo (0-indexado), end() se k >= sz(s)
+// s.order_of_key(x)  -> quantidade de elementos < x
+// Para multiset, use ordered_set<pll> com {valor, id unico}.
 //
 // complexity: O(log N) per op, O(N)
 
@@ -9,10 +12,4 @@
 
 using namespace __gnu_pbds;
 
-#define ordered_set tree<pll, null_type,less<pll>, rb_tree_tag,tree_order_statistics_node_update> 
-
-int main() {
-    ordered_set s;
-    s.find_by_order(position);
-    s.order_of_key(value);
-}
+template<class T> using ordered_set = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
