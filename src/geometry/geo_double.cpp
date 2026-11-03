@@ -68,7 +68,7 @@ bool col(pt p, pt q, pt r) { // se p, q e r sao colin.
 }
 
 bool ccw(pt p, pt q, pt r, bool strict = true) { // se p, q, r estao em sentido anti-horario
-    return cmp(sarea(p, q, r)) > 0 || (!strict && cmp(sarea(p, q, r)) == 0);
+	return cmp(sarea(p, q, r)) > 0 || (!strict && cmp(sarea(p, q, r)) == 0);
 }
 
 bool isinseg(pt p, line r) { // se p pertence ao seg de r
@@ -97,7 +97,7 @@ pt inter(line r, line s) { // r inter s
 // concentricos (mesmo se iguais) -> nenhum ponto
 pair<pt, pt> circint(pt o1, ld r1, pt o2, ld r2) {
 	pt in(DINF, DINF), dir = o2 - o1;
-    ld d = norm(dir);
+	ld d = norm(dir);
 	if (cmp(d) == 0) return {in, in};
 	if (cmp(d, r1 + r2) > 0 || cmp(d, abs(r1 - r2)) < 0) return {in, in};
 	ld x = (d*d - r2*r2 + r1*r1) / (2*d);
@@ -116,7 +116,7 @@ pt foot(pt p, pt a, pt b) { // projecao de p na reta ab
 
 pair<pt, pt> cline(pt o, ld r, pt a, pt b) {
 	pt h = foot(o, a, b), in(DINF, DINF), dir = b - a;
-    ld d = norm(h - o);
+	ld d = norm(h - o);
 	if (cmp(d, r) > 0) return {in, in};
 	if (cmp(d, r) == 0) return {h, in}; // tangente
 	pt k = dir * (sqrt(r*r - d*d) / norm(dir));
