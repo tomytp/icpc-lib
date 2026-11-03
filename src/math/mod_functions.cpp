@@ -1,16 +1,24 @@
 // Modular Arithmetic Helpers
 //
-// Provides fast modular mul, fast exponentiation.
+// modmul(a, b, M): computes (a*b) % M exactly.
+// modpow(b, e, M): computes b^e % M using binary exponentiation.
 //
-// complexity: O(log E) for power/inverse
+// Preconditions:
+// - M > 0.
+// - modmul supports arbitrary ull operands.
+// - modpow returns a value in [0, M).
+//
+// Uses __int128 for exact 64-bit modular multiplication.
+//
+// complexity:
+// - modmul: O(1) machine operations.
+// - modpow: O(log e) modular multiplications.
 
 typedef unsigned long long ull;
-const ll MOD = 1'000'000'007;
 
-ull modmul(ull a, ull b, ull M){ 
-    ll ret = a*b - M * ull(1.L / M*a*b);    
-    return ret + M * (ret < 0) - M * (ret >= (ll)M);
-};
+ull modmul(ull a, ull b, ull M) {
+    return (unsigned __int128)a * b % M;
+}
 
 ull modpow(ull b, ull e, ull mod){
     ull ans = 1;
@@ -18,4 +26,3 @@ ull modpow(ull b, ull e, ull mod){
         if(e & 1) ans = modmul(ans, b, mod);
     return ans;
 }
-

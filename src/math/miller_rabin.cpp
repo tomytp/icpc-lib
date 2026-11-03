@@ -1,12 +1,16 @@
 // Miller-Rabin Primality Test (Deterministic for 64-bit)
 //
-// Checks if a number N is prime using a fixed set of bases that 
-// guarantees correctness for any N < 2^64. 
-// Uses a long double trick for O(1) modular multiplication.
+// Checks whether n is prime using the seven deterministic bases:
+// {2, 325, 9375, 28178, 450775, 9780504, 1795265022}.
 //
-// complexity: O(7 log^3 N) per query
-
-#include "src/math/mod_functions.cpp"
+// Correct for every n < 2^64.
+//
+// Requires:
+// - modmul and modpow from mod_functions.cpp.
+// - Exact modular multiplication.
+//
+// complexity:
+// - O(log n) modular multiplications per query (7 bases).
 
 bool isPrime(ull n){
     if(n < 2 || n % 6 % 4 != 1) return (n | 1) == 3;
