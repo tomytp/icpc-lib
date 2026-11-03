@@ -1,6 +1,6 @@
 // Float Geometry Primitives
 //
-// Defines 2D point and line structures with orientation, area, and angle comparisons plus a sweep-line comparator.
+// Defines 2D point and line structures with orientation, area, line intersection and circle-circle / circle-line intersections.
 
 typedef long double ld;
 
@@ -67,7 +67,7 @@ bool col(pt p, pt q, pt r) { // se p, q e r sao colin.
 	return cmp(sarea(p, q, r), 0) == 0;
 }
 
-bool ccw(pt p, pt q, pt r, bool strict = true) { // true if p, q, r are 
+bool ccw(pt p, pt q, pt r, bool strict = true) { // se p, q, r estao em sentido anti-horario
     return cmp(sarea(p, q, r)) > 0 || (!strict && cmp(sarea(p, q, r)) == 0);
 }
 
@@ -76,7 +76,7 @@ bool isinseg(pt p, line r) { // se p pertence ao seg de r
 	return cmp(a ^ b) == 0 && cmp(a * b) <= 0;
 }
 
-ld polarea(vector<pt> v) { // area do poligono
+ld polarea(vector<pt>& v) { // area do poligono
 	ld ret = 0;
 	forn(i, 0, sz(v))
 		ret += sarea(pt(0, 0), v[i], v[(i + 1) % sz(v)]);
@@ -93,42 +93,32 @@ pt inter(line r, line s) { // r inter s
 	return r.q * get_t(r.q, s) + r.p;
 }
 
-// Intersecções de circulos
-
-pair<pt,pt> perp_pts(line l, ld d){ // retorna dois pontos r,s tq rq e sq sao perp a pq e |rq| = |sq| = d;
-    pt dir = l.p - l.q;
-    pt r = pt(dir.y, -dir.x);
-    pt k = r * (d/norm(r));
-    return {l.q + k, l.q - k};
-}
-
-pair<pt,pt> circint(pt o1, ld r1, pt o2, ld r2){
-    pt dir = o2 - o1;
-    pt in(DINF, DINF);
+// Interseccao de circulos: pontos inexistentes = (DINF, DINF)
+// concentricos (mesmo se iguais) -> nenhum ponto
+pair<pt, pt> circint(pt o1, ld r1, pt o2, ld r2) {
+	pt in(DINF, DINF), dir = o2 - o1;
     ld d = norm(dir);
-    // tangent
-    if(cmp(r1 + r2, d) == 0 || cmp(d + r2, r1) == 0 || cmp(d + r1, r2) == 0)
-        return {o1 + dir * r1/(r1 + r2), in};
-    // no inter
-    if(cmp(r1 + r2, d) == -1 || cmp(d + r2, r1) == -1 || cmp(d + r1, r2) == -1)
-        return {in, in};
-    // two inters
-    ld x = (d*d - r2*r2 + r1*r1)/(2*d);
-    return perp_pts(line(o1, o1 + dir * x/d), sqrt(r1*r1 - x*x));
+	if (cmp(d) == 0) return {in, in};
+	if (cmp(d, r1 + r2) > 0 || cmp(d, abs(r1 - r2)) < 0) return {in, in};
+	ld x = (d*d - r2*r2 + r1*r1) / (2*d);
+	pt m = o1 + dir * (x / d);
+	if (cmp(d, r1 + r2) == 0 || cmp(d, abs(r1 - r2)) == 0) return {m, in}; // tangentes
+	pt k = pt(-dir.y, dir.x) * (sqrt(max((ld)0, r1*r1 - x*x)) / d);
+	return {m + k, m - k};
 }
 
-//interseções de circulo e reta
+// Interseccao de circulo e reta
 
-pt foot(pt p, pt a, pt b) {
-    pt dir = b-a;
-    return (dir*((p-a)*dir))/(dir*dir) + a;
+pt foot(pt p, pt a, pt b) { // projecao de p na reta ab
+	pt dir = b - a;
+	return (dir * ((p - a) * dir)) / (dir * dir) + a;
 }
 
-pair<pt,pt> cline(pt o, double r, pt a, pt b){
-    pt h = foot(o, a, b);
-    pt in(DINF, DINF);
+pair<pt, pt> cline(pt o, ld r, pt a, pt b) {
+	pt h = foot(o, a, b), in(DINF, DINF), dir = b - a;
     ld d = norm(h - o);
-    if(cmp(d, r) == 0) return {h, in};
-    if(cmp(d, r) == 1) return {in, in};
-    return perp_pts(line(o, h), sqrt(r*r - d*d));
+	if (cmp(d, r) > 0) return {in, in};
+	if (cmp(d, r) == 0) return {h, in}; // tangente
+	pt k = dir * (sqrt(r*r - d*d) / norm(dir));
+	return {h + k, h - k};
 }
